@@ -35,24 +35,39 @@ const assembly = (t) => {
   return p < 0 ? 0 : p > 1 ? 1 : p * p * (3 - p * 2);
 };
 
-function makeGlowTexture() {
-  // sprites using this get scaled up to well over 10x this size on screen
-  // (nebula/aurora radii are fractions of the viewport's larger dimension),
-  // so a small source here reads as soft/blocky at that scale — 512 keeps
-  // the gradient smooth even at full-viewport sprite sizes on large screens.
-  const size = 512;
-  const c = document.createElement('canvas');
-  c.width = c.height = size;
-  const g = c.getContext('2d');
-  const grad = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  grad.addColorStop(0, 'rgba(255,255,255,1)');
-  grad.addColorStop(0.45, 'rgba(255,255,255,.38)');
-  grad.addColorStop(1, 'rgba(255,255,255,0)');
-  g.fillStyle = grad;
-  g.fillRect(0, 0, size, size);
-  const tex = new THREE.CanvasTexture(c);
-  tex.needsUpdate = true;
-  return tex;
+// Nebula/aurora glow blobs get stretched to a large fraction of the
+// viewport, and the original drew them with ctx.createRadialGradient every
+// frame — a true analytic gradient, sharp at any size since it's recomputed
+// at native resolution rather than sampled from a fixed-size bitmap. A
+// pre-rasterized CanvasTexture (the previous approach here) can't match
+// that at large scale no matter how big you make the source bitmap. This
+// shader computes the identical 3-stop gradient (0->1, .45->.38, 1->0,
+// linear between stops, same as canvas gradient interpolation) per pixel
+// instead, on a plain unit quad — resolution-independent, same draw cost.
+const GLOW_VERT = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+const GLOW_FRAG = `
+  uniform vec3 uColor;
+  uniform float uOpacity;
+  varying vec2 vUv;
+  void main() {
+    float d = length(vUv - 0.5) * 2.0;
+    if (d > 1.0) discard;
+    float a = d < 0.45 ? mix(1.0, 0.38, d / 0.45) : mix(0.38, 0.0, (d - 0.45) / 0.55);
+    gl_FragColor = vec4(uColor, a * uOpacity);
+  }
+`;
+function makeGlowMaterial(colorHex, opacity) {
+  return new THREE.ShaderMaterial({
+    vertexShader: GLOW_VERT, fragmentShader: GLOW_FRAG,
+    uniforms: { uColor: { value: new THREE.Color(colorHex) }, uOpacity: { value: opacity } },
+    transparent: true, depthTest: false, blending: THREE.AdditiveBlending,
+  });
 }
 
 const DUST_VERT = `
@@ -161,10 +176,10 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   const lowTier = !!window.__lowTierDevice;
   // __lowTierDevice isn't known yet at this point (measured async from real
   // frame timing — see siteEffects.js), so it always reads false here and
-  // this always renders at the display's real pixel density to start; the
-  // tier-measured listener below drops it only once a device is actually
-  // confirmed slow.
-  const DPR = window.devicePixelRatio || 1;
+  // this always renders at full native resolution to start (capped at 2x,
+  // same ceiling the original 2D-canvas version used); the tier-measured
+  // listener below drops it only once a device is actually confirmed slow.
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: false, powerPreference: 'low-power' });
   renderer.setPixelRatio(DPR);
@@ -183,8 +198,8 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   }
   layout();
 
-  // ---------- nebula (a handful of soft additive sprites, JS-updated — cheap at this count) ----------
-  const glowTex = makeGlowTexture();
+  // ---------- nebula (a handful of soft additive glow quads, JS-updated — cheap at this count) ----------
+  const glowGeo = new THREE.PlaneGeometry(1, 1);
   const nebulaDefs = [
     { x: 0.20, y: 0.22, r: 0.5, col: 0x969ca4, a: 0.085, ph: 0.0 },
     { x: 0.83, y: 0.30, r: 0.56, col: 0xaab0b8, a: 0.055, ph: 2.1 },
@@ -193,8 +208,8 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
     { x: 0.50, y: 0.50, r: 0.44, col: 0x828890, a: 0.04, ph: 3.3 },
   ];
   const nebulaSprites = nebulaDefs.map((nb) => {
-    const mat = new THREE.SpriteMaterial({ map: glowTex, color: nb.col, transparent: true, opacity: nb.a, blending: THREE.AdditiveBlending, depthTest: false });
-    const spr = new THREE.Sprite(mat);
+    const mat = makeGlowMaterial(nb.col, nb.a);
+    const spr = new THREE.Mesh(glowGeo, mat);
     spr.userData = nb;
     scene.add(spr);
     return spr;
@@ -213,8 +228,8 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   ];
   const auroraOpacityByFx = { home: 0.3, about: 0.5, service: 0.16, work: 0.2 };
   const auroraSprites = auroraDefs.map((def) => {
-    const mat = new THREE.SpriteMaterial({ map: glowTex, color: def.col, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthTest: false });
-    const spr = new THREE.Sprite(mat);
+    const mat = makeGlowMaterial(def.col, 0);
+    const spr = new THREE.Mesh(glowGeo, mat);
     spr.userData = def;
     scene.add(spr);
     return spr;
@@ -359,7 +374,7 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
       const r = nb.r * Math.max(W, H) * 2;
       spr.position.set(cx, cy, 0);
       spr.scale.set(r, r, 1);
-      spr.material.opacity = nb.a * (0.85 + 0.15 * Math.sin(tt * 0.2 + nb.ph));
+      spr.material.uniforms.uOpacity.value = nb.a * (0.85 + 0.15 * Math.sin(tt * 0.2 + nb.ph));
     }
 
     // aurora wash: the three blobs drift together as one unit — a smooth
@@ -377,7 +392,7 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
         spr.position.set(def.x * W + driftX, def.y * H + driftY, 0);
         const r = def.w * Math.max(W, H) * 2.4;
         spr.scale.set(r, r, 1);
-        spr.material.opacity = targetOpacity;
+        spr.material.uniforms.uOpacity.value = targetOpacity;
       }
     }
 

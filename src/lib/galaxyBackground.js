@@ -34,6 +34,16 @@ const assembly = (t) => {
   const p = (t - T.chaos) / (T.pulse - T.chaos);
   return p < 0 ? 0 : p > 1 ? 1 : p * p * (3 - p * 2);
 };
+const rnd = (a, b) => a + Math.random() * (b - a);
+// same drifting-noise field the original uses to give assembling fragments
+// their chaotic wander before they lock onto the target shape
+const flow = (x, y, t) => {
+  const s = 0.0016;
+  return [
+    Math.sin(x * s + t * 0.6) + Math.cos(y * s * 1.3 - t * 0.45),
+    Math.cos(x * s * 1.1 - t * 0.5) + Math.sin(y * s - t * 0.7),
+  ];
+};
 
 // Nebula/aurora glow blobs get stretched to a large fraction of the
 // viewport, and the original drew them with ctx.createRadialGradient every
@@ -120,43 +130,26 @@ const DUST_FRAG = `
   }
 `;
 
+// The fragment swarm's motion is a real damped-spring + flow-field
+// simulation in the original (stateful: velocity carries over frame to
+// frame), not a pure function of time — so unlike dust/nebula this can't
+// be reduced to a closed-form vertex-shader formula. It's computed on the
+// CPU each frame (mirroring the original's own per-particle JS loop
+// exactly) and written into these attributes; the shader just renders
+// wherever it's told. Bounded to the ~5s intro window, same as the
+// original paid this same CPU cost for, so it's not an ongoing cost.
 const FRAG_VERT = `
-  uniform float uTime;
-  uniform float uAssembly;   // 0..1 chaos -> formed
-  uniform float uDock;       // 0..1 dock progress (eased)
-  uniform vec2 uCenter;
-  uniform vec2 uNav;
-  uniform float uScale;
-  uniform float uNavScale;
   uniform float uPR;
-  attribute vec2 aTarget;
-  attribute float aOrbit;
-  attribute float aAngSpeed;
-  attribute float aSeed;
-  attribute float aSize;
+  attribute float aAlpha;
+  attribute float aPSize;
   attribute float aBlue;
   varying float vAlpha;
   varying float vBlue;
   void main() {
-    float ang = aSeed * 6.283 + uTime * aAngSpeed * (1.0 - uAssembly * 0.6);
-    float orbNow = mix(aOrbit, 0.04, uAssembly);
-    vec2 orbitPos = uCenter + vec2(cos(ang), sin(ang)) * orbNow * uScale;
-    vec2 targetPos = uCenter + aTarget * uScale;
-    vec2 formedPos = mix(orbitPos, targetPos, uAssembly);
-    // gentle organic wobble while still assembling
-    float wob = (1.0 - uAssembly) * 6.0;
-    formedPos += vec2(sin(uTime * 1.7 + aSeed * 11.0), cos(uTime * 1.4 + aSeed * 7.0)) * wob;
-
-    vec2 dockedPos = mix(uCenter, uNav, uDock);
-    float scaleNow = mix(uScale, uNavScale, uDock);
-    vec2 fromCenter = formedPos - uCenter;
-    // re-project relative to the (possibly shrinking) center as it docks
-    vec2 pos = dockedPos + fromCenter * (scaleNow / uScale);
-
-    vAlpha = 1.0 - smoothstep(0.75, 1.0, uDock);
+    vAlpha = aAlpha;
     vBlue = aBlue;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 0.0, 1.0);
-    gl_PointSize = aSize * (1.0 + uAssembly * 0.2) * (1.0 - uDock * 0.4) * 2.2 * uPR;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    gl_PointSize = aPSize * uPR;
   }
 `;
 const FRAG_FRAG = `
@@ -169,6 +162,31 @@ const FRAG_FRAG = `
     float edge = smoothstep(0.5, 0.0, d);
     vec3 col = mix(vec3(0.933, 0.937, 0.941), vec3(0.812, 0.820, 0.827), vBlue);
     gl_FragColor = vec4(col, vAlpha * edge);
+  }
+`;
+// motion-trail streaks behind fast-moving fragments — the original strokes
+// a short line from a particle's recent position to its current one
+// whenever it's moving fast (sp > 1.3), which is what gives the chaos/
+// formation phase its dense, spiky look. Rendered as plain additive line
+// segments, two vertices per fragment (degenerate/zero-alpha when not
+// streaking, cheaper than toggling draw range every frame).
+const STREAK_VERT = `
+  attribute float aAlpha;
+  attribute float aBlue;
+  varying float vAlpha;
+  varying float vBlue;
+  void main() {
+    vAlpha = aAlpha;
+    vBlue = aBlue;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+const STREAK_FRAG = `
+  varying float vAlpha;
+  varying float vBlue;
+  void main() {
+    vec3 col = mix(vec3(0.878, 0.882, 0.886), vec3(0.812, 0.820, 0.827), vBlue);
+    gl_FragColor = vec4(col, vAlpha);
   }
 `;
 
@@ -282,45 +300,77 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
     }
   }, { once: true });
 
-  // ---------- intro fragments (assemble into the logo shape, then dock) ----------
+  // ---------- intro fragments (assemble into the logo shape from chaos) ----------
   const rawTargets = targets && targets.length ? targets : [[0, 0]];
   const N_FRAG = Math.min(Math.round((W * H < 600000 ? 900 : 1600) * (lowTier ? 0.5 : 1)), rawTargets.length * 4);
-  const fragGeo = new THREE.BufferGeometry();
-  const fragPos = new Float32Array(N_FRAG * 3);
   const fragTarget = new Float32Array(N_FRAG * 2);
   const fragOrbit = new Float32Array(N_FRAG);
-  const fragAngSpeed = new Float32Array(N_FRAG);
-  const fragSeed = new Float32Array(N_FRAG);
+  const fragAsp = new Float32Array(N_FRAG);
   const fragSize = new Float32Array(N_FRAG);
   const fragBlue = new Float32Array(N_FRAG);
+  // live physics state (JS-side, mirrors the original's damped-spring +
+  // flow-field simulation exactly — see the frame() loop below)
+  const fragX = new Float32Array(N_FRAG);
+  const fragY = new Float32Array(N_FRAG);
+  const fragVX = new Float32Array(N_FRAG);
+  const fragVY = new Float32Array(N_FRAG);
+  const fragAng = new Float32Array(N_FRAG);
   for (let i = 0; i < N_FRAG; i++) {
     const t = rawTargets[(i * 7919) % rawTargets.length];
     fragTarget[i * 2] = t[0];
     fragTarget[i * 2 + 1] = t[1];
     fragOrbit[i] = 0.9 + Math.random() * 1.5;
-    fragAngSpeed[i] = 0.3 + Math.random() * 0.5;
-    fragSeed[i] = Math.random();
+    fragAsp[i] = rnd(0.4, 1.6);
     fragSize[i] = 0.7 + Math.random() * 1.4;
     fragBlue[i] = Math.random() < 0.13 ? 1 : 0;
+    const ang0 = rnd(0, 6.283);
+    fragAng[i] = ang0;
+    fragX[i] = LCX + Math.cos(ang0) * fragOrbit[i] * S;
+    fragY[i] = LCY + Math.sin(ang0) * fragOrbit[i] * S;
   }
+
+  const fragGeo = new THREE.BufferGeometry();
+  const fragPos = new Float32Array(N_FRAG * 3);
+  const fragAlpha = new Float32Array(N_FRAG);
+  const fragPSize = new Float32Array(N_FRAG);
   fragGeo.setAttribute('position', new THREE.BufferAttribute(fragPos, 3));
-  fragGeo.setAttribute('aTarget', new THREE.BufferAttribute(fragTarget, 2));
-  fragGeo.setAttribute('aOrbit', new THREE.BufferAttribute(fragOrbit, 1));
-  fragGeo.setAttribute('aAngSpeed', new THREE.BufferAttribute(fragAngSpeed, 1));
-  fragGeo.setAttribute('aSeed', new THREE.BufferAttribute(fragSeed, 1));
-  fragGeo.setAttribute('aSize', new THREE.BufferAttribute(fragSize, 1));
+  fragGeo.setAttribute('aAlpha', new THREE.BufferAttribute(fragAlpha, 1));
+  fragGeo.setAttribute('aPSize', new THREE.BufferAttribute(fragPSize, 1));
   fragGeo.setAttribute('aBlue', new THREE.BufferAttribute(fragBlue, 1));
-  const fragUniforms = {
-    uTime: { value: 0 }, uAssembly: { value: 0 }, uDock: { value: 0 },
-    uCenter: { value: new THREE.Vector2(LCX, LCY) }, uNav: { value: new THREE.Vector2(LCX, LCY) },
-    uScale: { value: S }, uNavScale: { value: S }, uPR: { value: DPR },
-  };
+  const fragUniforms = { uPR: { value: DPR } };
   const fragMat = new THREE.ShaderMaterial({
     vertexShader: FRAG_VERT, fragmentShader: FRAG_FRAG, uniforms: fragUniforms,
     transparent: true, depthTest: false, blending: THREE.AdditiveBlending,
   });
   const fragPoints = new THREE.Points(fragGeo, fragMat);
   scene.add(fragPoints);
+
+  // motion-trail streaks — two vertices (from -> to) per fragment, alpha 0
+  // when not currently streaking (cheaper than resizing the draw range
+  // every frame as the streaking subset changes).
+  const streakGeo = new THREE.BufferGeometry();
+  const streakPos = new Float32Array(N_FRAG * 2 * 3);
+  const streakAlpha = new Float32Array(N_FRAG * 2);
+  const streakBlue = new Float32Array(N_FRAG * 2);
+  for (let i = 0; i < N_FRAG; i++) {
+    streakBlue[i * 2] = fragBlue[i];
+    streakBlue[i * 2 + 1] = fragBlue[i];
+  }
+  streakGeo.setAttribute('position', new THREE.BufferAttribute(streakPos, 3));
+  streakGeo.setAttribute('aAlpha', new THREE.BufferAttribute(streakAlpha, 1));
+  streakGeo.setAttribute('aBlue', new THREE.BufferAttribute(streakBlue, 1));
+  const streakMat = new THREE.ShaderMaterial({
+    vertexShader: STREAK_VERT, fragmentShader: STREAK_FRAG,
+    transparent: true, depthTest: false, blending: THREE.AdditiveBlending,
+  });
+  const streakLines = new THREE.LineSegments(streakGeo, streakMat);
+  scene.add(streakLines);
+
+  // central formation glow — the original paints a soft radial wash behind
+  // the assembling logo (ctx.createRadialGradient at LCX,LCY, radius S*2);
+  // reuses the same analytic-gradient shader as the nebula/aurora blobs.
+  const formationGlow = new THREE.Mesh(glowGeo, makeGlowMaterial(0xcfd1d3, 0));
+  scene.add(formationGlow);
 
   // ---------- docking hero logo sprite (fades in as fragments assemble, flies into the nav slot) ----------
   let heroSprite = null;
@@ -365,6 +415,7 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
     const de = dpRaw * dpRaw * (3 - dpRaw * 2);
     const a = assembly(t);
     const zoom = 0.84 + easeOut(t / T.pulse) * 0.16;
+    const heroFade = clamp((t - T.pulse) / (T.locked - T.pulse), 0, 1);
 
     // nebula drift (5 sprites — negligible JS cost)
     for (const spr of nebulaSprites) {
@@ -402,28 +453,79 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
     if (mx > -9999) { dustUniforms.uMouse.value.set(mx, my); dustUniforms.uMouseActive.value = 1; }
     else dustUniforms.uMouseActive.value = 0;
 
-    // fragments: assembly + dock, also shader-driven
+    // fragments: real damped-spring + flow-field simulation, mirroring the
+    // original's own per-particle physics exactly (see the flow()/rnd()
+    // helpers above) — this is what produces the fast, chaotic motion that
+    // the streak trails below react to. Fragments fade out in place as they
+    // dock (de -> 1); only the hero logo sprite actually flies to the nav
+    // slot, same as the original.
     if (dpRaw < 1) {
       fragPoints.visible = true;
-      fragUniforms.uTime.value = tt;
-      fragUniforms.uAssembly.value = a;
-      fragUniforms.uDock.value = de;
-      fragUniforms.uCenter.value.set(LCX, LCY * 1 - 0); // keep in screen space (Y already canvas-style via camera)
-      fragUniforms.uScale.value = S * zoom;
-      if (navLogo) {
-        const r = navLogo.getBoundingClientRect();
-        if (r.width) {
-          fragUniforms.uNav.value.set(r.left + r.width / 2, r.top + r.height / 2);
-          fragUniforms.uNavScale.value = (r.width || 34) / 2;
+      streakLines.visible = true;
+      const stiff = lerp(0.012, 0.16, a) * (t >= T.pulse ? 1.4 : 1);
+      const damp = lerp(0.90, 0.78, a);
+      const fragDim = (1 - heroFade * 0.68) * (1 - de);
+      for (let i = 0; i < N_FRAG; i++) {
+        fragAng[i] += (0.004 + fragAsp[i] * 0.006) * (1 - a * 0.6);
+        const orbNow = lerp(fragOrbit[i], 0.04, a);
+        const rgx = LCX + Math.cos(fragAng[i]) * orbNow * S;
+        const rgy = LCY + Math.sin(fragAng[i]) * orbNow * S;
+        const txp = LCX + fragTarget[i * 2] * S;
+        const typ = LCY + fragTarget[i * 2 + 1] * S;
+        const gx = lerp(rgx, txp, a), gy = lerp(rgy, typ, a);
+        fragVX[i] += (gx - fragX[i]) * stiff;
+        fragVY[i] += (gy - fragY[i]) * stiff;
+        if (a < 0.98) {
+          const fl = flow(fragX[i], fragY[i], tt);
+          const k = (1 - a) * 0.9;
+          fragVX[i] += fl[0] * k;
+          fragVY[i] += fl[1] * k;
+        }
+        fragVX[i] *= damp;
+        fragVY[i] *= damp;
+        fragX[i] += fragVX[i];
+        fragY[i] += fragVY[i];
+        const sp = Math.hypot(fragVX[i], fragVY[i]);
+        const br = clamp(0.25 + sp * 0.05 + a * 0.35, 0.12, 1) * fragDim;
+
+        fragPos[i * 3] = fragX[i];
+        fragPos[i * 3 + 1] = fragY[i];
+        fragAlpha[i] = br;
+        fragPSize[i] = fragSize[i] * (1 + a * 0.2) * 2.2;
+
+        const si = i * 6, ai = i * 2;
+        if (sp > 1.3 && a < 0.96) {
+          streakPos[si] = fragX[i] - fragVX[i] * 2.2;
+          streakPos[si + 1] = fragY[i] - fragVY[i] * 2.2;
+          streakPos[si + 3] = fragX[i];
+          streakPos[si + 4] = fragY[i];
+          streakAlpha[ai] = br * 0.5;
+          streakAlpha[ai + 1] = br * 0.5;
+        } else {
+          streakAlpha[ai] = 0;
+          streakAlpha[ai + 1] = 0;
         }
       }
+      fragGeo.attributes.position.needsUpdate = true;
+      fragGeo.attributes.aAlpha.needsUpdate = true;
+      fragGeo.attributes.aPSize.needsUpdate = true;
+      streakGeo.attributes.position.needsUpdate = true;
+      streakGeo.attributes.aAlpha.needsUpdate = true;
+
+      // soft central wash behind the assembling logo, fading in as
+      // fragments lock and out again as the dock animation starts
+      const glowAmt = clamp((t - 150) / (T.pulse - 150), 0, 1) * (1 - de);
+      formationGlow.position.set(LCX, LCY, 0);
+      formationGlow.scale.set(S * 4, S * 4, 1);
+      formationGlow.material.uniforms.uOpacity.value = glowAmt * 0.5;
     } else {
       fragPoints.visible = false;
+      streakLines.visible = false;
+      formationGlow.material.uniforms.uOpacity.value = 0;
     }
 
     // hero logo sprite: fades in once formed, flies into the nav slot while docking
     if (heroSprite && t >= T.pulse) {
-      const heroFade = clamp((t - T.pulse) / (T.locked - T.pulse), 0, 1);
       const alpha = heroFade * (dpRaw < 0.88 ? 1 : clamp(1 - (dpRaw - 0.88) / 0.12, 0, 1));
       heroSprite.material.opacity = alpha;
       let cx = LCX, cy = LCY, sCur = S * zoom;

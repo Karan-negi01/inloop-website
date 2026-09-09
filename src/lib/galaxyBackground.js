@@ -36,7 +36,11 @@ const assembly = (t) => {
 };
 
 function makeGlowTexture() {
-  const size = 128;
+  // sprites using this get scaled up to well over 10x this size on screen
+  // (nebula/aurora radii are fractions of the viewport's larger dimension),
+  // so a small source here reads as soft/blocky at that scale — 512 keeps
+  // the gradient smooth even at full-viewport sprite sizes on large screens.
+  const size = 512;
   const c = document.createElement('canvas');
   c.width = c.height = size;
   const g = c.getContext('2d');
@@ -157,9 +161,10 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   const lowTier = !!window.__lowTierDevice;
   // __lowTierDevice isn't known yet at this point (measured async from real
   // frame timing — see siteEffects.js), so it always reads false here and
-  // this always renders at full native resolution to start; the tier-measured
-  // listener below drops it only once a device is actually confirmed slow.
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  // this always renders at the display's real pixel density to start; the
+  // tier-measured listener below drops it only once a device is actually
+  // confirmed slow.
+  const DPR = window.devicePixelRatio || 1;
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: false, powerPreference: 'low-power' });
   renderer.setPixelRatio(DPR);

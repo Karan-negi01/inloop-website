@@ -56,6 +56,7 @@ const DUST_VERT = `
   uniform float uScrollY;
   uniform vec2 uMouse;
   uniform float uMouseActive;
+  uniform float uPR;
   attribute float aSize;
   attribute float aZ;
   attribute float aSeed;
@@ -86,7 +87,7 @@ const DUST_VERT = `
     float tw = 0.55 + 0.45 * sin(uTime * 2.4 + aSeed * 6.0);
     vAlpha = aAlpha * tw + cb;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 0.0, 1.0);
-    gl_PointSize = aSize * aZ * (1.0 + cb) * 2.0;
+    gl_PointSize = aSize * aZ * (1.0 + cb) * 2.0 * uPR;
   }
 `;
 const DUST_FRAG = `
@@ -108,6 +109,7 @@ const FRAG_VERT = `
   uniform vec2 uNav;
   uniform float uScale;
   uniform float uNavScale;
+  uniform float uPR;
   attribute vec2 aTarget;
   attribute float aOrbit;
   attribute float aAngSpeed;
@@ -135,7 +137,7 @@ const FRAG_VERT = `
     vAlpha = 1.0 - smoothstep(0.75, 1.0, uDock);
     vBlue = aBlue;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 0.0, 1.0);
-    gl_PointSize = aSize * (1.0 + uAssembly * 0.2) * (1.0 - uDock * 0.4) * 2.2;
+    gl_PointSize = aSize * (1.0 + uAssembly * 0.2) * (1.0 - uDock * 0.4) * 2.2 * uPR;
   }
 `;
 const FRAG_FRAG = `
@@ -239,6 +241,7 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   dustGeo.setAttribute('aAlpha', new THREE.BufferAttribute(dustAlpha, 1));
   const dustUniforms = {
     uTime: { value: 0 }, uScrollY: { value: 0 }, uMouse: { value: new THREE.Vector2(-9999, -9999) }, uMouseActive: { value: 0 },
+    uPR: { value: DPR },
   };
   const dustMat = new THREE.ShaderMaterial({
     vertexShader: DUST_VERT, fragmentShader: DUST_FRAG, uniforms: dustUniforms,
@@ -252,7 +255,10 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   window.addEventListener('inloop:tier-measured', () => {
     if (window.__lowTierDevice) {
       dustGeo.setDrawRange(0, Math.floor(N_DUST / 2));
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
+      const newPR = Math.min(window.devicePixelRatio || 1, 1);
+      renderer.setPixelRatio(newPR);
+      dustUniforms.uPR.value = newPR;
+      fragUniforms.uPR.value = newPR;
     }
   }, { once: true });
 
@@ -287,7 +293,7 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   const fragUniforms = {
     uTime: { value: 0 }, uAssembly: { value: 0 }, uDock: { value: 0 },
     uCenter: { value: new THREE.Vector2(LCX, LCY) }, uNav: { value: new THREE.Vector2(LCX, LCY) },
-    uScale: { value: S }, uNavScale: { value: S },
+    uScale: { value: S }, uNavScale: { value: S }, uPR: { value: DPR },
   };
   const fragMat = new THREE.ShaderMaterial({
     vertexShader: FRAG_VERT, fragmentShader: FRAG_FRAG, uniforms: fragUniforms,

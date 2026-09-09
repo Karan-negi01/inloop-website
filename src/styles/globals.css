@@ -788,13 +788,8 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
     animation:twinkle var(--d,3s) ease-in-out var(--delay,0s) infinite}
   .pf-stars i.big{width:3px;height:3px;background:#fff;box-shadow:0 0 8px 1px rgba(217,219,223,.75)}
   @keyframes twinkle{0%,100%{opacity:.1;transform:scale(.7)}50%{opacity:.9;transform:scale(1.3)}}
-  /* aurora glows */
-  .pf-aurora{filter:blur(72px);opacity:.3;will-change:transform,opacity;
-    background:
-      radial-gradient(30% 30% at 22% 26%,rgba(181,186,194,.5),transparent 60%),
-      radial-gradient(28% 28% at 78% 34%,rgba(192,196,203,.4),transparent 60%),
-      radial-gradient(34% 34% at 55% 82%,rgba(181,186,194,.32),transparent 60%);
-    animation:aurora 24s ease-in-out infinite alternate}
+  /* aurora glows — now rendered as GPU sprites in the WebGL galaxy
+     background (src/lib/galaxyBackground.js) instead of a blurred DOM div */
   /* meteors (elegant, occasional) */
   .pf-meteors{display:block;will-change:transform}
   /* small floating 3D motes (depth via size/blur/opacity, gentle drift, follow scroll) */
@@ -813,11 +808,9 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
     mask-image:radial-gradient(circle at 50% 30%,#000,transparent 80%);
     animation:gridmove 20s linear infinite}
   @keyframes gridmove{to{background-position:62px 62px,62px 62px}}
-  /* per-route flavor (set via body[data-fx]) */
-  body[data-fx="work"] .pf-aurora{opacity:.2}
-  body[data-fx="about"] .pf-aurora{opacity:.5}
+  /* per-route flavor (set via body[data-fx]) — aurora's own per-route
+     opacity now lives in galaxyBackground.js's auroraOpacityByFx map */
   body[data-fx="service"] .pf-grid{display:block}
-  body[data-fx="service"] .pf-aurora{opacity:.16}
 
   /* ===== redesigned hero: orbital rings + glow (home + all page heroes) ===== */
   .hero-orbit{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);z-index:0;pointer-events:none;
@@ -880,7 +873,7 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   @media(max-width:680px){.cform-row{grid-template-columns:1fr}.cform{padding:22px}}
 
   @media (prefers-reduced-motion:reduce){
-    .mote,.pf-stars i,.pf-aurora,.pf-grid,.ho-glow,.ho-spin,.star-trail{animation:none!important}
+    .mote,.pf-stars i,.pf-grid,.ho-glow,.ho-spin,.star-trail{animation:none!important}
     #svp .route .reveal,#svp .route .pt-fade{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
     .star-trail{display:none!important}
     .mz-tile.anim-rise,.wrk-gal img.anim-rise,.wrk-reel.anim-rise{clip-path:none!important}
@@ -2349,7 +2342,7 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
    falling back to a slightly more opaque solid background so it stays legible. */
 .low-tier .nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(20,21,22,.72)}
 
-/* These four all animate opacity/transform on an element that ALSO has a
+/* These all animate opacity/transform on an element that ALSO has a
    large static filter:blur() — without a layer promotion hint, the browser
    has to re-run the blur on every single frame of the animation (transform/
    opacity alone would be compositor-only and effectively free; blur forces
@@ -2358,5 +2351,6 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
    just transform/fade *that*, so every frame after the first is cheap —
    same animation, same look, without the per-frame blur cost. See the
    matching declarations up near each of these classes' own rules.
-   .pf-aurora (72px blur) was the worst of these — it's part of the
-   persistent chrome, present and animating on literally every page. */
+   (.pf-aurora, the worst offender since it was persistent chrome on every
+   page, has since been moved into the WebGL galaxy background — see
+   src/lib/galaxyBackground.js — so it's no longer a DOM/CSS cost at all.) */

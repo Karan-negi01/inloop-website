@@ -145,7 +145,9 @@ export default function Layout() {
 
       <canvas id="c"></canvas>
       <div className="page-fx" aria-hidden="true">
-        <div className="pf pf-aurora"></div>
+        {/* .pf-aurora moved into the WebGL galaxy background (see
+            src/lib/galaxyBackground.js) — it used to be a full-viewport
+            DOM div with filter:blur(72px) animating forever. */}
         <div className="pf pf-grid"></div>
         <div className="pf pf-stars"></div>
         <div className="pf pf-meteors"></div>

@@ -189,6 +189,26 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
     return spr;
   });
 
+  // ---------- aurora wash (formerly a full-viewport DOM div with
+  // filter:blur(72px) + a 24s CSS animation — the single most expensive
+  // persistent blur+animation combo on the page, since it's part of the
+  // chrome and present on every route. Same three soft blobs, drifting
+  // together, but as GPU sprites instead of a blurred DOM element; opacity
+  // still follows body[data-fx] like the original per-route variants did. ----------
+  const auroraDefs = [
+    { x: 0.22, y: 0.26, w: 0.30, col: 0xb5bac2 },
+    { x: 0.78, y: 0.34, w: 0.28, col: 0xc0c4cb },
+    { x: 0.55, y: 0.82, w: 0.34, col: 0xb5bac2 },
+  ];
+  const auroraOpacityByFx = { home: 0.3, about: 0.5, service: 0.16, work: 0.2 };
+  const auroraSprites = auroraDefs.map((def) => {
+    const mat = new THREE.SpriteMaterial({ map: glowTex, color: def.col, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthTest: false });
+    const spr = new THREE.Sprite(mat);
+    spr.userData = def;
+    scene.add(spr);
+    return spr;
+  });
+
   // ---------- dust starfield (one draw call, all per-particle motion in the vertex shader) ----------
   const N_DUST = Math.round((W * H < 600000 ? 130 : 240) * (lowTier ? 0.5 : 1));
   const dustGeo = new THREE.BufferGeometry();
@@ -322,6 +342,25 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
       spr.position.set(cx, cy, 0);
       spr.scale.set(r, r, 1);
       spr.material.opacity = nb.a * (0.85 + 0.15 * Math.sin(tt * 0.2 + nb.ph));
+    }
+
+    // aurora wash: the three blobs drift together as one unit — a smooth
+    // back-and-forth (sin wave) approximating the original's 24s
+    // ease-in-out alternate — with opacity following the current route
+    // via body[data-fx], same as the CSS variants it replaces.
+    {
+      const ap = (Math.sin(tt * (Math.PI / 24)) + 1) / 2; // 0..1, ~48s round trip
+      const driftX = lerp(-0.04, 0.04, ap) * W;
+      const driftY = lerp(-0.02, 0.03, ap) * H;
+      const fx = document.body.getAttribute('data-fx');
+      const targetOpacity = auroraOpacityByFx[fx] != null ? auroraOpacityByFx[fx] : 0.3;
+      for (const spr of auroraSprites) {
+        const def = spr.userData;
+        spr.position.set(def.x * W + driftX, def.y * H + driftY, 0);
+        const r = def.w * Math.max(W, H) * 2.4;
+        spr.scale.set(r, r, 1);
+        spr.material.opacity = targetOpacity;
+      }
     }
 
     // dust: all per-particle motion happens in the shader

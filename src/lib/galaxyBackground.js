@@ -153,7 +153,11 @@ const FRAG_FRAG = `
 
 export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   const lowTier = !!window.__lowTierDevice;
-  const DPR = Math.min(window.devicePixelRatio || 1, lowTier ? 1 : 1.5);
+  // __lowTierDevice isn't known yet at this point (measured async from real
+  // frame timing — see siteEffects.js), so it always reads false here and
+  // this always renders at full native resolution to start; the tier-measured
+  // listener below drops it only once a device is actually confirmed slow.
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: false, powerPreference: 'low-power' });
   renderer.setPixelRatio(DPR);
@@ -246,7 +250,10 @@ export function initGalaxyBackground({ canvas, targets, heroTextureUrl }) {
   // from real frame timing (see siteEffects.js) — so react to it landing
   // late by thinning the already-built dust buffer instead of rebuilding it.
   window.addEventListener('inloop:tier-measured', () => {
-    if (window.__lowTierDevice) dustGeo.setDrawRange(0, Math.floor(N_DUST / 2));
+    if (window.__lowTierDevice) {
+      dustGeo.setDrawRange(0, Math.floor(N_DUST / 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
+    }
   }, { once: true });
 
   // ---------- intro fragments (assemble into the logo shape, then dock) ----------

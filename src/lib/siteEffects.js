@@ -1,8 +1,10 @@
 // Ported from the original static site's vanilla-JS behavior layer.
 // Runs once on client mount (see Layout.jsx). Guarded against React StrictMode's
 // double-invoke in development so listeners/canvas/cursor elements aren't duplicated.
-import { initGalaxyBackground } from './galaxyBackground';
-import { HERO_TARGETS } from './heroTargets';
+// This is a literal, unmodified port of the original's own canvas/JS — no
+// WebGL rewrite, no device-tier detection, no perf-motivated caching. It's
+// the exact same code (and exact same cost) as the source file.
+import { HERO_TARGETS as TARGETS } from './heroTargets';
 
 let hasInitialized = false;
 
@@ -10,53 +12,206 @@ export function initSiteEffects() {
   if (typeof window === 'undefined' || hasInitialized) return;
   hasInitialized = true;
 
-  // Device-tier check. hardwareConcurrency/deviceMemory were tried first
-  // and dropped: every Apple Silicon Mac, base chip or Pro/Max, reports 8
-  // cores, and deviceMemory isn't implemented in Safari at all — neither
-  // signal can actually tell a base machine from a Pro one. Instead this
-  // measures real frame pacing during the canvas intro (already the
-  // single heaviest moment on the page — 2300+ particles), and downgrades
-  // effects for the rest of the session if that pacing is bad. Everything
-  // that reads __lowTierDevice checks it lazily (after this has had time
-  // to resolve), not synchronously at boot.
-  window.__lowTierDevice = false;
-  window.__tierMeasured = false;
-  (function () {
-    var samples = [], lastT = null;
-    window.__reportFrameSample = function (now) {
-      if (window.__tierMeasured) return;
-      if (lastT != null) samples.push(now - lastT);
-      lastT = now;
-      if (samples.length >= 40) {
-        window.__tierMeasured = true;
-        samples.sort(function (a, b) { return a - b; });
-        var median = samples[Math.floor(samples.length / 2)];
-        if (median > 17) { // sustained under ~58fps during the heaviest moment on the page — erring toward catching borderline hardware, since the fallback (pausing a few decorative glow animations) costs very little visually
-          window.__lowTierDevice = true;
-          document.documentElement.classList.add('low-tier');
-          if (window.__trimDust) window.__trimDust(120);
-        }
-        window.dispatchEvent(new Event('inloop:tier-measured'));
-      }
-    };
-  })();
-// ============================================================
-//  INLOOP — galaxy background (WebGL — see src/lib/galaxyBackground.js)
-// ============================================================
 const HERO_SRC = "/images/hero-logo.webp";
+const HERO_ASPECT = 1.8228;
 document.querySelector('.navlogo').src = HERO_SRC;
 
-const galaxy = initGalaxyBackground({
-  canvas: document.getElementById('c'),
-  targets: HERO_TARGETS,
-  heroTextureUrl: HERO_SRC,
-});
+const heroEl = document.querySelector('.hero');
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d',{alpha:false});
 
+let W=0,H=0,DPR=1,LCX=0,LCY=0,S=0;
+let scrollY=0, mx=-1e4, my=-1e4, mvx=0, mvy=0;
+const hero = new Image(); let heroReady=false;
+hero.onload=()=>heroReady=true; hero.src=HERO_SRC;
+const off=document.createElement('canvas'), offg=off.getContext('2d');
+
+// drifting nebula clouds — give every section its own colour wash
+let nebula=[];
+function buildNebula(){
+  nebula=[
+    {x:.20,y:.22,r:.50,col:[150,156,164],a:.085,ph:0.0},
+    {x:.83,y:.30,r:.56,col:[170,176,184],a:.055,ph:2.1},
+    {x:.66,y:.72,r:.60,col:[120,126,134],a:.065,ph:4.0},
+    {x:.26,y:.82,r:.52,col:[140,146,154],a:.065,ph:1.2},
+    {x:.50,y:.50,r:.44,col:[130,136,144],a:.040,ph:3.3}
+  ];
+}
+
+function resize(){
+  DPR=Math.min(window.devicePixelRatio||1,2);
+  W=window.innerWidth; H=window.innerHeight;
+  cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+  const mob = W<760;
+  LCX=W/2; LCY=H*(mob?0.40:0.44);
+  S = mob ? Math.min(W*0.34,H*0.22) : Math.min(W*0.235,H*0.30);
+}
+window.addEventListener('resize',resize); resize(); buildNebula();
+try{window.scrollTo(0,0);}catch(e){}
+window.addEventListener('scroll',()=>{scrollY=window.scrollY||window.pageYOffset||0;},{passive:true});
+window.addEventListener('pointermove',e=>{mvx=e.clientX-mx;mvy=e.clientY-my;mx=e.clientX;my=e.clientY;},{passive:true});
+window.addEventListener('pointerleave',()=>{mx=-1e4;my=-1e4;});
+
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const ease=t=>t<0?0:t>1?1:t*t*(3-2*t);
+const easeOut=t=>1-Math.pow(1-Math.min(Math.max(t,0),1),3);
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const lerp=(a,b,t)=>a+(b-a)*t;
+
+const T={void:0,awaken:300,chaos:1250,formation:3300,pulse:3400,locked:4050,hold:4250,dock:4900};
+const DOCK_MS=950;
+const navLogo=document.querySelector('.navlogo');
+let start=0,paused=false,revealed=false,docked=false,pulseFired=false,ringT=-1;
+
+let dust=[],frags=[];
+const N_FRAG=(W*H<600000)?1300:2300, N_DUST=(W*H<600000)?200:380;
+function build(){
+  dust=[];for(let i=0;i<N_DUST;i++)dust.push({x:rnd(0,W),y:rnd(0,H),r:rnd(.3,1.7),z:rnd(.2,1),a:rnd(.035,.30),tw:rnd(0,6.28),sp:rnd(.0006,.004)*(Math.random()<.5?-1:1),vy:rnd(-.05,-.18),seed:rnd(0,1000)});
+  frags=[];const n=Math.min(N_FRAG,TARGETS.length);
+  for(let i=0;i<n;i++){const t=TARGETS[(i*7919)%TARGETS.length];const ang=rnd(0,6.28);const orb=rnd(.9,2.4);
+    frags.push({tx:t[0],ty:t[1],x:LCX+Math.cos(ang)*orb*S,y:LCY+Math.sin(ang)*orb*S,vx:0,vy:0,ang,orb,asp:rnd(.4,1.6),size:rnd(.7,2.1),blue:Math.random()<.13,seed:rnd(0,1000)});}
+}
+build();
+window.addEventListener('resize',build);
+
+function flow(x,y,t){const s=.0016;return [Math.sin(x*s+t*.6)+Math.cos(y*s*1.3-t*.45),Math.cos(x*s*1.1-t*.5)+Math.sin(y*s-t*.7)];}
+function assembly(t){if(t<T.chaos)return 0;if(t>=T.pulse)return 1;return ease((t-T.chaos)/(T.pulse-T.chaos));}
+function pulse(){ringT=0;}
+
+function frame(now){
+  if(!start)start=now;
+  let t=now-start;
+  if(paused){requestAnimationFrame(frame);return;}
+
+  const zoomBase=0.84+easeOut(t/T.pulse)*0.16;
+  const breathe=(t>=T.hold)?Math.sin((t-T.hold)*0.0011)*0.01:0;
+  const zoom=zoomBase+breathe;
+
+  const tt=t*0.001;
+  // dock progress (logo flies to header)
+  const dp=(t>=T.dock)?clamp((t-T.dock)/DOCK_MS,0,1):0;
+  const de=dp*dp*(3-2*dp);
+
+  let clearA = t<T.awaken?0.30 : t<T.chaos?0.20 : t<T.pulse?0.14 : t<T.hold?0.30 : 0.52;
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle='rgba(8,8,8,'+clearA+')';ctx.fillRect(0,0,W,H);
+
+  // nebula clouds — continuous cosmic wash, drifting + reacting to scroll
+  ctx.globalCompositeOperation='lighter';
+  for(const nb of nebula){
+    const cx=(nb.x+Math.sin(tt*0.05+nb.ph)*0.04)*W + Math.sin(scrollY*0.0006+nb.ph)*34;
+    const cy=(nb.y+Math.cos(tt*0.045+nb.ph)*0.04)*H + Math.cos(scrollY*0.0005+nb.ph)*30;
+    const r=nb.r*Math.max(W,H);
+    const c=nb.col, pulse=nb.a*(0.85+0.15*Math.sin(tt*0.2+nb.ph));
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+    g.addColorStop(0,'rgba('+c[0]+','+c[1]+','+c[2]+','+pulse+')');
+    g.addColorStop(.45,'rgba('+c[0]+','+c[1]+','+c[2]+','+(pulse*.38)+')');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.fill();
+  }
+  ctx.globalCompositeOperation='source-over';
+
+  const glowAmt=clamp((t-150)/(T.pulse-150),0,1)*(1-de);
+  if(glowAmt>0){ctx.globalCompositeOperation='lighter';
+    const g=ctx.createRadialGradient(LCX,LCY,0,LCX,LCY,S*2.0);
+    const ga=0.05*glowAmt+(t>=T.pulse?0.05*(1-de):0);
+    g.addColorStop(0,'rgba(207,209,211,'+(ga*.9)+')');g.addColorStop(.4,'rgba(150,156,164,'+(ga*.4)+')');g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+
+  ctx.save();ctx.translate(LCX,LCY);ctx.scale(zoom,zoom);ctx.translate(-LCX,-LCY);
+  const a=assembly(t);
+
+  // dust / starfield — parallax with scroll, reacts to cursor
+  ctx.globalCompositeOperation='lighter';
+  const par=scrollY*0.10;
+  for(const d of dust){
+    d.tw+=d.sp*16; d.y+=d.vy*d.z; d.x+=Math.sin(tt*.3+d.seed)*.04;
+    if(d.y<-5)d.y=H+5;
+    let px=d.x, py=((d.y - par*d.z)%H+H)%H;
+    // cursor repulsion + glow
+    let cb=0;
+    if(mx>-9999){const dx=px-mx, dy=py-my, dd=dx*dx+dy*dy;
+      if(dd<28000){const f=(1-dd/28000); cb=f*0.5; const inv=f*6/Math.max(40,Math.sqrt(dd)); px+=dx*inv; py+=dy*inv;}}
+    const tw=.55+.45*Math.sin(d.tw);
+    ctx.fillStyle='rgba(221,222,223,'+(d.a*tw+cb)+')';
+    ctx.beginPath();ctx.arc(px,py,d.r*d.z*(1+cb),0,6.283);ctx.fill();
+  }
+
+  // fragments
+  const heroFade=clamp((t-T.pulse)/(T.locked-T.pulse),0,1);
+  const fragDim=(1-heroFade*0.68)*(1-de);
+  const stiff=lerp(.012,.16,a)*(t>=T.pulse?1.4:1), damp=lerp(.90,.78,a);
+  if(dp<1)for(const f of frags){
+    const orbNow=lerp(f.orb,.04,a);
+    f.ang+=(.004+f.asp*.006)*(1-a*.6);
+    const rgx=LCX+Math.cos(f.ang)*orbNow*S, rgy=LCY+Math.sin(f.ang)*orbNow*S;
+    const txp=LCX+f.tx*S, typ=LCY+f.ty*S;
+    const gx=lerp(rgx,txp,a), gy=lerp(rgy,typ,a);
+    f.vx+=(gx-f.x)*stiff; f.vy+=(gy-f.y)*stiff;
+    if(a<.98){const fl=flow(f.x,f.y,tt);const k=(1-a)*.9;f.vx+=fl[0]*k;f.vy+=fl[1]*k;}
+    f.vx*=damp;f.vy*=damp;f.x+=f.vx;f.y+=f.vy;
+    const sp=Math.hypot(f.vx,f.vy);
+    let br=clamp(.25+sp*.05+a*.35,.12,1)*fragDim;
+    const col=f.blue?'rgba(207,209,211,'+br+')':'rgba(238,239,240,'+br+')';
+    if(sp>1.3&&a<.96){ctx.strokeStyle=f.blue?'rgba(207,209,211,'+(br*.5)+')':'rgba(224,225,226,'+(br*.5)+')';
+      ctx.lineWidth=f.size*.9;ctx.beginPath();ctx.moveTo(f.x-f.vx*2.2,f.y-f.vy*2.2);ctx.lineTo(f.x,f.y);ctx.stroke();}
+    ctx.fillStyle=col;ctx.beginPath();ctx.arc(f.x,f.y,f.size*(1+a*.2),0,6.283);ctx.fill();
+  }
+  ctx.restore();
+
+  // energy ring
+  if(t>=T.pulse&&!pulseFired){pulseFired=true;pulse();}
+  if(ringT>=0){ringT+=16;const p=ringT/520;
+    if(p<=1){const rad=easeOut(p)*S*2.6,al=(1-p)*.6;ctx.globalCompositeOperation='lighter';
+      ctx.lineWidth=lerp(10,1,p);ctx.strokeStyle='rgba(226,227,228,'+al+')';ctx.beginPath();ctx.arc(LCX,LCY,rad,0,6.283);ctx.stroke();
+      ctx.lineWidth=lerp(4,.5,p);ctx.strokeStyle='rgba(255,255,255,'+(al*.8)+')';ctx.beginPath();ctx.arc(LCX,LCY,rad*.7,0,6.283);ctx.stroke();
+    }else ringT=-1;}
+
+  // chrome logo: forms in center, then docks into the header
+  if(heroReady&&t>=T.pulse){
+    // measure the header logo slot live so the landing is pixel-accurate
+    const r=navLogo.getBoundingClientRect();
+    const navX=r.left+r.width/2, navY=r.top+r.height/2, navS=(r.width||34)/2;
+    const cx=lerp(LCX,navX,de), cy=lerp(LCY,navY,de), sCur=lerp(S,navS,de);
+    const hb=(t>=T.hold&&dp<0.02)?1+Math.sin((t-T.hold)*0.0013)*0.012:1;
+    const hw=2*sCur*(dp>0?1:zoom)*hb, hh=hw/HERO_ASPECT;
+    const dw=hw,dh=hh,dx=cx-dw/2,dy=cy-dh/2;
+    // visible through the flight, fades out in the last 12% as the crisp header logo appears
+    const alpha=heroFade*(dp<0.88?1:clamp(1-(dp-0.88)/0.12,0,1));
+    if(alpha>0.004){
+      const ow=Math.max(2,Math.round(dw)),oh=Math.max(2,Math.round(dh));
+      if(off.width!==ow||off.height!==oh){off.width=ow;off.height=oh;}
+      offg.clearRect(0,0,ow,oh);offg.globalCompositeOperation='source-over';offg.drawImage(hero,0,0,ow,oh);
+      offg.globalCompositeOperation='source-atop';
+      const sweep=((t%2600)/2600),sx=-ow*.4+sweep*ow*1.8;
+      const sg=offg.createLinearGradient(sx-ow*.3,0,sx+ow*.3,oh);
+      sg.addColorStop(0,'rgba(255,255,255,0)');sg.addColorStop(.5,'rgba(255,255,255,'+(0.32*alpha)+')');sg.addColorStop(1,'rgba(255,255,255,0)');
+      offg.fillStyle=sg;offg.fillRect(0,0,ow,oh);
+      const rg=offg.createRadialGradient(ow/2,oh/2,oh*.1,ow/2,oh/2,ow*.6);
+      rg.addColorStop(0,'rgba(255,255,255,0)');rg.addColorStop(1,'rgba(210,212,214,'+(0.10*alpha)+')');
+      offg.fillStyle=rg;offg.fillRect(0,0,ow,oh);offg.globalCompositeOperation='source-over';
+      if(de<0.4){ctx.globalCompositeOperation='lighter';ctx.globalAlpha=alpha*.5*(1-de*2.5);
+        if('filter' in ctx)ctx.filter='blur('+Math.max(6,S*.05)+'px)';
+        ctx.drawImage(off,dx,dy,dw,dh);ctx.filter='none';}
+      ctx.globalCompositeOperation='source-over';ctx.globalAlpha=alpha;ctx.drawImage(off,dx,dy,dw,dh);ctx.globalAlpha=1;
+    }
+  }
+
+  // splash ends -> reveal UI, dock the logo, lift the hero copy, unlock scroll
+  if(t>=T.dock&&!docked){docked=true;document.body.classList.add('ready');document.body.classList.add('docked');document.body.classList.remove('intro');}
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+document.addEventListener('visibilitychange',()=>{paused=document.hidden;});
 const navEl=document.querySelector('.nav');
 const onScroll=()=>navEl.classList.toggle('scrolled',window.scrollY>12);
 window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 const skipBtn=document.getElementById('skipIntro');
-if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
+if(skipBtn)skipBtn.addEventListener('click',function(){
+  start=performance.now()-(T.dock+DOCK_MS+60);var _sc=document.getElementById('c');if(_sc){_sc.style.transition='opacity .4s ease';_sc.style.opacity='0';setTimeout(function(){_sc.style.display='none';},460);}
+  document.body.classList.add('ready');document.body.classList.add('docked');
+  document.body.classList.remove('intro');
+});
 // ===== homepage interactions: reveals, counters, tilt, neural orb =====
 (function(){
   // footer logo + year
@@ -90,22 +245,15 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
   // 3D tilt
   document.querySelectorAll('.tilt').forEach(function(card){
     var lift = card.classList.contains('case') ? 0 : -6;
-    var r=null;
-    // measure once per hover instead of forcing a layout read on every
-    // pointermove (a card's own transform doesn't change its own rect,
-    // so the cached measurement stays accurate for the whole hover)
-    card.addEventListener('pointerenter',function(){ r=card.getBoundingClientRect(); });
     card.addEventListener('pointermove',function(e){
-      if(!r) r=card.getBoundingClientRect();
+      var r=card.getBoundingClientRect();
       var rx=((e.clientY-r.top)/r.height-.5)*-9, ry=((e.clientX-r.left)/r.width-.5)*9;
       card.style.transform='perspective(760px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY('+lift+'px)';
     });
-    card.addEventListener('pointerleave',function(){card.style.transform=''; r=null;});
+    card.addEventListener('pointerleave',function(){card.style.transform='';});
   });
 
   // ===== neural network orb =====
-  // (the __lowTierDevice check happens later, in the IntersectionObserver
-  // below, not here — tier measurement is still in flight at page load)
   var nc=document.getElementById('neural');
   if(nc){
     var g=nc.getContext('2d'), dpr=Math.min(window.devicePixelRatio||1,2), w=0,h=0, nodes=[], edges=[], pulses=[];
@@ -144,7 +292,7 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
         g.fillStyle='rgba(150,156,164,'+(0.18*tw)+')'; g.beginPath(); g.arc(nd.x,nd.y,nd.r*3,0,6.283); g.fill(); }
       requestAnimationFrame(frameN);
     }
-    var nio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ nio.disconnect(); sizeN(); requestAnimationFrame(frameN); } }); });
+    var nio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ sizeN(); requestAnimationFrame(frameN); nio.disconnect(); } }); });
     nio.observe(nc);
     window.addEventListener('resize',function(){ if(w)sizeN(); });
   }
@@ -152,28 +300,10 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
   // ===== AI agent orbs: eyes track the cursor =====
   var irises=document.querySelectorAll('.orb-iris');
   if(irises.length){
-    // this listener is global (fires on every pointermove anywhere on the
-    // page), so measuring each orb's rect on every single event — rather
-    // than only when the page layout can actually have changed — was the
-    // single most wasteful forced-layout pattern on the site.
-    var orbRects=[];
-    function measureOrbs(){
-      orbRects=[];
-      for(var i=0;i<irises.length;i++){
-        var orb=irises[i].closest('.ai-orb');
-        orbRects.push(orb?orb.getBoundingClientRect():null);
-      }
-    }
-    measureOrbs();
-    window.addEventListener('resize',measureOrbs,{passive:true});
-    var orbScrollTick=false;
-    window.addEventListener('scroll',function(){
-      if(orbScrollTick) return; orbScrollTick=true;
-      requestAnimationFrame(function(){ measureOrbs(); orbScrollTick=false; });
-    },{passive:true});
     window.addEventListener('pointermove',function(e){
       for(var i=0;i<irises.length;i++){
-        var r=orbRects[i]; if(!r)continue;
+        var orb=irises[i].closest('.ai-orb'); if(!orb)continue;
+        var r=orb.getBoundingClientRect();
         var dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2);
         var dist=Math.hypot(dx,dy)||1, max=r.width*0.11, f=Math.min(dist,320)/320;
         var ox=(dx/dist)*max*f, oy=(dy/dist)*max*f;
@@ -250,22 +380,18 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
       document.body.appendChild(el);
       pts.push({el:el, x:innerWidth/2, y:innerHeight/2});
     }
-    var mx = innerWidth/2, my = innerHeight/2, active = false, settled = true;
-    addEventListener('pointermove', function(e){ mx = e.clientX; my = e.clientY; active = true; settled = false; }, {passive:true});
+    var mx = innerWidth/2, my = innerHeight/2, active = false;
+    addEventListener('pointermove', function(e){ mx = e.clientX; my = e.clientY; active = true; }, {passive:true});
     function loop(){
       requestAnimationFrame(loop);
-      if(settled) return;
-      var px = mx, py = my, moving = false;
+      var px = mx, py = my;
       for(var i=0;i<pts.length;i++){
         var st = pts[i], ease = 0.34 - i*0.02;
-        var dx = px - st.x, dy = py - st.y;
-        if(Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05) moving = true;
-        st.x += dx * ease; st.y += dy * ease;
+        st.x += (px - st.x) * ease; st.y += (py - st.y) * ease;
         st.el.style.transform = 'translate(' + st.x + 'px,' + st.y + 'px) translate(-50%,-50%)';
         st.el.style.opacity = active ? String(Math.max(0, 0.9 - i*0.1)) : '0';
         px = st.x; py = st.y;
       }
-      if(!moving) settled = true;
     }
     loop();
   }
@@ -517,26 +643,14 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
     var els=document.querySelectorAll('.magnetic');
     els.forEach(function(el){
       var strength=parseFloat(el.getAttribute('data-mag'))||0.35;
-      // quickTo is GSAP's purpose-built API for continuous pointer-driven
-      // updates — one tween instance reused every move, instead of gsap.to()
-      // re-parsing a full tween config on every single pointermove event.
-      var xTo = hasGSAP ? gsap.quickTo(el,'x',{duration:.4,ease:'power3.out'}) : null;
-      var yTo = hasGSAP ? gsap.quickTo(el,'y',{duration:.4,ease:'power3.out'}) : null;
-      var r=null;
-      // measure once per hover — a magnetic element's own translate x/y
-      // doesn't change its rect, so re-measuring on every pointermove
-      // (forced layout, dozens of times/sec, times every magnetic element
-      // on the page) buys nothing.
-      el.addEventListener('pointerenter',function(){ r=el.getBoundingClientRect(); });
       el.addEventListener('pointermove',function(e){
-        if(!r) r=el.getBoundingClientRect();
+        var r=el.getBoundingClientRect();
         var x=(e.clientX-(r.left+r.width/2))*strength;
         var y=(e.clientY-(r.top+r.height/2))*strength;
-        if(hasGSAP){ xTo(x); yTo(y); }
+        if(hasGSAP) gsap.to(el,{x:x,y:y,duration:.4,ease:'power3.out'});
         else el.style.transform='translate('+x+'px,'+y+'px)';
       });
       el.addEventListener('pointerleave',function(){
-        r=null;
         if(hasGSAP) gsap.to(el,{x:0,y:0,duration:.5,ease:'elastic.out(1,.4)'});
         else el.style.transform='';
       });
@@ -556,6 +670,7 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
     var pmx=mx,pmy=my;
     window.addEventListener('pointermove',function(e){
       mx=e.clientX;my=e.clientY;
+      dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
     },{passive:true});
 
     /* press feedback + click pulse ring */
@@ -579,27 +694,25 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
     var HOT=SMALL+','+BIG;
     var activeEl=null, mode=null;   // mode: 'lock' (wrap small) | 'big' (enlarge)
 
-    var activeRect=null;
     function enter(el){
       if(el===activeEl) return;
       var r=el.getBoundingClientRect();
       /* yellow-outline lock removed: small interactive elements keep the normal cursor */
       if(el.matches(SMALL) && r.width<=320 && r.height<=120){
-        activeEl=null; mode=null; activeRect=null;
+        activeEl=null; mode=null;
         ring.classList.remove('lock'); ring.classList.remove('big');
         ring.style.width=''; ring.style.height=''; ring.style.borderRadius='';
         dot.style.opacity='';
         return;
       }
       activeEl=el;
-      activeRect=r;
       mode='big';
       ring.classList.add('big'); ring.classList.remove('lock');
       ring.style.width=''; ring.style.height=''; ring.style.borderRadius='';
       dot.style.opacity='0';
     }
     function clear(){
-      activeEl=null; mode=null; activeRect=null;
+      activeEl=null; mode=null;
       ring.classList.remove('lock'); ring.classList.remove('big');
       ring.style.width=''; ring.style.height=''; ring.style.borderRadius='';
       dot.style.opacity='1';
@@ -608,23 +721,13 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
       var el=e.target.closest && e.target.closest(HOT);
       if(el) enter(el);
     });
-    // the hovered element's own transform (tilt/scale) doesn't change its
-    // rect, but scrolling while hovering does — invalidate so the loop
-    // below re-measures once rather than trusting a stale position.
-    window.addEventListener('scroll',function(){ if(activeEl) activeRect=null; },{passive:true});
 
-    var lastDotX=null, lastDotY=null;
     function loop(){
-      if(mx!==lastDotX || my!==lastDotY){
-        dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
-        lastDotX=mx; lastDotY=my;
-      }
       var tx=mx, ty=my;
       if(activeEl){
         if(!document.body.contains(activeEl)){ clear(); }
         else {
-          if(!activeRect) activeRect=activeEl.getBoundingClientRect();
-          var r=activeRect, m=16;
+          var r=activeEl.getBoundingClientRect(), m=16;
           var inside = mx>=r.left-m && mx<=r.right+m && my>=r.top-m && my<=r.bottom+m;
           if(!inside){ clear(); }
           else if(mode==='lock'){ tx=r.left+r.width/2; ty=r.top+r.height/2; }
@@ -967,11 +1070,11 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
     function measure(){ base=stars.map(function(s){ var r=s.getBoundingClientRect(); return [r.left+r.width/2, r.top+r.height/2]; }); }
     measure(); window.addEventListener('resize',measure,{passive:true});
 
-    var mx=-9999,my=-9999,gx=-9999,gy=-9999,moved=false,settled=true;
-    window.addEventListener('pointermove',function(e){ mx=e.clientX; my=e.clientY; if(gx<-9000){gx=mx;gy=my;} moved=true; settled=false; },{passive:true});
+    var mx=-9999,my=-9999,gx=-9999,gy=-9999,moved=false;
+    window.addEventListener('pointermove',function(e){ mx=e.clientX; my=e.clientY; if(gx<-9000){gx=mx;gy=my;} moved=true; },{passive:true});
     var R=180, R2=R*R, lit=[];
     function loop(){
-      if(moved && !settled){
+      if(moved){
         gx+=(mx-gx)*.2; gy+=(my-gy)*.2;
         glow.style.transform='translate('+gx+'px,'+gy+'px) translate(-50%,-50%)';
         glow.style.opacity='1';
@@ -990,7 +1093,6 @@ if(skipBtn)skipBtn.addEventListener('click',function(){ galaxy.skip(); });
             lit.push(i);
           }
         }
-        if(Math.abs(mx-gx)<0.5 && Math.abs(my-gy)<0.5) settled=true;
       }
       requestAnimationFrame(loop);
     }

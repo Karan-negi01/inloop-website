@@ -104,7 +104,7 @@ export default function Production() {
       <div className="cta-portal"></div>
       <h2>Create content that looks professionally produced.</h2>
       <p>Let&#x27;s bring your campaign, product or brand story to life with high-quality production.</p>
-      <Link className="btn primary lg magnetic" data-mag="0.35" to="/portfolio#content-production">View Production Work <span className="arr">↗</span></Link>
+      <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>
   </section>
 

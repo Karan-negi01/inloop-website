@@ -195,7 +195,6 @@ export default function Layout() {
             </div>
           </div>
 
-          <Link to="/portfolio">Portfolio</Link>
           <Link to="/blog">Blog</Link>
           <Link to="/careers">Careers</Link>
           <Link to="/about">About</Link>
@@ -213,7 +212,7 @@ export default function Layout() {
             <p className="foot-ams-note">An AMS Group company</p>
             <p className="foot-tag">AI-first marketing, built to fill your pipeline.</p>
           </div>
-          <nav className="foot-col"><h4>Company</h4><Link to="/#services">Services</Link><Link to="/portfolio">Portfolio</Link><Link to="/blog">Blog</Link><Link to="/careers">Careers</Link><Link to="/about">About</Link><Link to="/#contact">Contact</Link></nav>
+          <nav className="foot-col"><h4>Company</h4><Link to="/#services">Services</Link><Link to="/blog">Blog</Link><Link to="/careers">Careers</Link><Link to="/about">About</Link><Link to="/#contact">Contact</Link></nav>
           <nav className="foot-col"><h4>Connect</h4><Link to="/#contact">Book a Free Call</Link><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">hello@inloopmedia.com</a></nav>
         </div>
         <div className="foot-base"><span>© <span id="yr"></span> Inloop Media · An AMS Group company</span><span>Keeping brands in-loop with what matters.</span></div>

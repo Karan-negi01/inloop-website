@@ -165,7 +165,7 @@ export default function Seo() {
       <div className="cta-portal"></div>
       <h2>Let your audience find you when they are searching.</h2>
       <p>We help brands build stronger search visibility, improve website relevance and create long-term organic growth through strategic SEO.</p>
-      <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/portfolio">Start SEO Growth <span className="arr">&#8599;</span></Link>
+      <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/#contact">Start SEO Growth <span className="arr">&#8599;</span></Link>
     </div>
   </section>
 

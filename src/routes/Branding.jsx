@@ -106,7 +106,7 @@ export default function Branding() {
       <div className="cta-portal"></div>
       <h2>Ready to build a brand people remember?</h2>
       <p>Let&#x27;s create an intelligent identity that gives your business clarity, confidence and lasting market relevance.</p>
-      <Link className="btn primary lg magnetic" data-mag="0.35" to="/portfolio#branding">View Branding Work <span className="arr">↗</span></Link>
+      <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>
   </section>
 

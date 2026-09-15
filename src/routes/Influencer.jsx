@@ -104,7 +104,7 @@ export default function Influencer() {
       <div className="cta-portal"></div>
       <h2>Work with creators who genuinely fit your brand.</h2>
       <p>Let&#x27;s build creator campaigns that are relevant, credible and growth-focused.</p>
-      <Link className="btn primary lg magnetic" data-mag="0.35" to="/portfolio#influencer-marketing">View Influencer Work <span className="arr">↗</span></Link>
+      <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>
   </section>
 

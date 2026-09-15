@@ -102,7 +102,7 @@ export default function Pr() {
       <div className="cta-portal"></div>
       <h2>Make your brand seen, heard and trusted.</h2>
       <p>Let&#x27;s build communication that strengthens your reputation and market presence.</p>
-      <Link className="btn primary lg magnetic" data-mag="0.35" to="/portfolio">View Our Work <span className="arr">↗</span></Link>
+      <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>
   </section>
 

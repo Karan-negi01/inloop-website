@@ -74,7 +74,7 @@ export default function About() {
         <h2>Ready to build something <span className="grad">that lasts?</span></h2>
         <p>Tell us about your brand. We'll tell you exactly how we'd grow it.</p>
         <div className="ab-cta-row">
-          <Link className="btn primary lg magnetic cta-lux" data-mag="0.4" to="/portfolio">View Our Work <span className="arr">↗</span></Link>
+          <Link className="btn primary lg magnetic cta-lux" data-mag="0.4" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
         </div>
       </div>
     </section>

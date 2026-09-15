@@ -165,7 +165,7 @@ export default function Ecommerce() {
       <div className="cta-portal"></div>
       <h2>Build an online store that sells smarter.</h2>
       <p>We help e-commerce brands improve shopping experience, product storytelling, conversion flow and retention systems for stronger growth.</p>
-      <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/portfolio#web-app">Start E-commerce Optimization <span className="arr">&#8599;</span></Link>
+      <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/#contact">Start E-commerce Optimization <span className="arr">&#8599;</span></Link>
     </div>
   </section>
 

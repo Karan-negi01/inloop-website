@@ -103,7 +103,7 @@ export default function CreatorManagement() {
       <div className="cta-portal"></div>
       <h2>Build a creator profile brands want to work with.</h2>
       <p>Let&#x27;s turn your content presence into a more professional and valuable creator brand.</p>
-      <Link className="btn primary lg magnetic" data-mag="0.35" to="/portfolio#influencer-marketing">View Creator Work <span className="arr">↗</span></Link>
+      <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>
   </section>
 

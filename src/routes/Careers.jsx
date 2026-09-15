@@ -43,42 +43,15 @@ export default function Careers() {
       <h2>Find your <span className="grad">seat.</span></h2>
       <p className="sec-sub">Don&#x27;t see a perfect match? Pitch yourself anyway &mdash; we always want to meet great people.</p>
     </div>
-    <div className="job-grid">
+    <div className="job-grid job-grid-single">
       <article className="job anim-rise">
-        <div className="job-top"><span className="job-tag">Design</span><span className="job-type">Full-time</span></div>
-        <h3>Senior Brand &amp; Visual Designer</h3>
-        <p>Craft identities, campaigns and premium visual systems for brands across industries.</p>
-        <div className="job-foot"><span className="job-loc">&#9678; Remote / Delhi</span><Link className="job-apply" to="/#contact">Apply <span>&#8599;</span></Link></div>
-      </article>
-      <article className="job anim-rise" data-d="1">
-        <div className="job-top"><span className="job-tag">Performance</span><span className="job-type">Full-time</span></div>
-        <h3>Performance Marketing Manager</h3>
-        <p>Own paid media strategy across Meta and Google &mdash; engineered around ROAS, not vanity.</p>
-        <div className="job-foot"><span className="job-loc">&#9678; Remote</span><Link className="job-apply" to="/#contact">Apply <span>&#8599;</span></Link></div>
-      </article>
-      <article className="job anim-rise" data-d="2">
-        <div className="job-top"><span className="job-tag">Content</span><span className="job-type">Full-time</span></div>
-        <h3>Content &amp; Social Strategist</h3>
-        <p>Build always-on content engines and social strategy that compounds attention.</p>
-        <div className="job-foot"><span className="job-loc">&#9678; Remote / Delhi</span><Link className="job-apply" to="/#contact">Apply <span>&#8599;</span></Link></div>
-      </article>
-      <article className="job anim-rise">
-        <div className="job-top"><span className="job-tag">AI</span><span className="job-type">Full-time</span></div>
-        <h3>AI Automation Specialist</h3>
-        <p>Weave AI and automation through client workflows for faster, sharper output.</p>
-        <div className="job-foot"><span className="job-loc">&#9678; Remote</span><Link className="job-apply" to="/#contact">Apply <span>&#8599;</span></Link></div>
-      </article>
-      <article className="job anim-rise" data-d="1">
-        <div className="job-top"><span className="job-tag">Video</span><span className="job-type">Full-time</span></div>
-        <h3>Video Editor &amp; Motion Designer</h3>
-        <p>Produce scroll-stopping short-form and AI-assisted video creative.</p>
-        <div className="job-foot"><span className="job-loc">&#9678; Delhi</span><Link className="job-apply" to="/#contact">Apply <span>&#8599;</span></Link></div>
-      </article>
-      <article className="job anim-rise" data-d="2">
-        <div className="job-top"><span className="job-tag">Client</span><span className="job-type">Full-time</span></div>
-        <h3>Account &amp; Client Success Manager</h3>
-        <p>Be the senior point of contact that keeps brands in-loop and growing.</p>
-        <div className="job-foot"><span className="job-loc">&#9678; Remote / Delhi</span><Link className="job-apply" to="/#contact">Apply <span>&#8599;</span></Link></div>
+        <div className="job-top"><span className="job-tag">All roles</span><span className="job-type">Full-time</span></div>
+        <h3>Open Positions at Inloop Media</h3>
+        <p>We post and manage every open role on LinkedIn &mdash; check there for current openings and apply directly.</p>
+        <div className="job-foot">
+          <span className="job-loc">&#9678; Remote / Delhi</span>
+          <a className="job-apply" href="https://www.linkedin.com/company/inloop-media/jobs/" target="_blank" rel="noopener noreferrer">View on LinkedIn <span>&#8599;</span></a>
+        </div>
       </article>
     </div>
   </section>

@@ -2116,6 +2116,7 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
 
 /* ============ CAREERS: job cards ============ */
 #svp .job-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+#svp .job-grid-single{grid-template-columns:1fr;max-width:640px;margin:0 auto}
 #svp .job{display:flex;flex-direction:column;gap:12px;padding:26px 24px;border-radius:20px;
   border:1px solid var(--line);position:relative;overflow:hidden;
   background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));

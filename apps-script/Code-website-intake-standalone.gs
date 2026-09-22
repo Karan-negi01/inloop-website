@@ -22,17 +22,19 @@
  *  in the master sheet picks them up normally.
  ************************************************************************/
 
-// The master spreadsheet's ID (from its URL).
-var MASTER_SHEET_ID = '1MQDy4OLHgKWH-KP3dsEaTul-5y_YsQLa74K_iYC2OnI';
+// The target spreadsheet's ID (from its URL).
+var MASTER_SHEET_ID = '1wVEKynx7ApojFpa_5WFqRwLqoPproMTg8p0HdXy1sto';
 
-// The tab website leads land in.
+// The tab website leads land in. Created automatically on first submit
+// if it doesn't already exist, so a fresh sheet needs no manual setup.
 var WEBSITE_LEAD_TAB = 'Website (Inloop)';
 
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
-    var sheet = SpreadsheetApp.openById(MASTER_SHEET_ID).getSheetByName(WEBSITE_LEAD_TAB);
-    if (!sheet) throw new Error('Sheet tab "' + WEBSITE_LEAD_TAB + '" not found');
+    var ss = SpreadsheetApp.openById(MASTER_SHEET_ID);
+    var sheet = ss.getSheetByName(WEBSITE_LEAD_TAB);
+    if (!sheet) sheet = ss.insertSheet(WEBSITE_LEAD_TAB);
 
     if (sheet.getLastRow() === 0) {
       sheet.appendRow([

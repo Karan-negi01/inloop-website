@@ -24,7 +24,7 @@ export default function SocialMedia() {
     <div className="sp-over-grid">
       <div className="sp-over-copy reveal-up" data-parallax="-6">
         <div className="kick2">Overview</div>
-        <h2>Where brands build trust — not just post content.</h2>
+        <h2>Where brands build trust, not just post content</h2>
         <p>Social media is no longer just where you post — it&#x27;s where brands build trust, shape culture, spark conversation and influence buying decisions.</p>
         <p>Our Social Media Management service helps brands build a strong, consistent presence through strategy, content planning, design, copywriting and performance review.</p>
         <p>We create content that looks refined, feels relevant and drives measurable business impact.</p>
@@ -43,7 +43,7 @@ export default function SocialMedia() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">What we do</div>
-      <h2>Everything this service <span className="grad">covers.</span></h2>
+      <h2>Everything this service <span className="grad">covers</span></h2>
       <p className="sec-sub">A complete, premium offering — strategy, craft and execution under one roof.</p>
     </div>
     <div className="svc-grid">
@@ -60,7 +60,7 @@ export default function SocialMedia() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Our process</div>
-      <h2>How we <span className="grad">get it done.</span></h2>
+      <h2>How we <span className="grad">get it done</span></h2>
       <p className="sec-sub">A clear, structured path from first conversation to final delivery.</p>
     </div>
     <div className="sp-steps">
@@ -88,7 +88,7 @@ export default function SocialMedia() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Why Inloop</div>
-      <h2>Why brands <span className="grad">choose us.</span></h2>
+      <h2>Why brands <span className="grad">choose us</span></h2>
       <p className="sec-sub">The same standard runs through every service we deliver.</p>
     </div>
     <div className="sp-why-grid">
@@ -103,7 +103,7 @@ export default function SocialMedia() {
   <section className="sec cta-band">
     <div className="cta-band-inner reveal-up">
       <div className="cta-portal"></div>
-      <h2>Let your social media reflect the caliber of your brand.</h2>
+      <h2>Let your social media reflect the caliber of your brand</h2>
       <p>We help you build a polished, strategic and culturally relevant social presence.</p>
       <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>

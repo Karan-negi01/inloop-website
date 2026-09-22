@@ -36,7 +36,7 @@ export default function Blog() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Latest articles</div>
-      <h2>From the <span className="grad">Inloop desk.</span></h2>
+      <h2>From the <span className="grad">Inloop desk</span></h2>
     </div>
     <div className="blog-grid">
       <Link className="blog-card anim-rise" to="/#contact">
@@ -86,7 +86,7 @@ export default function Blog() {
   <section className="sec cta-band">
     <div className="cta-band-inner reveal-up">
       <div className="cta-portal"></div>
-      <h2>Get growth insights in your inbox.</h2>
+      <h2>Get growth insights in your inbox</h2>
       <p>Occasional, high-signal notes on marketing, AI and building brands that grow. No spam &mdash; ever.</p>
       <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/#contact">Subscribe <span className="arr">&#8599;</span></Link>
     </div>

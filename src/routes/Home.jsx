@@ -11,11 +11,11 @@ export default function Home() {
 
     <div className="hero-content">
       <div className="reveal d1 eyebrow"><span className="dot"></span>Creative · Performance · AI Automation</div>
-      <h1 className="reveal d2">We don't just market your brand. We <span className="chrome">engineer its growth.</span></h1>
+      <h1 className="reveal d2">We don't just market your brand. We <span className="chrome">engineer its growth</span></h1>
       <p className="reveal d3 sub">Creative, performance, and AI automation under one roof — turning brand identity into qualified leads. <b>Inloop builds brands that scale.</b></p>
       <div className="reveal d4 cta-row">
         <Link className="btn primary magnetic" data-mag="0.3" to="/#contact">Book a Free Call</Link>
-        
+
       </div>
     </div>
 
@@ -32,18 +32,8 @@ export default function Home() {
 <section className="sec aivid" id="ai-video">
     <div className="sec-head reveal-up">
       <div className="kick2">AI Video</div>
-      <h2>Scroll-stopping <span className="grad">AI video creative.</span></h2>
+      <h2>Scroll-stopping <span className="grad">AI video creative</span></h2>
       <p className="sec-sub">UGC hooks, product demos and story ads — generated and edited with AI, then tuned for performance on every feed.</p>
-    </div>
-    <div className="aiv-player reveal-up" id="aivPlayer">
-      <div className="aiv-stage">
-        <span className="aiv-grain"></span>
-        <button className="aiv-play" aria-label="Play demo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
-        <span className="aiv-skip aiv-skipL" aria-hidden="true">⟲ 5</span>
-        <span className="aiv-skip aiv-skipR" aria-hidden="true">5 ⟳</span>
-        <span className="aiv-cap">UGC ad · click to unmute</span>
-        <span className="aiv-fs" aria-hidden="true">⛶</span>
-      </div>
     </div>
     <div className="aiv-grid"><article className="aiv-card anim-rise" style={{'--i': 0}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Beauty, Health &amp; Wellness</b><span>UGC unboxings &amp; routines</span></div></article><article className="aiv-card anim-rise" style={{'--i': 1}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Fashion &amp; Apparel</b><span>Lookbooks &amp; try-on hooks</span></div></article><article className="aiv-card anim-rise" style={{'--i': 2}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>High-Tech &amp; SaaS</b><span>Explainer &amp; demo ads</span></div></article><article className="aiv-card anim-rise" style={{'--i': 3}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Professional Services</b><span>Talking-head authority</span></div></article><article className="aiv-card anim-rise" style={{'--i': 4}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>D2C &amp; E-commerce</b><span>Product spotlights</span></div></article><article className="aiv-card anim-rise" style={{'--i': 5}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Real Estate</b><span>Walkthrough reels</span></div></article></div>
   </section>
@@ -51,7 +41,7 @@ export default function Home() {
 <section className="sec services" id="services">
     <div className="sec-head reveal-up">
       <div className="kick2">What we do</div>
-      <h2>One roof. <span className="grad">Every lever of growth.</span></h2>
+      <h2>One roof. <span className="grad">Every lever of growth</span></h2>
       <p className="sec-sub">From the first pixel of your identity to the last touch of a qualified lead — we build, run, and scale all of it.</p>
     </div>
     <div className="svc-grid">
@@ -87,7 +77,7 @@ export default function Home() {
       <div className="ai-core-copy">
         <div className="kick2 reveal-up">AI Solution &amp; Automation</div>
         <div className="badge-pill reveal-up" data-d="1"><span className="bp-dot"></span>AI-POWERED · HUMAN-LED</div>
-        <h2 className="reveal-up" data-d="2">Every campaign built with <span className="grad">AI at its core.</span></h2>
+        <h2 className="reveal-up" data-d="2">Every campaign built with <span className="grad">AI at its core</span></h2>
         <p className="reveal-up" data-d="3">We use AI to move faster, produce more, and optimize smarter — so your brand gets better results at a fraction of the cost. The thinking stays human. The speed is everything else.</p>
         <div className="reveal-up" data-d="4" style={{marginTop:'22px'}}><Link className="btn ghost magnetic" data-mag="0.25" to="/#tools">See AI Capabilities <span className="arr">↗</span></Link></div>
       </div>
@@ -124,7 +114,7 @@ export default function Home() {
 <section className="sec tools" id="tools">
     <div className="sec-head reveal-up">
       <div className="kick2">Our AI stack</div>
-      <h2>Powered by the <span className="grad">best AI in the world.</span></h2>
+      <h2>Powered by the <span className="grad">best AI in the world</span></h2>
       <p className="sec-sub">The tools behind faster, sharper, more affordable output.</p>
     </div>
     <div className="tool-grid">
@@ -145,7 +135,7 @@ export default function Home() {
 <section className="sec adsx" id="ads">
     <div className="sec-head reveal-up">
       <div className="kick2">Paid media</div>
-      <h2>Every major ad platform, <span className="grad">one growth engine.</span></h2>
+      <h2>Every major ad platform, <span className="grad">one growth engine</span></h2>
       <p className="sec-sub">We plan, launch and optimize campaigns across the platforms your customers actually use — and we have the dashboards to prove it.</p>
     </div>
     <div className="adx-chips reveal-up"><button className="adx-chip active" data-f="all">All</button><button className="adx-chip" data-f="google">Google Ads</button><button className="adx-chip" data-f="meta">Meta Ads</button><button className="adx-chip" data-f="microsoft">Microsoft Ads</button><button className="adx-chip" data-f="taboola">Taboola</button><button className="adx-chip" data-f="tiktok">TikTok Ads</button><button className="adx-chip" data-f="jio">Jio Ads</button></div>
@@ -153,7 +143,7 @@ export default function Home() {
   </section>
 
 <section className="sec impacts" id="impacts">
-    <div className="sec-head reveal-up"><div className="kick2">The impact</div><h2>What AI changes <span className="grad">for your brand.</span></h2></div>
+    <div className="sec-head reveal-up"><div className="kick2">The impact</div><h2>What AI changes <span className="grad">for your brand</span></h2></div>
     <div className="impact-row">
       <div className="impact anim-rise"><div className="impact-num"><span data-count="10">0</span>x</div><div className="impact-lbl">faster content output</div></div>
       <div className="impact anim-rise" data-d="1"><div className="impact-num"><span data-count="60">0</span>%</div><div className="impact-lbl">lower creative production cost</div></div>
@@ -164,7 +154,7 @@ export default function Home() {
 <section className="sec packages" id="pricing">
     <div className="sec-head reveal-up">
       <div className="kick2">Packages</div>
-      <h2>Pick a kit, <span className="grad">start the loop.</span></h2>
+      <h2>Pick a kit, <span className="grad">start the loop</span></h2>
       <p className="sec-sub">Three clear ways to work with us — from first launch to full-scale growth. Every kit is tailored to your stage.</p>
     </div>
     <div className="pkg-wrap">
@@ -218,7 +208,7 @@ export default function Home() {
 <section className="sec cases" id="work">
     <div className="sec-head reveal-up">
       <div className="kick2">Case studies</div>
-      <h2>Results that speak — <span className="grad">real brands, real numbers.</span></h2>
+      <h2>Results that speak, <span className="grad">real brands, real numbers</span></h2>
     </div>
     <div className="quad reveal-up">
       <div className="quad-cross" aria-hidden="true"></div>
@@ -233,7 +223,7 @@ export default function Home() {
   </section>
 
 <section className="sec testi" id="testimonials">
-    <div className="sec-head reveal-up"><div className="kick2">Client testimonials</div><h2>Brands that <span className="grad">stayed in the loop.</span></h2></div>
+    <div className="sec-head reveal-up"><div className="kick2">Client testimonials</div><h2>Brands that <span className="grad">stayed in the loop</span></h2></div>
     <div className="testi-grid">
       <figure className="quote reveal-up"><div className="q-mark">“</div><blockquote>Inloop thinks in systems, not posts. The pipeline finally feels predictable instead of lucky.</blockquote><figcaption><span className="av">D</span><span><b>Founder</b><i>D2C Skincare Brand</i></span></figcaption></figure>
       <figure className="quote reveal-up" data-d="1"><div className="q-mark">“</div><blockquote>AI speed with human taste — we ship more, test faster, and the ROAS shows it.</blockquote><figcaption><span className="av">F</span><span><b>Marketing Lead</b><i>FMCG Health Brand</i></span></figcaption></figure>
@@ -254,7 +244,7 @@ export default function Home() {
   <div className="aiad-glow" aria-hidden="true"></div>
   <div className="aiad-wrap reveal-up">
     <span className="aiad-kick">AI-powered advertising</span>
-    <h2 className="aiad-title">Make your first <span className="grad">AI ad</span> with us.</h2>
+    <h2 className="aiad-title">Make your first <span className="grad">AI ad</span> with us</h2>
     <p className="aiad-sub">From script to screen in days &mdash; cinematic AI video ads, built around your brand and tuned to convert. No crews, no wasted spend, just output that performs.</p>
     <div className="aiad-cta">
       <Link className="aiad-btn magnetic" to="/#contact">Start your AI ad <span>&#8599;</span></Link>
@@ -276,7 +266,7 @@ export default function Home() {
       
       <div className="ags-left reveal-up">
         <div className="kick2">Free AI Growth Audit</div>
-        <h2>Get Your Brand&#x27;s <span className="grad">AI Growth Score.</span></h2>
+        <h2>Get Your Brand&#x27;s <span className="grad">AI Growth Score</span></h2>
         <p className="ags-desc">Answer a few quick questions and get an instant snapshot of how ready your brand is for AI-led growth across content, ads, automation and conversion systems.</p>
         <ul className="ags-benefits">
           <li><span className="ags-bi">&#10003;</span>Identify where your brand is losing growth opportunities</li>
@@ -439,7 +429,7 @@ export default function Home() {
 <section className="sec contact" id="contact">
     <div className="sec-head reveal-up">
       <div className="kick2">Let's talk</div>
-      <h2>Tell us about your <span className="grad">brand.</span></h2>
+      <h2>Tell us about your <span className="grad">brand</span></h2>
       <p className="sec-sub">Share a few details and we'll come back with exactly how we'd grow it. No fluff, just a clear plan.</p>
     </div>
     <form className="cform reveal-up" id="leadForm" noValidate>

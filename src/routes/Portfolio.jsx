@@ -30,7 +30,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec" id="pfBranding">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Branding</span><h2 className="pf2-h2">Brand systems built to be <span className="grad">remembered.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Branding</span><h2 className="pf2-h2">Brand systems built to be <span className="grad">remembered</span></h2></div>
       <div className="pf2-grid">
       <article className="pfc pfc-sq anim-rise"><div className="pfc-frame">
         <span className="cm cm1"></span><span className="cm cm2"></span><span className="cm cm3"></span><span className="cm cm4"></span>
@@ -67,7 +67,7 @@ export default function Portfolio() {
       
       <div className="pf-indhead reveal-up">
         <span className="pf2-kick">Branding &mdash; by industry</span>
-        <h3 className="pf-ind-title">Work across <span className="grad">every industry.</span></h3>
+        <h3 className="pf-ind-title">Work across <span className="grad">every industry</span></h3>
       </div>
       <div className="pf-ind-chips reveal-up"><a href="#pfBranding-travel" data-pfjump>Travel Agency</a><a href="#pfBranding-trading" data-pfjump>Trading &amp; Finance</a><a href="#pfBranding-restaurant" data-pfjump>Restaurant</a><a href="#pfBranding-cafe" data-pfjump>Caf&eacute; &amp; Bakery</a><a href="#pfBranding-bar" data-pfjump>Bar &amp; Lounge</a><a href="#pfBranding-realestate" data-pfjump>Real Estate</a><a href="#pfBranding-fashion" data-pfjump>Fashion &amp; Apparel</a><a href="#pfBranding-healthcare" data-pfjump>Healthcare &amp; Clinics</a><a href="#pfBranding-fitness" data-pfjump>Fitness &amp; Gym</a><a href="#pfBranding-ecommerce" data-pfjump>E-commerce</a></div>
       <div className="pf-ind" id="pfBranding-travel">
@@ -275,7 +275,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec" id="pfDesign">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Design</span><h2 className="pf2-h2">Design that captures attention <span className="grad">and converts.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Design</span><h2 className="pf2-h2">Design that captures attention <span className="grad">and converts</span></h2></div>
       <div className="pf2-grid">
       <article className="pfc pfc-sq anim-rise"><div className="pfc-frame">
         <span className="cm cm1"></span><span className="cm cm2"></span><span className="cm cm3"></span><span className="cm cm4"></span>
@@ -312,7 +312,7 @@ export default function Portfolio() {
       
       <div className="pf-indhead reveal-up">
         <span className="pf2-kick">Design &mdash; by industry</span>
-        <h3 className="pf-ind-title">Work across <span className="grad">every industry.</span></h3>
+        <h3 className="pf-ind-title">Work across <span className="grad">every industry</span></h3>
       </div>
       <div className="pf-ind-chips reveal-up"><a href="#pfDesign-travel" data-pfjump>Travel Agency</a><a href="#pfDesign-trading" data-pfjump>Trading &amp; Finance</a><a href="#pfDesign-restaurant" data-pfjump>Restaurant</a><a href="#pfDesign-cafe" data-pfjump>Caf&eacute; &amp; Bakery</a><a href="#pfDesign-bar" data-pfjump>Bar &amp; Lounge</a><a href="#pfDesign-realestate" data-pfjump>Real Estate</a><a href="#pfDesign-fashion" data-pfjump>Fashion &amp; Apparel</a><a href="#pfDesign-healthcare" data-pfjump>Healthcare &amp; Clinics</a><a href="#pfDesign-fitness" data-pfjump>Fitness &amp; Gym</a><a href="#pfDesign-ecommerce" data-pfjump>E-commerce</a></div>
       <div className="pf-ind" id="pfDesign-travel">
@@ -520,7 +520,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec" id="pfSocial">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Social media</span><h2 className="pf2-h2">Social media that builds <span className="grad">communities.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Social media</span><h2 className="pf2-h2">Social media that builds <span className="grad">communities</span></h2></div>
       <div className="pf2-grid">
       <article className="pfc pfc-sq anim-rise"><div className="pfc-frame">
         <span className="cm cm1"></span><span className="cm cm2"></span><span className="cm cm3"></span><span className="cm cm4"></span>
@@ -557,7 +557,7 @@ export default function Portfolio() {
       
       <div className="pf-indhead reveal-up">
         <span className="pf2-kick">Social media &mdash; by industry</span>
-        <h3 className="pf-ind-title">Work across <span className="grad">every industry.</span></h3>
+        <h3 className="pf-ind-title">Work across <span className="grad">every industry</span></h3>
       </div>
       <div className="pf-ind-chips reveal-up"><a href="#pfSocial-travel" data-pfjump>Travel Agency</a><a href="#pfSocial-trading" data-pfjump>Trading &amp; Finance</a><a href="#pfSocial-restaurant" data-pfjump>Restaurant</a><a href="#pfSocial-cafe" data-pfjump>Caf&eacute; &amp; Bakery</a><a href="#pfSocial-bar" data-pfjump>Bar &amp; Lounge</a><a href="#pfSocial-realestate" data-pfjump>Real Estate</a><a href="#pfSocial-fashion" data-pfjump>Fashion &amp; Apparel</a><a href="#pfSocial-healthcare" data-pfjump>Healthcare &amp; Clinics</a><a href="#pfSocial-fitness" data-pfjump>Fitness &amp; Gym</a><a href="#pfSocial-ecommerce" data-pfjump>E-commerce</a></div>
       <div className="pf-ind" id="pfSocial-travel">
@@ -765,7 +765,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec" id="pfWeb">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Web &amp; app</span><h2 className="pf2-h2">Websites and apps built for <span className="grad">business growth.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Web &amp; app</span><h2 className="pf2-h2">Websites and apps built for <span className="grad">business growth</span></h2></div>
       <div className="pf2-grid">
       <article className="pfc pfc-sq anim-rise"><div className="pfc-frame">
         <span className="cm cm1"></span><span className="cm cm2"></span><span className="cm cm3"></span><span className="cm cm4"></span>
@@ -802,7 +802,7 @@ export default function Portfolio() {
       
       <div className="pf-indhead reveal-up">
         <span className="pf2-kick">Web &amp; app &mdash; by industry</span>
-        <h3 className="pf-ind-title">Work across <span className="grad">every industry.</span></h3>
+        <h3 className="pf-ind-title">Work across <span className="grad">every industry</span></h3>
       </div>
       <div className="pf-ind-chips reveal-up"><a href="#pfWeb-travel" data-pfjump>Travel Agency</a><a href="#pfWeb-trading" data-pfjump>Trading &amp; Finance</a><a href="#pfWeb-restaurant" data-pfjump>Restaurant</a><a href="#pfWeb-cafe" data-pfjump>Caf&eacute; &amp; Bakery</a><a href="#pfWeb-bar" data-pfjump>Bar &amp; Lounge</a><a href="#pfWeb-realestate" data-pfjump>Real Estate</a><a href="#pfWeb-fashion" data-pfjump>Fashion &amp; Apparel</a><a href="#pfWeb-healthcare" data-pfjump>Healthcare &amp; Clinics</a><a href="#pfWeb-fitness" data-pfjump>Fitness &amp; Gym</a><a href="#pfWeb-ecommerce" data-pfjump>E-commerce</a></div>
       <div className="pf-ind" id="pfWeb-travel">
@@ -1010,7 +1010,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec" id="pfInf">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Influencer marketing</span><h2 className="pf2-h2">Influencer marketing <span className="grad">at scale.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Influencer marketing</span><h2 className="pf2-h2">Influencer marketing <span className="grad">at scale</span></h2></div>
       <div className="pf2-grid">
       <article className="pfc pfc-sq anim-rise"><div className="pfc-frame">
         <span className="cm cm1"></span><span className="cm cm2"></span><span className="cm cm3"></span><span className="cm cm4"></span>
@@ -1047,7 +1047,7 @@ export default function Portfolio() {
       
       <div className="pf-indhead reveal-up">
         <span className="pf2-kick">Influencer marketing &mdash; by industry</span>
-        <h3 className="pf-ind-title">Work across <span className="grad">every industry.</span></h3>
+        <h3 className="pf-ind-title">Work across <span className="grad">every industry</span></h3>
       </div>
       <div className="pf-ind-chips reveal-up"><a href="#pfInf-travel" data-pfjump>Travel Agency</a><a href="#pfInf-trading" data-pfjump>Trading &amp; Finance</a><a href="#pfInf-restaurant" data-pfjump>Restaurant</a><a href="#pfInf-cafe" data-pfjump>Caf&eacute; &amp; Bakery</a><a href="#pfInf-bar" data-pfjump>Bar &amp; Lounge</a><a href="#pfInf-realestate" data-pfjump>Real Estate</a><a href="#pfInf-fashion" data-pfjump>Fashion &amp; Apparel</a><a href="#pfInf-healthcare" data-pfjump>Healthcare &amp; Clinics</a><a href="#pfInf-fitness" data-pfjump>Fitness &amp; Gym</a><a href="#pfInf-ecommerce" data-pfjump>E-commerce</a></div>
       <div className="pf-ind" id="pfInf-travel">
@@ -1255,7 +1255,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec pf2-dark" id="pfContent">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Content production</span><h2 className="pf2-h2">Ideas to scripts. Shoots to <span className="grad">stories.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Content production</span><h2 className="pf2-h2">Ideas to scripts. Shoots to <span className="grad">stories</span></h2></div>
       <div className="pf2-grid pf2-video">
       <article className="pfc pfc-sq anim-rise"><div className="pfc-frame">
         <span className="cm cm1"></span><span className="cm cm2"></span><span className="cm cm3"></span><span className="cm cm4"></span>
@@ -1292,7 +1292,7 @@ export default function Portfolio() {
       
       <div className="pf-indhead reveal-up">
         <span className="pf2-kick">Content production &mdash; by industry</span>
-        <h3 className="pf-ind-title">Work across <span className="grad">every industry.</span></h3>
+        <h3 className="pf-ind-title">Work across <span className="grad">every industry</span></h3>
       </div>
       <div className="pf-ind-chips reveal-up"><a href="#pfContent-travel" data-pfjump>Travel Agency</a><a href="#pfContent-trading" data-pfjump>Trading &amp; Finance</a><a href="#pfContent-restaurant" data-pfjump>Restaurant</a><a href="#pfContent-cafe" data-pfjump>Caf&eacute; &amp; Bakery</a><a href="#pfContent-bar" data-pfjump>Bar &amp; Lounge</a><a href="#pfContent-realestate" data-pfjump>Real Estate</a><a href="#pfContent-fashion" data-pfjump>Fashion &amp; Apparel</a><a href="#pfContent-healthcare" data-pfjump>Healthcare &amp; Clinics</a><a href="#pfContent-fitness" data-pfjump>Fitness &amp; Gym</a><a href="#pfContent-ecommerce" data-pfjump>E-commerce</a></div>
       <div className="pf-ind" id="pfContent-travel">
@@ -1500,7 +1500,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec" id="pfPerf">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Performance marketing</span><h2 className="pf2-h2">Performance that drives <span className="grad">revenue.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Performance marketing</span><h2 className="pf2-h2">Performance that drives <span className="grad">revenue</span></h2></div>
       <div className="pf2-grid">
       <article className="pfc pfc-sq anim-rise"><div className="pfc-frame">
         <span className="cm cm1"></span><span className="cm cm2"></span><span className="cm cm3"></span><span className="cm cm4"></span>
@@ -1538,7 +1538,7 @@ export default function Portfolio() {
       
       <div className="pf-indhead reveal-up">
         <span className="pf2-kick">Performance marketing &mdash; by industry</span>
-        <h3 className="pf-ind-title">Work across <span className="grad">every industry.</span></h3>
+        <h3 className="pf-ind-title">Work across <span className="grad">every industry</span></h3>
       </div>
       <div className="pf-ind-chips reveal-up"><a href="#pfPerf-travel" data-pfjump>Travel Agency</a><a href="#pfPerf-trading" data-pfjump>Trading &amp; Finance</a><a href="#pfPerf-restaurant" data-pfjump>Restaurant</a><a href="#pfPerf-cafe" data-pfjump>Caf&eacute; &amp; Bakery</a><a href="#pfPerf-bar" data-pfjump>Bar &amp; Lounge</a><a href="#pfPerf-realestate" data-pfjump>Real Estate</a><a href="#pfPerf-fashion" data-pfjump>Fashion &amp; Apparel</a><a href="#pfPerf-healthcare" data-pfjump>Healthcare &amp; Clinics</a><a href="#pfPerf-fitness" data-pfjump>Fitness &amp; Gym</a><a href="#pfPerf-ecommerce" data-pfjump>E-commerce</a></div>
       <div className="pf-ind" id="pfPerf-travel">
@@ -1746,7 +1746,7 @@ export default function Portfolio() {
 
   <section className="pf2-sec" id="pfApproach">
     <div className="pf2-wrap">
-      <div className="pf2-head reveal-up"><span className="pf2-kick">Our approach</span><h2 className="pf2-h2">Four steps. One <span className="grad">loop.</span></h2></div>
+      <div className="pf2-head reveal-up"><span className="pf2-kick">Our approach</span><h2 className="pf2-h2">Four steps. One <span className="grad">loop</span></h2></div>
       <ol className="pf2-steps">
         <li className="anim-rise"><span className="pf2-stepnum">01</span><b>Strategy</b><p>Positioning, audience and the plan before any pixel moves.</p></li>
         <li className="anim-rise"><span className="pf2-stepnum">02</span><b>Creativity</b><p>Identity, content and campaigns designed to be remembered.</p></li>
@@ -1759,7 +1759,7 @@ export default function Portfolio() {
   <section className="pf2-sec pf2-final">
     <div className="pf2-wrap">
       <div className="pf2-head reveal-up" style={{textAlign:'center', maxWidth:'720px', marginLeft:'auto', marginRight:'auto'}}>
-        <h2 className="pf2-h2">Let&rsquo;s build your <span className="grad">brand.</span></h2>
+        <h2 className="pf2-h2">Let&rsquo;s build your <span className="grad">brand</span></h2>
         <p className="pf2-sub">If you are ready to grow, we are ready to build with you.</p>
       </div>
       <div className="pf2-cta anim-rise" style={{justifyContent:'center'}}>

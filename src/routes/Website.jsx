@@ -24,7 +24,7 @@ export default function Website() {
     <div className="sp-over-grid">
       <div className="sp-over-copy reveal-up" data-parallax="-6">
         <div className="kick2">Overview</div>
-        <h2>Your first serious interaction with a brand.</h2>
+        <h2>Your first serious interaction with a brand</h2>
         <p>Your website is often the first real interaction people have with your brand. It must look premium, load fast, communicate clearly and guide users toward action.</p>
         <p>Our Website Design &amp; Development service blends UI/UX thinking, clean design, responsive build and conversion-led structure into sites that perform as well as they look.</p>
         <p>From corporate sites and landing pages to Shopify stores and full redesigns, we build digital experiences engineered to scale.</p>
@@ -43,7 +43,7 @@ export default function Website() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">What we do</div>
-      <h2>Everything this service <span className="grad">covers.</span></h2>
+      <h2>Everything this service <span className="grad">covers</span></h2>
       <p className="sec-sub">A complete, premium offering — strategy, craft and execution under one roof.</p>
     </div>
     <div className="svc-grid">
@@ -60,7 +60,7 @@ export default function Website() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Our process</div>
-      <h2>How we <span className="grad">get it done.</span></h2>
+      <h2>How we <span className="grad">get it done</span></h2>
       <p className="sec-sub">A clear, structured path from first conversation to final delivery.</p>
     </div>
     <div className="sp-steps">
@@ -91,7 +91,7 @@ export default function Website() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Why Inloop</div>
-      <h2>Why brands <span className="grad">choose us.</span></h2>
+      <h2>Why brands <span className="grad">choose us</span></h2>
       <p className="sec-sub">The same standard runs through every service we deliver.</p>
     </div>
     <div className="sp-why-grid">
@@ -106,7 +106,7 @@ export default function Website() {
   <section className="sec cta-band">
     <div className="cta-band-inner reveal-up">
       <div className="cta-portal"></div>
-      <h2>Your website should work as beautifully as it looks.</h2>
+      <h2>Your website should work as beautifully as it looks</h2>
       <p>Let&#x27;s build a digital experience that feels premium, performs flawlessly and fuels intelligent growth.</p>
       <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>

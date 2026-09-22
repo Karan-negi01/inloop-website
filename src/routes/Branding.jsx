@@ -24,7 +24,7 @@ export default function Branding() {
     <div className="sp-over-grid">
       <div className="sp-over-copy reveal-up" data-parallax="-6">
         <div className="kick2">Overview</div>
-        <h2>More than a logo — a complete brand system.</h2>
+        <h2>More than a logo, a complete brand system</h2>
         <p>A strong brand is never built on a logo alone. It lives at the intersection of clarity, culture, emotion and a sharp understanding of what the brand stands for.</p>
         <p>Our Brand Strategy &amp; Identity service helps modern brands build a complete identity system — from positioning and messaging to visual language and guidelines — engineered to feel intentional, premium and built to scale.</p>
         <p>Whether you are launching or evolving, we help you build a brand that captures attention and drives long-term relevance and measurable growth.</p>
@@ -43,7 +43,7 @@ export default function Branding() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">What we do</div>
-      <h2>Everything this service <span className="grad">covers.</span></h2>
+      <h2>Everything this service <span className="grad">covers</span></h2>
       <p className="sec-sub">A complete, premium offering — strategy, craft and execution under one roof.</p>
     </div>
     <div className="svc-grid">
@@ -59,7 +59,7 @@ export default function Branding() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Our process</div>
-      <h2>How we <span className="grad">get it done.</span></h2>
+      <h2>How we <span className="grad">get it done</span></h2>
       <p className="sec-sub">A clear, structured path from first conversation to final delivery.</p>
     </div>
     <div className="sp-steps">
@@ -89,7 +89,7 @@ export default function Branding() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Why Inloop</div>
-      <h2>Why brands <span className="grad">choose us.</span></h2>
+      <h2>Why brands <span className="grad">choose us</span></h2>
       <p className="sec-sub">The same standard runs through every service we deliver.</p>
     </div>
     <div className="sp-why-grid">

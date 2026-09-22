@@ -688,8 +688,7 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
 .ai-svg{width:100%;height:auto}
 .ai-lines path{stroke-dasharray:6 8;animation:aiFlow 3s linear infinite}
 @keyframes aiFlow{to{stroke-dashoffset:-28}}
-.ai-n,.ai-core{animation:aiPulse 3s ease-in-out infinite}
-.ai-core{animation-duration:2.2s}
+.ai-n{animation:aiPulse 3s ease-in-out infinite}
 @keyframes aiPulse{0%,100%{opacity:.85}50%{opacity:1;transform-box:fill-box;transform:scale(1.06)}}
 .ai-legend{display:flex;flex-direction:column;gap:14px}
 .ai-leg{padding:16px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025)}

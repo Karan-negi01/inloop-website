@@ -25,7 +25,7 @@ export default function Seo() {
     <div className="sp-over-grid">
       <div className="sp-over-copy reveal-up" data-parallax="-6">
         <div className="kick2">Overview</div>
-        <h2>Attract the right traffic &mdash; people already searching with intent.</h2>
+        <h2>Attract the right traffic, people already searching with intent</h2>
         <p>Search is one of the most powerful long-term growth channels for any brand. When people are actively looking for products, services or solutions, your brand needs to appear with clarity, credibility and relevance.</p><p>We work on the complete search ecosystem &mdash; from website structure and technical SEO to keyword strategy, content optimization and performance tracking. The goal is not just more traffic, but the right traffic: people more likely to engage, enquire or convert.</p>
       </div>
       <div className="sp-over-card reveal-up" data-d="1">
@@ -43,7 +43,7 @@ export default function Seo() {
     <div className="sp-two">
       <div className="sp-two-col reveal-up">
         <div className="kick2">Why it matters</div>
-        <h2>Why SEO matters.</h2>
+        <h2>Why SEO matters</h2>
         <p>A strong SEO foundation helps your brand get discovered by people who are already looking for what you offer. Unlike paid ads, organic visibility continues to build over time and creates a long-term source of qualified traffic.</p><p>With the right strategy, your website becomes more discoverable, more relevant and more trusted by both users and search engines.</p>
       </div>
       <div className="sp-two-col reveal-up" data-d="1">
@@ -57,7 +57,7 @@ export default function Seo() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Core services</div>
-      <h2>Everything this service <span className="grad">covers.</span></h2>
+      <h2>Everything this service <span className="grad">covers</span></h2>
       <p className="sec-sub">A complete, premium offering &mdash; strategy, craft and execution under one roof.</p>
     </div>
     <div className="svc-grid">
@@ -76,7 +76,7 @@ export default function Seo() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Our framework</div>
-      <h2>How we <span className="grad">get it done.</span></h2>
+      <h2>How we <span className="grad">get it done</span></h2>
       <p className="sec-sub">A clear, structured path from first conversation to measurable growth.</p>
     </div>
     <div className="sp-flow">
@@ -110,7 +110,7 @@ export default function Seo() {
     <div className="sp-bestfor reveal-up">
       <div className="sp-bf-head">
         <div className="kick2">Best for</div>
-        <h2>Built for brands ready to <span className="grad">grow.</span></h2>
+        <h2>Built for brands ready to <span className="grad">grow</span></h2>
       </div>
       <div className="sp-bf-tags">
         <span className="sp-tagchip anim-rise">Service-based businesses</span>
@@ -132,7 +132,7 @@ export default function Seo() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Benefits</div>
-      <h2>What you <span className="grad">walk away with.</span></h2>
+      <h2>What you <span className="grad">walk away with</span></h2>
       <p className="sec-sub">The same standard runs through every service we deliver.</p>
     </div>
     <div className="sp-why-grid">
@@ -148,7 +148,7 @@ export default function Seo() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">FAQ</div>
-      <h2>Questions, <span className="grad">answered.</span></h2>
+      <h2>Questions, <span className="grad">answered</span></h2>
     </div>
     <div className="sp-faq">
       <details className="faq-item anim-rise"><summary><span>How long does SEO take to show results?</span><i className="faq-ic" aria-hidden="true"></i></summary><div className="faq-a"><p>SEO builds organic visibility gradually. Most brands begin seeing early improvements within a few months, depending on competition, website condition and content quality.</p></div></details>
@@ -163,7 +163,7 @@ export default function Seo() {
   <section className="sec cta-band">
     <div className="cta-band-inner reveal-up">
       <div className="cta-portal"></div>
-      <h2>Let your audience find you when they are searching.</h2>
+      <h2>Let your audience find you when they are searching</h2>
       <p>We help brands build stronger search visibility, improve website relevance and create long-term organic growth through strategic SEO.</p>
       <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/#contact">Start SEO Growth <span className="arr">&#8599;</span></Link>
     </div>

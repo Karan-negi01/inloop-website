@@ -25,7 +25,7 @@ export default function Ecommerce() {
     <div className="sp-over-grid">
       <div className="sp-over-copy reveal-up" data-parallax="-6">
         <div className="kick2">Overview</div>
-        <h2>Make the buying journey smoother, clearer and more persuasive.</h2>
+        <h2>Make the buying journey smoother, clearer and more persuasive</h2>
         <p>A successful e-commerce brand needs more than a good-looking website. It needs a clear customer journey, strong product presentation, smooth navigation, trust-building elements and a system that encourages people to buy and come back again.</p><p>From storefront strategy and product page optimization to landing pages, funnels and retention planning, we help e-commerce brands build a stronger digital sales ecosystem &mdash; easier to explore, easier to trust and easier to purchase from.</p>
       </div>
       <div className="sp-over-card reveal-up" data-d="1">
@@ -43,7 +43,7 @@ export default function Ecommerce() {
     <div className="sp-two">
       <div className="sp-two-col reveal-up">
         <div className="kick2">Why it matters</div>
-        <h2>Why e-commerce optimization matters.</h2>
+        <h2>Why e-commerce optimization matters</h2>
         <p>Your store is not just a website. It is your digital sales environment. Every section, product image, headline, CTA, offer and checkout step affects how people experience your brand.</p><p>A better experience can improve conversions, reduce drop-offs, increase customer trust and support repeat purchases. The goal is simple &mdash; make the buying journey smoother, clearer and more persuasive.</p>
       </div>
       <div className="sp-two-col reveal-up" data-d="1">
@@ -57,7 +57,7 @@ export default function Ecommerce() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Core services</div>
-      <h2>Everything this service <span className="grad">covers.</span></h2>
+      <h2>Everything this service <span className="grad">covers</span></h2>
       <p className="sec-sub">A complete, premium offering &mdash; strategy, craft and execution under one roof.</p>
     </div>
     <div className="svc-grid">
@@ -76,7 +76,7 @@ export default function Ecommerce() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Our framework</div>
-      <h2>How we <span className="grad">get it done.</span></h2>
+      <h2>How we <span className="grad">get it done</span></h2>
       <p className="sec-sub">A clear, structured path from first conversation to measurable growth.</p>
     </div>
     <div className="sp-flow">
@@ -110,7 +110,7 @@ export default function Ecommerce() {
     <div className="sp-bestfor reveal-up">
       <div className="sp-bf-head">
         <div className="kick2">Best for</div>
-        <h2>Built for brands ready to <span className="grad">grow.</span></h2>
+        <h2>Built for brands ready to <span className="grad">grow</span></h2>
       </div>
       <div className="sp-bf-tags">
         <span className="sp-tagchip anim-rise">D2C brands</span>
@@ -132,7 +132,7 @@ export default function Ecommerce() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Benefits</div>
-      <h2>What you <span className="grad">walk away with.</span></h2>
+      <h2>What you <span className="grad">walk away with</span></h2>
       <p className="sec-sub">The same standard runs through every service we deliver.</p>
     </div>
     <div className="sp-why-grid">
@@ -148,7 +148,7 @@ export default function Ecommerce() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">FAQ</div>
-      <h2>Questions, <span className="grad">answered.</span></h2>
+      <h2>Questions, <span className="grad">answered</span></h2>
     </div>
     <div className="sp-faq">
       <details className="faq-item anim-rise"><summary><span>What is e-commerce optimization?</span><i className="faq-ic" aria-hidden="true"></i></summary><div className="faq-a"><p>It means improving your online store&#x27;s design, product pages, user journey, checkout flow and retention systems to support better sales performance.</p></div></details>
@@ -163,7 +163,7 @@ export default function Ecommerce() {
   <section className="sec cta-band">
     <div className="cta-band-inner reveal-up">
       <div className="cta-portal"></div>
-      <h2>Build an online store that sells smarter.</h2>
+      <h2>Build an online store that sells smarter</h2>
       <p>We help e-commerce brands improve shopping experience, product storytelling, conversion flow and retention systems for stronger growth.</p>
       <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/#contact">Start E-commerce Optimization <span className="arr">&#8599;</span></Link>
     </div>

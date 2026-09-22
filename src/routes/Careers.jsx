@@ -24,7 +24,7 @@ export default function Careers() {
     <div className="sp-two">
       <div className="sp-two-col reveal-up">
         <div className="kick2">Our culture</div>
-        <h2>Small team. Serious craft. Real ownership.</h2>
+        <h2>Small team. Serious craft. Real ownership</h2>
         <p>We keep the team lean and senior on purpose. That means less hand-off, more ownership, and work you&#x27;re genuinely proud to put your name on.</p>
         <p>We move fast with AI, but we never let it replace taste. Every asset, strategy and campaign is held to a premium standard.</p>
       </div>
@@ -40,7 +40,7 @@ export default function Careers() {
   <section className="sec" id="openings">
     <div className="sec-head reveal-up">
       <div className="kick2">Open roles</div>
-      <h2>Find your <span className="grad">seat.</span></h2>
+      <h2>Find your <span className="grad">seat</span></h2>
       <p className="sec-sub">Don&#x27;t see a perfect match? Pitch yourself anyway &mdash; we always want to meet great people.</p>
     </div>
     <div className="job-grid job-grid-single">
@@ -60,7 +60,7 @@ export default function Careers() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Why Inloop</div>
-      <h2>What you get <span className="grad">working here.</span></h2>
+      <h2>What you get <span className="grad">working here</span></h2>
     </div>
     <div className="sp-why-grid">
       <div className="sp-why anim-rise"><span className="wi">∞</span><h3>AI-first workflow</h3><p>Work with the best AI tools woven through every project, not bolted on.</p></div>
@@ -76,7 +76,7 @@ export default function Careers() {
   <section className="sec cta-band">
     <div className="cta-band-inner reveal-up">
       <div className="cta-portal"></div>
-      <h2>Don&#x27;t see your role? Reach out anyway.</h2>
+      <h2>Don&#x27;t see your role? Reach out anyway</h2>
       <p>Tell us what you&#x27;re great at and how you&#x27;d make brands grow. We read every message.</p>
       <Link className="btn primary lg magnetic cta-lux" data-mag="0.35" to="/#contact">Pitch Yourself <span className="arr">&#8599;</span></Link>
     </div>

@@ -24,7 +24,7 @@ export default function Influencer() {
     <div className="sp-over-grid">
       <div className="sp-over-copy reveal-up" data-parallax="-6">
         <div className="kick2">Overview</div>
-        <h2>Relevance and credibility over follower count.</h2>
+        <h2>Relevance and credibility over follower count</h2>
         <p>Influencer marketing works when the right creator, audience and message align — it&#x27;s about relevance and credibility, not follower count.</p>
         <p>Our Influencer Marketing &amp; Creator Campaigns service helps brands run campaigns with creators who fit their category, culture and objectives.</p>
         <p>From discovery and outreach to planning, coordination, approvals and reporting, we manage the entire process end to end.</p>
@@ -43,7 +43,7 @@ export default function Influencer() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">What we do</div>
-      <h2>Everything this service <span className="grad">covers.</span></h2>
+      <h2>Everything this service <span className="grad">covers</span></h2>
       <p className="sec-sub">A complete, premium offering — strategy, craft and execution under one roof.</p>
     </div>
     <div className="svc-grid">
@@ -60,7 +60,7 @@ export default function Influencer() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Our process</div>
-      <h2>How we <span className="grad">get it done.</span></h2>
+      <h2>How we <span className="grad">get it done</span></h2>
       <p className="sec-sub">A clear, structured path from first conversation to final delivery.</p>
     </div>
     <div className="sp-steps">
@@ -87,7 +87,7 @@ export default function Influencer() {
   <section className="sec">
     <div className="sec-head reveal-up">
       <div className="kick2">Why Inloop</div>
-      <h2>Why brands <span className="grad">choose us.</span></h2>
+      <h2>Why brands <span className="grad">choose us</span></h2>
       <p className="sec-sub">The same standard runs through every service we deliver.</p>
     </div>
     <div className="sp-why-grid">
@@ -102,7 +102,7 @@ export default function Influencer() {
   <section className="sec cta-band">
     <div className="cta-band-inner reveal-up">
       <div className="cta-portal"></div>
-      <h2>Work with creators who genuinely fit your brand.</h2>
+      <h2>Work with creators who genuinely fit your brand</h2>
       <p>Let&#x27;s build creator campaigns that are relevant, credible and growth-focused.</p>
       <Link className="btn primary lg magnetic" data-mag="0.35" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
     </div>

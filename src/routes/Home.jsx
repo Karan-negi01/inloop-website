@@ -232,14 +232,6 @@ export default function Home() {
     </div>
   </section>
 
-<section className="sec cta-band reveal-up" id="cta">
-    <div className="cta-band-inner">
-      <div className="cta-portal" aria-hidden="true"></div>
-      <h2>Want results like these?</h2>
-      <Link to="/#contact" className="btn primary lg">Book a Free Call</Link>
-    </div>
-  </section>
-
 <section className="sec aiad-band" id="aiad">
   <div className="aiad-glow" aria-hidden="true"></div>
   <div className="aiad-wrap reveal-up">
@@ -423,30 +415,6 @@ export default function Home() {
       </div>
       </div>
     </div>
-  </section>
-
-
-<section className="sec contact" id="contact">
-    <div className="sec-head reveal-up">
-      <div className="kick2">Let's talk</div>
-      <h2>Tell us about your <span className="grad">brand</span></h2>
-      <p className="sec-sub">Share a few details and we'll come back with exactly how we'd grow it. No fluff, just a clear plan.</p>
-    </div>
-    <form className="cform reveal-up" id="leadForm" noValidate>
-      <div className="cform-row">
-        <label className="cfield"><span>Name</span><input type="text" name="name" required placeholder="Your name" /></label>
-        <label className="cfield"><span>Email</span><input type="email" name="email" required placeholder="you@brand.com" /></label>
-      </div>
-      <div className="cform-row">
-        <label className="cfield"><span>Brand / Website</span><input type="text" name="brand" placeholder="Brand name or URL" /></label>
-        <label className="cfield"><span>Mobile number</span><input type="tel" name="mobile" required placeholder="+91 98765 43210" /></label>
-      </div>
-      <label className="cfield"><span>What do you need?</span><textarea name="message" rows="4" required placeholder="A line or two about your goals…"></textarea></label>
-      <div className="cform-foot">
-        <button type="submit" className="btn primary lg magnetic" data-mag="0.3">Send</button>
-        <span className="cform-note" id="cformNote"></span>
-      </div>
-    </form>
   </section>
 
 

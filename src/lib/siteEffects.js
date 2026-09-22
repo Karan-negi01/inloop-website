@@ -425,10 +425,57 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
   else boot();
 })();
 
+// ===== contact modal: every CTA that points at #contact opens this instead of scrolling =====
+(function(){
+  var modal = document.getElementById('contactModal');
+  if(!modal) return;
+  var lastFocus = null;
+
+  function openModal(){
+    lastFocus = document.activeElement;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cmodal-lock');
+    var first = modal.querySelector('input[name="name"]');
+    if(first) setTimeout(function(){ first.focus(); }, 60);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cmodal-lock');
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  window.__openContactModal = openModal;
+  window.__closeContactModalDelayed = function(){ setTimeout(closeModal, 2400); };
+
+  modal.querySelectorAll('[data-cmodal-close]').forEach(function(el){
+    el.addEventListener('click', closeModal);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+  // every "Book a Free Call" / service CTA in the app is a <Link to="/#contact">,
+  // which renders as <a href="/#contact">. React Router's own click handler is
+  // bound in the bubble phase, so a bubble-phase listener here would fire too
+  // late to stop it — capture the click first, in the capture phase, and stop
+  // it from ever reaching the router.
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href="/#contact"], a[href="#contact"]');
+    if(!a) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openModal();
+  }, true);
+})();
+
 (function(){
   function bind(){
     var f = document.getElementById('leadForm'); if(!f) return;
     var note = document.getElementById('cformNote');
+    var mobileEl = f.elements['mobile'];
+    if(mobileEl) mobileEl.addEventListener('input', function(){
+      mobileEl.value = mobileEl.value.replace(/\D/g,'').slice(0,10);
+    });
     f.addEventListener('submit', function(e){
       e.preventDefault(); var ok = true;
       ['name','email','mobile','message'].forEach(function(k){
@@ -437,12 +484,16 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
       });
       var email = f.elements['email'];
       if(email.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value)){ email.closest('.cfield').classList.add('invalid'); ok = false; }
-      if(!ok){ note.textContent = 'Please fill the required fields.'; note.classList.remove('ok'); return; }
+      var mobile = f.elements['mobile'];
+      if(mobile.value && !/^\d{10}$/.test(mobile.value)){ mobile.closest('.cfield').classList.add('invalid'); ok = false; }
+      if(!ok){ note.textContent = 'Please fill the required fields — mobile number needs exactly 10 digits.'; note.classList.remove('ok'); return; }
 
       var submitBtn = f.querySelector('button[type="submit"]');
       var oldTxt = submitBtn.textContent;
       submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
       note.textContent = ''; note.classList.remove('ok');
+
+      var dial = f.elements['countryDial'] ? f.elements['countryDial'].value : '';
 
       fetch('/api/lead', {
         method: 'POST',
@@ -451,7 +502,7 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
           source: 'Contact Form',
           nameOrBrand: f.elements['name'].value,
           email: f.elements['email'].value,
-          phone: f.elements['mobile'].value,
+          phone: (dial ? dial + ' ' : '') + f.elements['mobile'].value,
           brandOrWebsite: f.elements['brand'].value,
           message: f.elements['message'].value,
           pageUrl: window.location.href
@@ -461,6 +512,7 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
         f.reset();
         note.textContent = "Thanks — we've got your details and will be in touch shortly.";
         note.classList.add('ok');
+        if(window.__closeContactModalDelayed) window.__closeContactModalDelayed();
       }).catch(function(){
         note.textContent = 'Something went wrong sending that — please try again.';
         note.classList.remove('ok');
@@ -1438,6 +1490,8 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
       // reveal
       form.hidden = true;
       result.hidden = false;
+      var wrap = form.closest('.ags-wrap');
+      if(wrap) wrap.classList.add('ags-result-only');
       animateGauge(s.overall);
       requestAnimationFrame(function(){
         setTimeout(function(){
@@ -1506,6 +1560,8 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
       ['brandName','email','channel'].forEach(function(n){ setErr(n,''); });
       result.hidden = true;
       form.hidden = false;
+      var wrap = form.closest('.ags-wrap');
+      if(wrap) wrap.classList.remove('ags-result-only');
       // reset bars/gauge
       var arc = document.getElementById('agsGaugeArc'); if(arc) arc.style.strokeDashoffset = 327;
       form.scrollIntoView({ behavior:'smooth', block:'center' });

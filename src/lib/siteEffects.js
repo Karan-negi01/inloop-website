@@ -199,7 +199,11 @@ function frame(now){
 
   // splash ends -> reveal UI, dock the logo, lift the hero copy, unlock scroll
   if(t>=T.dock&&!docked){docked=true;document.body.classList.add('ready');document.body.classList.add('docked');document.body.classList.remove('intro');}
-  requestAnimationFrame(frame);
+  // the canvas fades to opacity:0 once docked (see body.docked #c in globals.css) and
+  // never shows again, but the loop kept rendering ~4000 particles/gradients forever
+  // on every page — stop once the fade-out finishes instead of animating a hidden layer.
+  if(t<T.dock+DOCK_MS+500){requestAnimationFrame(frame);}
+  else{cv.style.display='none';}
 }
 requestAnimationFrame(frame);
 document.addEventListener('visibilitychange',()=>{paused=document.hidden;});
@@ -272,9 +276,9 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
     }
     function spawn(){ if(!edges.length)return; var e=edges[(Math.random()*edges.length)|0];
       pulses.push({e:e,t:Math.random(),sp:0.004+Math.random()*0.006}); }
-    var t=0;
+    var t=0, runningN=false, rafN=null;
     function frameN(){
-      if(!w){requestAnimationFrame(frameN);return;}
+      if(!w){rafN=requestAnimationFrame(frameN);return;}
       g.clearRect(0,0,w,h); t+=0.016;
       // edges
       g.lineWidth=1;
@@ -290,9 +294,17 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
       for(var n=0;n<nodes.length;n++){ var nd=nodes[n], tw=0.6+0.4*Math.sin(t*2+nd.ph);
         g.fillStyle='rgba(215,217,219,'+(0.5+tw*0.4)+')'; g.beginPath(); g.arc(nd.x,nd.y,nd.r,0,6.283); g.fill();
         g.fillStyle='rgba(150,156,164,'+(0.18*tw)+')'; g.beginPath(); g.arc(nd.x,nd.y,nd.r*3,0,6.283); g.fill(); }
-      requestAnimationFrame(frameN);
+      if(runningN)rafN=requestAnimationFrame(frameN);
     }
-    var nio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ sizeN(); requestAnimationFrame(frameN); nio.disconnect(); } }); });
+    // pause/resume with visibility instead of running forever once first seen —
+    // same animation while on screen, no cost while scrolled away or on another page.
+    var builtN=false;
+    var nio=new IntersectionObserver(function(es){ es.forEach(function(e){
+      if(e.isIntersecting){
+        if(!builtN){builtN=true;sizeN();}
+        if(!runningN){runningN=true;rafN=requestAnimationFrame(frameN);}
+      }else if(runningN){runningN=false;if(rafN)cancelAnimationFrame(rafN);}
+    }); });
     nio.observe(nc);
     window.addEventListener('resize',function(){ if(w)sizeN(); });
   }

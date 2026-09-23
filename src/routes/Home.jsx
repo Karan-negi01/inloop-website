@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import TubesBackground from '@/components/TubesBackground';
 import ServicesFlip from '@/components/ServicesFlip';
+import ToolsMarquee from '@/components/ToolsMarquee';
 
 export default function Home() {
   return (
@@ -89,26 +90,7 @@ export default function Home() {
     </div>
   </section>
 
-<section className="sec tools" id="tools">
-    <div className="sec-head reveal-up">
-      <div className="kick2">Our AI stack</div>
-      <h2>Powered by the <span className="grad">best AI in the world</span></h2>
-      <p className="sec-sub">The tools behind faster, sharper, more affordable output.</p>
-    </div>
-    <div className="tool-grid">
-      <span className="tool anim-rise">ChatGPT</span>
-      <span className="tool anim-rise" data-d="1">Claude</span>
-      <span className="tool anim-rise" data-d="2">Meta AI</span>
-      <span className="tool anim-rise" data-d="3">Magnific</span>
-      <span className="tool anim-rise" data-d="4">Gemini</span>
-      <span className="tool anim-rise">ElevenLabs</span>
-      <span className="tool anim-rise" data-d="1">Kalakaar</span>
-      <span className="tool anim-rise" data-d="2">Adobe Firefly</span>
-      <span className="tool anim-rise" data-d="3">Higgsfield</span>
-      <span className="tool anim-rise" data-d="4">Midjourney</span>
-      <span className="tool more reveal-up">+ more</span>
-    </div>
-  </section>
+  <ToolsMarquee />
 
 <section className="sec adsx" id="ads">
     <div className="sec-head reveal-up">

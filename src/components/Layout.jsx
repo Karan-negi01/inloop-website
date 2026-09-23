@@ -239,6 +239,14 @@ export default function Layout() {
       <Outlet />
 
       <footer className="footer">
+        <span className="foot-glow" aria-hidden="true"></span>
+        <div className="foot-cta">
+          <div>
+            <div className="kick2">Let's talk</div>
+            <h3>Ready to engineer your growth?</h3>
+          </div>
+          <Link className="btn primary lg magnetic" data-mag="0.3" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
+        </div>
         <div className="footer-grid">
           <div className="foot-brand">
             <div className="foot-logos"><img className="footlogo" alt="Inloop" /><span className="wm"><b>inloop</b> <span>media</span></span></div>
@@ -246,7 +254,7 @@ export default function Layout() {
             <p className="foot-tag">AI-first marketing, built to fill your pipeline.</p>
           </div>
           <nav className="foot-col"><h4>Company</h4><Link to="/#services">Services</Link><Link to="/careers">Careers</Link><Link to="/about">About</Link><Link to="/#contact">Contact</Link></nav>
-          <nav className="foot-col"><h4>Connect</h4><Link to="/#contact">Book a Free Call</Link><a href="https://www.instagram.com/inloop.media/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.linkedin.com/company/inloop-media/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="#">hello@inloopmedia.com</a></nav>
+          <nav className="foot-col"><h4>Connect</h4><a href="https://www.instagram.com/inloop.media/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.linkedin.com/company/inloop-media/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="mailto:hello@inloopmedia.com">hello@inloopmedia.com</a></nav>
         </div>
         <div className="foot-base"><span>© <span id="yr"></span> Inloop Media · An AMS Group company</span><span>Keeping brands in-loop with what matters.</span></div>
       </footer>

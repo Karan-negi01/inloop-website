@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom';
+import TubesBackground from '@/components/TubesBackground';
+import ServicesFlip from '@/components/ServicesFlip';
 
 export default function Home() {
   return (
 <main id="view-home" className="route" data-route="home">
   <header className="hero">
     <div id="grain"></div>
-    <div className="hero-orbit" aria-hidden="true"><span className="ho-glow"></span>
-      <svg className="ho-rings" viewBox="0 0 800 800"><g className="ho-spin s1"><circle className="ho-c" cx="400" cy="400" r="158"/></g><g className="ho-spin s2"><circle className="ho-c dash" cx="400" cy="400" r="238"/><circle className="ho-dot" cx="400" cy="162" r="4"/></g><g className="ho-spin s3"><circle className="ho-c thin dash" cx="400" cy="400" r="318"/></g><g className="ho-spin s4"><circle className="ho-c faint" cx="400" cy="400" r="392"/><circle className="ho-dot" cx="400" cy="8" r="3"/></g></svg>
-    </div>
+    <TubesBackground className="hero-tubes" />
 
     <div className="hero-content">
-      <div className="reveal d1 eyebrow"><span className="dot"></span>Creative · Performance · AI Automation</div>
       <h1 className="reveal d2">We don't just market your brand. We <span className="chrome">engineer its growth</span></h1>
       <p className="reveal d3 sub">Creative, performance, and AI automation under one roof — turning brand identity into qualified leads. <b>Inloop builds brands that scale.</b></p>
       <div className="reveal d4 cta-row">
@@ -29,6 +28,8 @@ export default function Home() {
     </div>
   </section>
 
+  <ServicesFlip />
+
 <section className="sec aivid" id="ai-video">
     <div className="sec-head reveal-up">
       <div className="kick2">AI Video</div>
@@ -36,29 +37,6 @@ export default function Home() {
       <p className="sec-sub">UGC hooks, product demos and story ads — generated and edited with AI, then tuned for performance on every feed.</p>
     </div>
     <div className="aiv-grid"><article className="aiv-card anim-rise" style={{'--i': 0}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Beauty, Health &amp; Wellness</b><span>UGC unboxings &amp; routines</span></div></article><article className="aiv-card anim-rise" style={{'--i': 1}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Fashion &amp; Apparel</b><span>Lookbooks &amp; try-on hooks</span></div></article><article className="aiv-card anim-rise" style={{'--i': 2}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>High-Tech &amp; SaaS</b><span>Explainer &amp; demo ads</span></div></article><article className="aiv-card anim-rise" style={{'--i': 3}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Professional Services</b><span>Talking-head authority</span></div></article><article className="aiv-card anim-rise" style={{'--i': 4}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>D2C &amp; E-commerce</b><span>Product spotlights</span></div></article><article className="aiv-card anim-rise" style={{'--i': 5}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Real Estate</b><span>Walkthrough reels</span></div></article></div>
-  </section>
-
-<section className="sec services" id="services">
-    <div className="sec-head reveal-up">
-      <div className="kick2">What we do</div>
-      <h2>One roof. <span className="grad">Every lever of growth</span></h2>
-      <p className="sec-sub">From the first pixel of your identity to the last touch of a qualified lead — we build, run, and scale all of it.</p>
-    </div>
-    <div className="svc-grid">
-      <article className="svc tilt anim-rise"><Link className="svc-link" to="/branding" aria-label="Brand Strategy &amp; Identity"></Link><span className="svc-ic">✦</span><h3>Branding</h3><p>Identity systems that make you unmistakable.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/social-media" aria-label="Social Media Management"></Link><span className="svc-ic">◎</span><h3>Social Media</h3><p>Always-on content and community that compounds.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/website" aria-label="Website Design &amp; Development"></Link><span className="svc-ic">⬡</span><h3>Tech</h3><p>Sites, funnels and tracking built to convert.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="3"><Link className="svc-link" to="/influencer" aria-label="Influencer Marketing"></Link><span className="svc-ic">◈</span><h3>Influencer</h3><p>Creator partnerships matched to real intent.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/performance" aria-label="Performance Marketing"></Link><span className="svc-ic">▲</span><h3>Performance</h3><p>Paid media engineered around ROAS, not vanity.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/ai" aria-label="AI-Powered Creative"></Link><span className="svc-ic">∞</span><h3>AI Powered</h3><p>Automation and models woven through every play.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="3"><span className="svc-ic">◇</span><h3>Creator Management</h3><p>End-to-end management for talent and brands.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/production" aria-label="Creative Production"></Link><span className="svc-ic">●</span><h3>Production</h3><p>Shoots and post that move at AI speed.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/pr" aria-label="Strategic PR &amp; Communication"></Link><span className="svc-ic">◐</span><h3>PR &amp; Communication</h3><p>Narratives that earn attention and trust.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="3"><span className="svc-ic">✧</span><h3>Content Creation</h3><p>Story-first assets across every format.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/seo" aria-label="SEO &amp; Search"></Link><span className="svc-ic">⌖</span><h3>SEO &amp; Search</h3><p>Search visibility that compounds organically.</p><span className="svc-go">↗</span></article>
-      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/ecommerce" aria-label="E-commerce Growth"></Link><span className="svc-ic">▣</span><h3>E-commerce Growth</h3><p>Storefronts, funnels and retention that sell.</p><span className="svc-go">↗</span></article>
-    </div>
-    
   </section>
 
 <section className="sec stats" id="stats">
@@ -246,178 +224,5 @@ export default function Home() {
 </section>
 
 
-  <section className="sec ai-score" id="ai-score">
-    <div className="ags-shell reveal-up">
-      <span className="ags-shell-glow" aria-hidden="true"></span>
-      <span className="ags-shell-grid" aria-hidden="true"></span>
-      <div className="ags-shell-top">
-        <span className="ags-live"><span className="ags-live-dot"></span>AI-powered · Live estimate</span>
-        <span className="ags-shell-badge">5 growth signals analyzed</span>
-      </div>
-      <div className="ags-wrap">
-      
-      <div className="ags-left reveal-up">
-        <div className="kick2">Free AI Growth Audit</div>
-        <h2>Get Your Brand&#x27;s <span className="grad">AI Growth Score</span></h2>
-        <p className="ags-desc">Answer a few quick questions and get an instant snapshot of how ready your brand is for AI-led growth across content, ads, automation and conversion systems.</p>
-        <ul className="ags-benefits">
-          <li><span className="ags-bi">&#10003;</span>Identify where your brand is losing growth opportunities</li>
-          <li><span className="ags-bi">&#10003;</span>Understand how AI can improve your marketing workflow</li>
-          <li><span className="ags-bi">&#10003;</span>Get a quick roadmap for better content, ads and automation</li>
-        </ul>
-      </div>
-
-      
-      <div className="ags-right reveal-up" data-d="1">
-        
-        <form className="ags-card ags-form" id="agsForm" noValidate>
-          <div className="ags-field">
-            <label htmlFor="ags-brand">Brand Name <b>*</b></label>
-            <input id="ags-brand" name="brandName" type="text" placeholder="Enter your brand name" autoComplete="organization" />
-            <span className="ags-err" data-for="brandName"></span>
-          </div>
-          <div className="ags-row2">
-            <div className="ags-field">
-              <label htmlFor="ags-web">Website URL</label>
-              <input id="ags-web" name="website" type="url" placeholder="https://yourbrand.com" autoComplete="url" />
-            </div>
-            <div className="ags-field">
-              <label htmlFor="ags-ig">Instagram Handle</label>
-              <input id="ags-ig" name="instagram" type="text" placeholder="@yourbrand" />
-            </div>
-          </div>
-          <span className="ags-err ags-err-block" data-for="channel"></span>
-
-          <div className="ags-row2">
-            <div className="ags-field">
-              <label htmlFor="ags-industry">Industry / Category</label>
-              <select id="ags-industry" name="industry">
-                <option value="">Select category</option>
-                <option>Fashion &amp; Lifestyle</option>
-                <option>Beauty &amp; Personal Care</option>
-                <option>Food &amp; Beverage</option>
-                <option>Real Estate</option>
-                <option>Healthcare &amp; Wellness</option>
-                <option>Technology / SaaS</option>
-                <option>E-commerce / D2C</option>
-                <option>Creator / Personal Brand</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div className="ags-field">
-              <label htmlFor="ags-focus">Current Marketing Focus</label>
-              <select id="ags-focus" name="focus">
-                <option value="">Select focus</option>
-                <option>Building brand awareness</option>
-                <option>Getting more leads</option>
-                <option>Improving sales</option>
-                <option>Scaling content</option>
-                <option>Running paid ads</option>
-                <option>Automating workflows</option>
-                <option>Not sure yet</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="ags-row2">
-            <div className="ags-field">
-              <label htmlFor="ags-freq">Posting Frequency</label>
-              <select id="ags-freq" name="postingFrequency">
-                <option value="">Select frequency</option>
-                <option>Rarely</option>
-                <option>1-2 times a week</option>
-                <option>3-4 times a week</option>
-                <option>Daily</option>
-                <option>Multiple times a day</option>
-              </select>
-            </div>
-            <div className="ags-field">
-              <label htmlFor="ags-ads">Paid Ads Status</label>
-              <select id="ags-ads" name="paidAdsStatus">
-                <option value="">Select status</option>
-                <option>Not running ads</option>
-                <option>Tried ads but no strong results</option>
-                <option>Running ads currently</option>
-                <option>Scaling paid campaigns</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="ags-row2">
-            <div className="ags-field">
-              <label htmlFor="ags-auto">Automation Usage</label>
-              <select id="ags-auto" name="automationUsage">
-                <option value="">Select usage</option>
-                <option>No automation</option>
-                <option>Basic WhatsApp / email replies</option>
-                <option>CRM or lead tracking</option>
-                <option>Advanced automation workflows</option>
-              </select>
-            </div>
-            <div className="ags-field">
-              <label htmlFor="ags-chal">Biggest Challenge</label>
-              <select id="ags-chal" name="biggestChallenge">
-                <option value="">Select challenge</option>
-                <option>Weak content consistency</option>
-                <option>Poor ad performance</option>
-                <option>Low website conversions</option>
-                <option>No clear marketing strategy</option>
-                <option>Manual repetitive work</option>
-                <option>Not getting quality leads</option>
-                <option>Scaling is difficult</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="ags-field">
-            <label htmlFor="ags-email">Email Address <b>*</b></label>
-            <input id="ags-email" name="email" type="email" placeholder="Enter your email to receive detailed audit" autoComplete="email" />
-            <span className="ags-err" data-for="email"></span>
-          </div>
-
-          <button type="submit" className="btn primary lg ags-submit" id="agsSubmit">Generate My AI Growth Score</button>
-        </form>
-
-        
-        <div className="ags-card ags-result" id="agsResult" hidden aria-live="polite">
-          <div className="ags-overall">
-            <div className="ags-gauge">
-              <svg viewBox="0 0 120 120" className="ags-gauge-svg" aria-hidden="true">
-                <circle className="ags-gt" cx="60" cy="60" r="52"></circle>
-                <circle className="ags-gp" cx="60" cy="60" r="52" id="agsGaugeArc"></circle>
-              </svg>
-              <div className="ags-gauge-num"><b id="agsScoreNum">0</b><span>/100</span></div>
-            </div>
-            <div className="ags-overall-tx">
-              <div className="kick2">Your AI Growth Score</div>
-              <h3 id="agsLabel">&mdash;</h3>
-              <p id="agsInsight" className="ags-insight"></p>
-            </div>
-          </div>
-
-          <div className="ags-bars-block">
-            <div className="ags-bars-h">Score breakdown</div>
-            <div className="ags-bars" id="agsBars"></div>
-          </div>
-
-          <div className="ags-recos">
-            <div className="ags-recos-h">Recommended next steps</div>
-            <ol id="agsRecos"></ol>
-          </div>
-
-          <div className="ags-result-cta">
-            <a className="btn primary lg magnetic cta-lux" data-mag="0.3" id="agsBook">Book a Detailed Growth Audit <span className="arr">&#8599;</span></a>
-            <button type="button" className="btn ghost magnetic" data-mag="0.25" id="agsRestart">Restart Audit</button>
-          </div>
-
-          <p className="ags-disclaimer">This is a quick AI-powered estimate. For a detailed audit, our team will review your brand, content, ads and automation opportunities manually.</p>
-        </div>
-      </div>
-      </div>
-    </div>
-  </section>
-
-
-  
   </main>  );
 }

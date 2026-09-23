@@ -17,7 +17,7 @@
  *  Only touches the "Website (Inloop)" tab. Same row layout the master
  *  sheet's own syncAssignedLeads() expects:
  *    A Name | B Number | C Email | D Brand/Niche | E Date Registered |
- *    F Assigned To | G Synced?
+ *    F Assigned To | G Synced? | H Message
  *  F and G are left blank on every new row so the existing automation
  *  in the master sheet picks them up normally.
  ************************************************************************/
@@ -40,7 +40,7 @@ function doPost(e) {
       sheet.appendRow([
         'Name', 'Number', 'Email', 'Brand/Niche', 'Date Registered',
         'Assigned To', 'Synced?',
-        'Source', 'Message', 'Instagram', 'AI Growth Score', 'Score Label', 'Page URL'
+        'Message'
       ]);
     }
 
@@ -55,12 +55,7 @@ function doPost(e) {
       new Date(),                // E Date Registered
       '',                        // F Assigned To (left blank)
       '',                        // G Synced? (left blank)
-      data.source || '',         // H Source
-      data.message || '',        // I Message / Needs
-      data.instagram || '',      // J Instagram
-      data.aiGrowthScore != null ? data.aiGrowthScore : '', // K AI Growth Score
-      data.scoreLabel || '',     // L Score Label
-      data.pageUrl || ''         // M Page URL
+      data.message || ''         // H Message / Needs
     ]);
 
     return ContentService.createTextOutput(

@@ -31,6 +31,28 @@ export default function Home() {
 
   <ServicesFlip />
 
+<section className="sec services" id="services">
+    <div className="sec-head reveal-up">
+      <div className="kick2">All services</div>
+      <h2>One roof. <span className="grad">Every lever of growth</span></h2>
+      <p className="sec-sub">From the first pixel of your identity to the last touch of a qualified lead — we build, run, and scale all of it.</p>
+    </div>
+    <div className="svc-grid">
+      <article className="svc tilt anim-rise"><Link className="svc-link" to="/branding" aria-label="Brand Strategy &amp; Identity"></Link><span className="svc-ic">✦</span><h3>Branding</h3><p>Identity systems that make you unmistakable.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/social-media" aria-label="Social Media Management"></Link><span className="svc-ic">◎</span><h3>Social Media</h3><p>Always-on content and community that compounds.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/website" aria-label="Website Design &amp; Development"></Link><span className="svc-ic">⬡</span><h3>Tech</h3><p>Sites, funnels and tracking built to convert.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="3"><Link className="svc-link" to="/influencer" aria-label="Influencer Marketing"></Link><span className="svc-ic">◈</span><h3>Influencer</h3><p>Creator partnerships matched to real intent.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/performance" aria-label="Performance Marketing"></Link><span className="svc-ic">▲</span><h3>Performance</h3><p>Paid media engineered around ROAS, not vanity.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/ai" aria-label="AI-Powered Creative"></Link><span className="svc-ic">∞</span><h3>AI Powered</h3><p>Automation and models woven through every play.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="3"><Link className="svc-link" to="/creator-management" aria-label="Creator Management"></Link><span className="svc-ic">◇</span><h3>Creator Management</h3><p>End-to-end management for talent and brands.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/production" aria-label="Creative Production"></Link><span className="svc-ic">●</span><h3>Production</h3><p>Shoots and post that move at AI speed.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/pr" aria-label="Strategic PR &amp; Communication"></Link><span className="svc-ic">◐</span><h3>PR &amp; Communication</h3><p>Narratives that earn attention and trust.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="3"><Link className="svc-link" to="/content" aria-label="Content Creation"></Link><span className="svc-ic">✧</span><h3>Content Creation</h3><p>Story-first assets across every format.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="1"><Link className="svc-link" to="/seo" aria-label="SEO &amp; Search"></Link><span className="svc-ic">⌖</span><h3>SEO &amp; Search</h3><p>Search visibility that compounds organically.</p><span className="svc-go">↗</span></article>
+      <article className="svc tilt anim-rise" data-d="2"><Link className="svc-link" to="/ecommerce" aria-label="E-commerce Growth"></Link><span className="svc-ic">▣</span><h3>E-commerce Growth</h3><p>Storefronts, funnels and retention that sell.</p><span className="svc-go">↗</span></article>
+    </div>
+  </section>
+
 <section className="sec aivid" id="ai-video">
     <div className="sec-head reveal-up">
       <div className="kick2">AI Video</div>

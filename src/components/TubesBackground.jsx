@@ -1,21 +1,22 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// WebGL "tubes" cursor effect (threejs-components, loaded from jsdelivr —
-// it's not published on npm, only as a browser ES module). Background-only
-// visual: no children slot, sits absolutely positioned behind real content.
+// WebGL "tubes" cursor effect (threejs-components@0.0.19, self-hosted at
+// /vendor/tubes1.min.js — it only ships as a browser ES module, and loading it
+// from the CDN at runtime broke the hero whenever jsdelivr was unreachable).
+// Background-only visual: no children slot, sits behind real content.
 export default function TubesBackground({ className = '', enableClickInteraction = true }) {
   const canvasRef = useRef(null);
   const tubesRef = useRef(null);
 
   useEffect(() => {
     let mounted = true;
-    window.THREE = THREE; // the CDN script expects a global THREE
+    window.THREE = THREE; // the vendored script expects a global THREE
 
     (async () => {
       if (!canvasRef.current) return;
       try {
-        const mod = await import(/* webpackIgnore: true */ 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js');
+        const mod = await import(/* webpackIgnore: true */ '/vendor/tubes1.min.js');
         if (!mounted) return;
         const TubesCursor = mod.default;
         tubesRef.current = TubesCursor(canvasRef.current, {
@@ -25,7 +26,8 @@ export default function TubesBackground({ className = '', enableClickInteraction
           },
         });
       } catch (err) {
-        console.error('Failed to load TubesCursor:', err);
+        // decorative only — if it can't load, the hero just renders without it
+        console.warn('TubesCursor unavailable:', err);
       }
     })();
 

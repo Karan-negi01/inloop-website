@@ -466,6 +466,19 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
     e.stopPropagation();
     openModal();
   }, true);
+
+  // footer email pill: carry the typed email into the lead form, then open the modal
+  document.addEventListener('submit', function(e){
+    var f = e.target.closest && e.target.closest('#footSub');
+    if(!f) return;
+    e.preventDefault();
+    var v = f.elements['footEmail'].value.trim();
+    if(v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ f.classList.add('invalid'); return; }
+    f.classList.remove('invalid');
+    var lead = document.getElementById('leadForm');
+    if(lead && v) lead.elements['email'].value = v;
+    openModal();
+  });
 })();
 
 (function(){

@@ -232,31 +232,43 @@ export default function Layout() {
           <Link to="/careers">Careers</Link>
           <Link to="/about">About</Link>
         </div>
-        <Link to="/#contact" className="nav-cta magnetic" data-mag="0.3">Book a Free Call</Link>
+        <Link to="/#contact" className="nav-cta magnetic" data-mag="0.3">Book a Free Call <span className="arr">↗</span></Link>
         <button className="menu-btn" aria-label="Menu"><span></span></button>
       </nav>
 
       <Outlet />
 
       <footer className="footer">
-        <span className="foot-glow" aria-hidden="true"></span>
-        <div className="foot-cta">
-          <div>
-            <div className="kick2">Let's talk</div>
-            <h3>Ready to engineer your growth?</h3>
-          </div>
-          <Link className="btn primary lg magnetic" data-mag="0.3" to="/#contact">Book a Free Call <span className="arr">↗</span></Link>
+        <div className="foot-news">
+          <h3>Ready to engineer your <span className="accent">growth?</span></h3>
+          <p>Tell us about your brand and we'll tell you exactly how we'd grow it. AI-first marketing, built to fill your pipeline.</p>
+          <form className="foot-sub" id="footSub" noValidate>
+            <input type="email" name="footEmail" placeholder="you@brand.com" aria-label="Your email" autoComplete="email" />
+            <button type="submit">Book a Free Call</button>
+          </form>
+          <small>No spam. Just a conversation about your growth.</small>
         </div>
-        <div className="footer-grid">
-          <div className="foot-brand">
-            <div className="foot-logos"><img className="footlogo" alt="Inloop" /><span className="wm"><b>inloop</b> <span>media</span></span></div>
-            <p className="foot-ams-note">An AMS Group company</p>
-            <p className="foot-tag">AI-first marketing, built to fill your pipeline.</p>
+        <div className="foot-main">
+          <div className="footer-grid">
+            <div className="foot-brand">
+              <div className="foot-logos">
+                <span className="foot-mark"><img className="footlogo" src="/images/hero-logo.webp" alt="Inloop" /></span>
+                <span className="foot-name"><b>inloop media</b><span>An AMS Group company</span></span>
+              </div>
+              <p className="foot-tag">Keeping brands in-loop with what matters. Strategy, creative and performance, all powered by AI.</p>
+              <div className="foot-social">
+                <a href="https://www.instagram.com/inloop.media/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg></a>
+                <a href="https://www.linkedin.com/company/inloop-media/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" /></svg></a>
+                <a href="mailto:hello@inloopmedia.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg></a>
+              </div>
+            </div>
+            <nav className="foot-col"><h4>Services</h4><Link to="/branding">Branding</Link><Link to="/social-media">Social Media</Link><Link to="/website">Website Design</Link><Link to="/performance">Performance</Link></nav>
+            <nav className="foot-col"><h4>Growth</h4><Link to="/seo">SEO &amp; Search</Link><Link to="/influencer">Influencer</Link><Link to="/content">Content</Link><Link to="/ai">AI Creative</Link></nav>
+            <nav className="foot-col"><h4>Resources</h4><Link to="/portfolio">Portfolio</Link><Link to="/blog">Blog</Link><Link to="/#services">All Services</Link></nav>
+            <nav className="foot-col"><h4>Company</h4><Link to="/about">About Us</Link><Link to="/careers">Careers</Link><Link to="/#contact">Contact</Link></nav>
           </div>
-          <nav className="foot-col"><h4>Company</h4><Link to="/#services">Services</Link><Link to="/careers">Careers</Link><Link to="/about">About</Link><Link to="/#contact">Contact</Link></nav>
-          <nav className="foot-col"><h4>Connect</h4><a href="https://www.instagram.com/inloop.media/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.linkedin.com/company/inloop-media/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="mailto:hello@inloopmedia.com">hello@inloopmedia.com</a></nav>
+          <div className="foot-base"><span>© <span id="yr"></span> Inloop Media. Every great brand starts in the loop.</span><span className="foot-base-links"><a href="mailto:hello@inloopmedia.com">hello@inloopmedia.com</a></span></div>
         </div>
-        <div className="foot-base"><span>© <span id="yr"></span> Inloop Media · An AMS Group company</span><span>Keeping brands in-loop with what matters.</span></div>
       </footer>
     </>
   );

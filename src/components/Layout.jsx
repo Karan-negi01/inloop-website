@@ -86,6 +86,7 @@ export default function Layout() {
     if (window.__buildVisuals) window.__buildVisuals();
     if (window.__countBind) window.__countBind();
     if (window.__baInit) window.__baInit();
+    if (window.__adsInit) window.__adsInit();
     if (window.ScrollTrigger) {
       try {
         window.ScrollTrigger.refresh();
@@ -239,15 +240,6 @@ export default function Layout() {
       <Outlet />
 
       <footer className="footer">
-        <div className="foot-news">
-          <h3>Ready to engineer your <span className="accent">growth?</span></h3>
-          <p>Tell us about your brand and we'll tell you exactly how we'd grow it. AI-first marketing, built to fill your pipeline.</p>
-          <form className="foot-sub" id="footSub" noValidate>
-            <input type="email" name="footEmail" placeholder="you@brand.com" aria-label="Your email" autoComplete="email" />
-            <button type="submit">Book a Free Call</button>
-          </form>
-          <small>No spam. Just a conversation about your growth.</small>
-        </div>
         <div className="foot-main">
           <div className="footer-grid">
             <div className="foot-brand">
@@ -267,8 +259,9 @@ export default function Layout() {
             <nav className="foot-col"><h4>Resources</h4><Link to="/portfolio">Portfolio</Link><Link to="/blog">Blog</Link><Link to="/#services">All Services</Link></nav>
             <nav className="foot-col"><h4>Company</h4><Link to="/about">About Us</Link><Link to="/careers">Careers</Link><Link to="/#contact">Contact</Link></nav>
           </div>
-          <div className="foot-base"><span>© <span id="yr"></span> Inloop Media. Every great brand starts in the loop.</span><span className="foot-base-links"><a href="mailto:hello@inloopmedia.com">hello@inloopmedia.com</a></span></div>
+          <div className="foot-base"><span>© <span id="yr"></span> Inloop Media. Every great brand starts in the loop.</span><span className="foot-base-links"><a href="mailto:hello@inloopmedia.com">hello@inloopmedia.com</a><button type="button" className="foot-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Back to top <span aria-hidden="true">↑</span></button></span></div>
         </div>
+        <div className="foot-giant" aria-hidden="true">inloop</div>
       </footer>
     </>
   );

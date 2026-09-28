@@ -466,19 +466,6 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
     e.stopPropagation();
     openModal();
   }, true);
-
-  // footer email pill: carry the typed email into the lead form, then open the modal
-  document.addEventListener('submit', function(e){
-    var f = e.target.closest && e.target.closest('#footSub');
-    if(!f) return;
-    e.preventDefault();
-    var v = f.elements['footEmail'].value.trim();
-    if(v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ f.classList.add('invalid'); return; }
-    f.classList.remove('invalid');
-    var lead = document.getElementById('leadForm');
-    if(lead && v) lead.elements['email'].value = v;
-    openModal();
-  });
 })();
 
 (function(){
@@ -981,14 +968,42 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
 
 
 (function(){
-  var sec=document.getElementById('ads'); if(sec){
+  // re-run on every visit to Home (Layout calls window.__adsInit on route change);
+  // the __bound flag keeps a mounted section from getting duplicate listeners
+  function adsInit(){
+  var sec=document.getElementById('ads'); if(sec && !sec.__bound){ sec.__bound=true;
     var chips=sec.querySelectorAll('.adx-chip'), cards=sec.querySelectorAll('.adx-card');
+    var track=document.getElementById('adxTrack'), prev=document.getElementById('adxPrev'), next=document.getElementById('adxNext');
+    var bar=document.getElementById('adxBar'), count=document.getElementById('adxCount');
+    function visible(){ return Array.prototype.filter.call(cards,function(c){ return c.style.display!=='none'; }); }
+    // step = one card + the gap, so arrows land exactly on the next snap point
+    function step(){ var v=visible(); if(v.length<2) return track.clientWidth; return v[1].offsetLeft-v[0].offsetLeft; }
+    function pad(n){ return (n<10?'0':'')+n; }
+    function update(){
+      if(!track) return;
+      var v=visible(), max=track.scrollWidth-track.clientWidth;
+      var idx=Math.min(v.length-1, Math.round(track.scrollLeft/step()));
+      if(track.scrollLeft>=max-2) idx=v.length-1;
+      prev.disabled=track.scrollLeft<=2; next.disabled=track.scrollLeft>=max-2;
+      bar.style.width=(v.length? (idx+1)/v.length*100 : 100)+'%';
+      count.textContent=pad(v.length?idx+1:0)+' / '+pad(v.length);
+    }
+    if(track){
+      prev.addEventListener('click',function(){ track.scrollBy({left:-step(),behavior:'smooth'}); });
+      next.addEventListener('click',function(){ track.scrollBy({left:step(),behavior:'smooth'}); });
+      track.addEventListener('scroll',function(){ requestAnimationFrame(update); },{passive:true});
+      window.addEventListener('resize',function(){ if(document.contains(track)) update(); });
+      update();
+    }
     chips.forEach(function(c){ c.addEventListener('click',function(){
       chips.forEach(function(x){x.classList.remove('active')}); c.classList.add('active');
       var f=c.getAttribute('data-f');
       cards.forEach(function(card){ card.style.display=(f==='all'||card.getAttribute('data-p')===f)?'':'none'; });
+      if(track){ track.scrollTo({left:0,behavior:'instant'}); update(); }
     }); });
   }
+  }
+  window.__adsInit=adsInit; adsInit();
   var pl=document.getElementById('aivPlayer'); if(pl){
     pl.addEventListener('click',function(){ var b=pl.querySelector('.aiv-play'); if(b){ b.style.transform='scale(.9)'; setTimeout(function(){b.style.transform='';},160);} });
   }

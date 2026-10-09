@@ -46,6 +46,7 @@ function applySeo(route) {
 export default function Layout() {
   const location = useLocation();
   const isFirst = useRef(true);
+  const hashPath = useRef(null);
 
   // run the ported vanilla-JS behavior layer once, on client mount
   useEffect(() => {
@@ -130,10 +131,15 @@ export default function Layout() {
       if (window.__pfShow) window.__pfShow(anchor);
       return;
     }
+    // arriving from another page (e.g. /ai#ai-work): jump straight to the section
+    // under the transition wipe; same-page hash links keep the smooth scroll
+    const arrived = hashPath.current !== location.pathname;
+    hashPath.current = location.pathname;
     if (anchor) {
       const target = document.getElementById(anchor);
       if (target) {
-        const t = setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+        const behavior = arrived ? 'instant' : 'smooth';
+        const t = setTimeout(() => target.scrollIntoView({ behavior, block: 'start' }), 60);
         return () => clearTimeout(t);
       }
     }

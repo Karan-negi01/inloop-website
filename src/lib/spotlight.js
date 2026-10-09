@@ -1,7 +1,11 @@
-// Cursor-following spotlight on homepage cards: one delegated pointermove
+// Cursor-following spotlight on cards (home + service pages): one delegated pointermove
 // listener writes the pointer position into --mx / --my on the hovered card,
 // and the card's ::after paints a soft radial light there (see globals.css).
-const SELECTOR = '.svc-bento .svc, .cs-card, .pkq, .aiv-card, .proc-step';
+const SELECTOR = [
+  '.svc-bento .svc', '.cs-card', '.pkq', '.aiv-card', '.proc-step',
+  // service pages (About is left untouched)
+  '#svp main:not([data-route="about"]) :is(.svc, .sp-step, .sp-why, .pipe-step)',
+].join(', ');
 
 let started = false;
 

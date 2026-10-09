@@ -1,6 +1,10 @@
 // AI video concepts — each card is styled as a short-form video player whose
 // "footage" is a looping, CSS-animated storyboard of the ad (hook → demo → CTA),
 // with the scenes running as captions over it.
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import AiVideoPlayer from './AiVideoPlayer';
+
 const ICONS = {
   beauty: (
     <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M26 6h12v8H26z" /><path d="M22 14h20l2 8H20z" /><rect x="18" y="22" width="28" height="36" rx="6" /><path d="M26 34c2-3 10-3 12 0M28 42h8" /></svg>
@@ -52,17 +56,19 @@ const CONCEPTS = [
 const STAGES = ['Hook', 'Demo', 'CTA'];
 
 export default function AiVideoGrid() {
+  const [open, setOpen] = useState(null);
+
   return (
     <div className="aiv-grid">
       {CONCEPTS.map((c, i) => (
-        <article className="aiv-card anim-rise" style={{ '--i': i }} key={c.title}>
+        <article className="aiv-card anim-rise" style={{ '--i': i }} key={c.title} onClick={() => setOpen(i)}>
           <div className="aiv-thumb">
             <div className="aiv-top" aria-hidden="true">
               <div className="aiv-segs"><i /><i /><i /></div>
               <div className="aiv-meta"><span className="aiv-badge">AI</span><span>Sponsored</span><span className="aiv-len">{c.len}</span></div>
             </div>
             <span className="aiv-ic">{ICONS[c.icon]}</span>
-            <span className="aiv-pp" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+            <button type="button" className="aiv-pp" aria-label={`Play ${c.title} video`} onClick={(e) => { e.stopPropagation(); setOpen(i); }}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg></button>
             <ol className="aiv-scenes" aria-label={`${c.title} ad storyboard`}>
               {c.scenes.map((s, k) => (
                 <li className="aiv-scene" key={STAGES[k]}>
@@ -80,6 +86,11 @@ export default function AiVideoGrid() {
           <div className="aiv-label"><b>{c.title}</b><span>{c.sub}</span></div>
         </article>
       ))}
+      {/* portal to <body>: the cards are transformed, which would trap a fixed overlay */}
+      {open != null && createPortal(
+        <AiVideoPlayer concept={CONCEPTS[open]} icon={ICONS[CONCEPTS[open].icon]} index={open} onClose={() => setOpen(null)} />,
+        document.body,
+      )}
     </div>
   );
 }

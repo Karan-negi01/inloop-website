@@ -206,7 +206,7 @@ export default function Home() {
     <p className="aiad-sub">From script to screen in days &mdash; cinematic AI video ads, built around your brand and tuned to convert. No crews, no wasted spend, just output that performs.</p>
     <div className="aiad-cta">
       <Link className="aiad-btn magnetic" to="/#contact">Start your AI ad <span>&#8599;</span></Link>
-      <Link className="aiad-ghost" to="/ai" data-link>See AI video work</Link>
+      <Link className="aiad-ghost" to="/ai#ai-work" data-link>See AI video work</Link>
     </div>
   </div>
 </section>

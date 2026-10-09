@@ -18,6 +18,17 @@ import Blog from '@/routes/Blog';
 import Portfolio from '@/routes/Portfolio';
 import About from '@/routes/About';
 
+// A reload always starts the visitor at the homepage, from the top (and with
+// its intro). Links opened directly — e.g. a shared /seo URL — still land on
+// their page, since only the "reload" navigation type is redirected.
+if (typeof window !== 'undefined') {
+  const nav = performance.getEntriesByType('navigation')[0];
+  if (nav && nav.type === 'reload' && window.location.pathname !== '/') {
+    window.history.replaceState(null, '', '/');
+  }
+  if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+}
+
 export default function App() {
   return (
     <BrowserRouter>

@@ -3224,19 +3224,9 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
   background:radial-gradient(closest-side,var(--acc-soft),transparent);filter:blur(40px)}
 .svx-hero-media img{position:relative;z-index:1;display:block;width:100%;aspect-ratio:4/5;max-height:min(74vh,640px);object-fit:cover;
   border-radius:32px;border:1px solid rgba(255,255,255,.14);box-shadow:0 50px 120px -50px rgba(0,0,0,.95)}
-.svx-chip-stat{position:absolute;z-index:2;display:flex;flex-direction:column;gap:4px;padding:14px 18px;border-radius:18px;
-  background:rgba(12,12,13,.62);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  box-shadow:0 20px 50px -20px rgba(0,0,0,.9);animation:svxFloat 6s ease-in-out infinite}
-.svx-chip-stat b{font:700 clamp(20px,2vw,26px)/1 "Bricolage Grotesque",sans-serif;color:var(--acc)}
-.svx-chip-stat span{font-size:12.5px;color:#d4d5d8;max-width:22ch}
-.svx-chip-stat.s0{left:-28px;bottom:36px}
-.svx-chip-stat.s1{right:-22px;top:32px;animation-delay:-3s}
-@keyframes svxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @media(max-width:1000px){
   #svp .svx .sp-hero.svx-hero{grid-template-columns:minmax(0,1fr);gap:40px}
   .svx-hero-media img{aspect-ratio:16/11}
-  .svx-chip-stat.s0{left:12px;bottom:12px}
-  .svx-chip-stat.s1{right:12px;top:12px}
 }
 
 /* the accent, used with restraint */
@@ -3255,17 +3245,11 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
 .svx .svx-cap-bar i{background:var(--acc)}
 .svx .svx-panel{background:radial-gradient(120% 90% at 100% 0%,var(--acc-soft),transparent 60%),linear-gradient(180deg,#141415,#0a0a0b);
   border-color:var(--acc-soft)}
-.svx-panel-img{position:absolute;top:0;right:0;width:62%;height:100%;object-fit:cover;opacity:.8;pointer-events:none;
-  -webkit-mask-image:linear-gradient(270deg,#000 35%,transparent);mask-image:linear-gradient(270deg,#000 35%,transparent);
-  animation:svxKen 9s ease-out both}
-@keyframes svxKen{from{transform:scale(1.12)}to{transform:scale(1)}}
-.svx-panel:has(.svx-panel-img) .svx-panel-glyph{display:none}
 .svx-panel :is(.svx-panel-ic,h3,p){position:relative;z-index:1}
 .svx-panel .svx-panel-n{z-index:1}
 .svx .svx-panel-ic{background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--acc) 55%,#fff));box-shadow:0 0 34px var(--acc-soft)}
 .svx .svx-panel p{max-width:34ch;text-shadow:0 2px 16px rgba(0,0,0,.8)}
 .svx .svx-panel h3{text-shadow:0 4px 30px rgba(0,0,0,.7)}
-@media(max-width:900px){.svx-panel-img{width:100%;opacity:.45;-webkit-mask-image:linear-gradient(180deg,#000 20%,transparent 85%);mask-image:linear-gradient(180deg,#000 20%,transparent 85%)}}
 
 /* process, rails, tiles, CTA */
 .svx .svx-line i{background:linear-gradient(90deg,var(--acc-faint),var(--acc));box-shadow:0 0 14px var(--acc-soft)}
@@ -3277,7 +3261,7 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
 .svx .svx-tile:is(:hover,:focus-visible){border-color:var(--acc-soft)}
 .svx :is(.svx-panel,.svx-step,.svx-tile)::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),var(--acc-faint),transparent 50%)}
 #svp .svx .cta-band-inner{border-color:var(--acc-soft);box-shadow:0 60px 140px -60px var(--acc-soft)}
-@media(prefers-reduced-motion:reduce){.svx-chip-stat,.svx-panel-img{animation:none}}
+@media(prefers-reduced-motion:reduce){.svx-panel-img{transition:none}}
 
 /* ================= ABOUT — "Our story" photo timeline ================= */
 #svp .abx-story2{max-width:1180px}
@@ -3299,3 +3283,17 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
   .abx-tl::before{display:none}
   .abx-tl-img{height:220px}
 }
+
+/* capability panel: each capability's photo fills the panel and cross-fades;
+   title and copy sit on a dark gradient at the bottom */
+.svx .svx-panel{justify-content:flex-end;min-height:clamp(340px,40vw,460px);padding:0;background:#0b0b0c;border-color:rgba(255,255,255,.14)}
+.svx-panel::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(8,8,8,.05) 0%,rgba(8,8,8,.25) 40%,rgba(8,8,8,.9) 82%,#0a0a0b 100%)}
+.svx-panel-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transform:scale(1.06);
+  transition:opacity .8s ease,transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.svx-panel-img.on{opacity:1;transform:scale(1)}
+.svx-panel .svx-panel-n{z-index:2;top:22px;right:auto;left:22px;padding:7px 12px;border-radius:999px;color:#fff;
+  background:rgba(10,10,11,.55);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.svx-panel-body{position:relative;z-index:2;padding:clamp(24px,3vw,40px);animation:svxPanel .55s cubic-bezier(.2,.7,.2,1)}
+.svx .svx-panel-body h3{margin:0 0 10px}
+.svx .svx-panel-body p{max-width:42ch;color:#d4d5d8}

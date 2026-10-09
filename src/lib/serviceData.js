@@ -1,11 +1,12 @@
 // Content for the service pages, rendered by src/components/ServicePage.jsx.
-// `title` wraps the highlighted words in [brackets]; `accent` is the page's
-// signature colour (glows, numbers, highlights) on the black base.
+// `title` wraps the highlighted words in [brackets]; `accent` is the highlight
+// colour on the black base (silver, to stay with the black & white theme);
+// each capability has its own photo (`img`, public/images/caps).
 export const SERVICES = {
   "branding": {
     "route": "branding",
     "image": "/images/stock/branding.webp",
-    "accent": "#E8B86D",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 01 · Inloop Media",
     "sub": "We build AI-led brand identities that help modern brands define who they are, communicate with conviction and stay relevant as they scale.",
     "cta": "Begin Your Brand Journey",
@@ -29,27 +30,32 @@ export const SERVICES = {
       {
         "ic": "✦",
         "h": "Brand Strategy",
-        "p": "We define your purpose, audience, positioning, personality and competitive edge."
+        "p": "We define your purpose, audience, positioning, personality and competitive edge.",
+        "img": "/images/caps/branding-1.webp"
       },
       {
         "ic": "◑",
         "h": "Logo & Visual Identity",
-        "p": "We craft logos, color systems, typography, icons, patterns and a complete visual language."
+        "p": "We craft logos, color systems, typography, icons, patterns and a complete visual language.",
+        "img": "/images/caps/branding-2.webp"
       },
       {
         "ic": "✎",
         "h": "Brand Messaging",
-        "p": "We shape your brand story, tagline, tone of voice and core narrative framework."
+        "p": "We shape your brand story, tagline, tone of voice and core narrative framework.",
+        "img": "/images/caps/branding-3.webp"
       },
       {
         "ic": "▤",
         "h": "Brand Guidelines",
-        "p": "We build a clear rulebook that keeps your brand consistent across every touchpoint."
+        "p": "We build a clear rulebook that keeps your brand consistent across every touchpoint.",
+        "img": "/images/caps/branding-4.webp"
       },
       {
         "ic": "↻",
         "h": "Rebranding",
-        "p": "We transform dated identities into modern, culture-led and scalable brand systems."
+        "p": "We transform dated identities into modern, culture-led and scalable brand systems.",
+        "img": "/images/caps/branding-5.webp"
       }
     ],
     "steps": [
@@ -110,7 +116,7 @@ export const SERVICES = {
   "social-media": {
     "route": "social-media",
     "image": "/images/stock/social-media.webp",
-    "accent": "#FF6B9A",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 02 · Inloop Media",
     "sub": "We create and manage social experiences that keep modern brands relevant, consistent and culturally connected across every platform.",
     "cta": "Grow Your Social Presence",
@@ -134,32 +140,38 @@ export const SERVICES = {
       {
         "ic": "◎",
         "h": "Social Media Strategy",
-        "p": "We define your content direction, audience approach, platform strategy and themes."
+        "p": "We define your content direction, audience approach, platform strategy and themes.",
+        "img": "/images/caps/social-media-1.webp"
       },
       {
         "ic": "▦",
         "h": "Content Calendar Planning",
-        "p": "We build structured monthly calendars across reels, carousels, posts and stories."
+        "p": "We build structured monthly calendars across reels, carousels, posts and stories.",
+        "img": "/images/caps/social-media-2.webp"
       },
       {
         "ic": "✦",
         "h": "Creative Design",
-        "p": "We design premium creatives that stay true to your brand identity."
+        "p": "We design premium creatives that stay true to your brand identity.",
+        "img": "/images/caps/social-media-3.webp"
       },
       {
         "ic": "✎",
         "h": "Caption & Copywriting",
-        "p": "We write scroll-stopping captions, hooks, CTAs and storytelling-led content."
+        "p": "We write scroll-stopping captions, hooks, CTAs and storytelling-led content.",
+        "img": "/images/caps/social-media-4.webp"
       },
       {
         "ic": "☰",
         "h": "Profile Optimization",
-        "p": "We refine your bio, highlights, pinned posts, grid and overall page presentation."
+        "p": "We refine your bio, highlights, pinned posts, grid and overall page presentation.",
+        "img": "/images/caps/social-media-5.webp"
       },
       {
         "ic": "✱",
         "h": "Community Engagement",
-        "p": "We nurture audience interaction through comments, DMs and story engagement."
+        "p": "We nurture audience interaction through comments, DMs and story engagement.",
+        "img": "/images/caps/social-media-6.webp"
       }
     ],
     "steps": [
@@ -218,7 +230,7 @@ export const SERVICES = {
   "website": {
     "route": "website",
     "image": "/images/stock/website.webp",
-    "accent": "#5B8CFF",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 03 · Inloop Media",
     "sub": "We design and develop responsive, premium, user-focused websites that create strong digital impressions and convert visitors into customers.",
     "cta": "Build My Website",
@@ -242,32 +254,38 @@ export const SERVICES = {
       {
         "ic": "◳",
         "h": "Website UI/UX Design",
-        "p": "We design clean, modern, conversion-focused interfaces."
+        "p": "We design clean, modern, conversion-focused interfaces.",
+        "img": "/images/caps/website-1.webp"
       },
       {
         "ic": "⬡",
         "h": "Website Development",
-        "p": "We build responsive sites optimized for desktop, tablet and mobile."
+        "p": "We build responsive sites optimized for desktop, tablet and mobile.",
+        "img": "/images/caps/website-2.webp"
       },
       {
         "ic": "▣",
         "h": "Shopify Development",
-        "p": "We craft premium Shopify storefronts for product and D2C brands."
+        "p": "We craft premium Shopify storefronts for product and D2C brands.",
+        "img": "/images/caps/website-3.webp"
       },
       {
         "ic": "➤",
         "h": "Landing Pages",
-        "p": "We design campaign-specific pages for leads, sales, launches and promotions."
+        "p": "We design campaign-specific pages for leads, sales, launches and promotions.",
+        "img": "/images/caps/website-4.webp"
       },
       {
         "ic": "↻",
         "h": "Website Redesign",
-        "p": "We transform dated websites into modern, high-performing experiences."
+        "p": "We transform dated websites into modern, high-performing experiences.",
+        "img": "/images/caps/website-5.webp"
       },
       {
         "ic": "⚙",
         "h": "Maintenance & Updates",
-        "p": "We handle ongoing design changes, content updates and technical improvements."
+        "p": "We handle ongoing design changes, content updates and technical improvements.",
+        "img": "/images/caps/website-6.webp"
       }
     ],
     "steps": [
@@ -329,7 +347,7 @@ export const SERVICES = {
   "influencer": {
     "route": "influencer",
     "image": "/images/stock/influencer.webp",
-    "accent": "#B57CFF",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 04 · Inloop Media",
     "sub": "We help brands discover, collaborate and grow through authentic influencer campaigns that build awareness, trust and measurable impact.",
     "cta": "Plan Your Campaign",
@@ -353,32 +371,38 @@ export const SERVICES = {
       {
         "ic": "◈",
         "h": "Creator Discovery",
-        "p": "We identify creators by niche, audience quality, content style and brand fit."
+        "p": "We identify creators by niche, audience quality, content style and brand fit.",
+        "img": "/images/caps/influencer-1.webp"
       },
       {
         "ic": "◇",
         "h": "Campaign Strategy",
-        "p": "We shape campaign concepts, deliverables, timelines and communication structures."
+        "p": "We shape campaign concepts, deliverables, timelines and communication structures.",
+        "img": "/images/caps/influencer-2.webp"
       },
       {
         "ic": "✉",
         "h": "Creator Outreach",
-        "p": "We manage communication, negotiation, onboarding and briefing."
+        "p": "We manage communication, negotiation, onboarding and briefing.",
+        "img": "/images/caps/influencer-3.webp"
       },
       {
         "ic": "▷",
         "h": "Campaign Execution",
-        "p": "We coordinate timelines, approvals, posting schedules and deliverables."
+        "p": "We coordinate timelines, approvals, posting schedules and deliverables.",
+        "img": "/images/caps/influencer-4.webp"
       },
       {
         "ic": "✦",
         "h": "UGC Campaigns",
-        "p": "We help brands generate authentic creator-led content for ads and social."
+        "p": "We help brands generate authentic creator-led content for ads and social.",
+        "img": "/images/caps/influencer-5.webp"
       },
       {
         "ic": "▤",
         "h": "Reporting & Insights",
-        "p": "We track performance, engagement, reach and content impact."
+        "p": "We track performance, engagement, reach and content impact.",
+        "img": "/images/caps/influencer-6.webp"
       }
     ],
     "steps": [
@@ -436,7 +460,7 @@ export const SERVICES = {
   "performance": {
     "route": "performance",
     "image": "/images/stock/performance.webp",
-    "accent": "#34D399",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 05 · Inloop Media",
     "sub": "We plan, build and optimize paid campaigns that help brands move faster and market smarter across every channel.",
     "cta": "Run Better Ads",
@@ -460,32 +484,38 @@ export const SERVICES = {
       {
         "ic": "▲",
         "h": "Meta Ads",
-        "p": "We run Instagram and Facebook campaigns for awareness, traffic, leads and conversions."
+        "p": "We run Instagram and Facebook campaigns for awareness, traffic, leads and conversions.",
+        "img": "/images/caps/performance-1.webp"
       },
       {
         "ic": "◎",
         "h": "Google Ads",
-        "p": "We manage search, display and YouTube campaigns based on user intent."
+        "p": "We manage search, display and YouTube campaigns based on user intent.",
+        "img": "/images/caps/performance-2.webp"
       },
       {
         "ic": "✦",
         "h": "Ad Creative Strategy",
-        "p": "We develop ad concepts, hooks, copy and visuals built for performance."
+        "p": "We develop ad concepts, hooks, copy and visuals built for performance.",
+        "img": "/images/caps/performance-3.webp"
       },
       {
         "ic": "⛛",
         "h": "Funnel Planning",
-        "p": "We structure campaigns across awareness, consideration and conversion."
+        "p": "We structure campaigns across awareness, consideration and conversion.",
+        "img": "/images/caps/performance-4.webp"
       },
       {
         "ic": "⚙",
         "h": "Campaign Optimization",
-        "p": "We monitor performance and optimize targeting, budget and creatives."
+        "p": "We monitor performance and optimize targeting, budget and creatives.",
+        "img": "/images/caps/performance-5.webp"
       },
       {
         "ic": "▤",
         "h": "Reporting",
-        "p": "We deliver clear reports with results, insights and next-step recommendations."
+        "p": "We deliver clear reports with results, insights and next-step recommendations.",
+        "img": "/images/caps/performance-6.webp"
       }
     ],
     "steps": [
@@ -543,7 +573,7 @@ export const SERVICES = {
   "ai": {
     "route": "ai",
     "image": "/images/stock/ai.webp",
-    "accent": "#8B7CFF",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 06 · Inloop Media",
     "sub": "We use AI-led workflows to help brands create smarter content, faster concepts, scalable campaigns and leaner creative systems.",
     "cta": "Explore AI Solutions",
@@ -567,32 +597,38 @@ export const SERVICES = {
       {
         "ic": "✶",
         "h": "AI Content Ideation",
-        "p": "We generate content ideas, hooks, captions, scripts and angles with AI-led strategy."
+        "p": "We generate content ideas, hooks, captions, scripts and angles with AI-led strategy.",
+        "img": "/images/caps/ai-1.webp"
       },
       {
         "ic": "◈",
         "h": "AI Visual Concepts",
-        "p": "We generate moodboards, ad concepts, creative directions and visual references."
+        "p": "We generate moodboards, ad concepts, creative directions and visual references.",
+        "img": "/images/caps/ai-2.webp"
       },
       {
         "ic": "▷",
         "h": "AI Video Storyboarding",
-        "p": "We build AI-assisted video concepts, scene prompts and cinematic storyboards."
+        "p": "We build AI-assisted video concepts, scene prompts and cinematic storyboards.",
+        "img": "/images/caps/ai-3.webp"
       },
       {
         "ic": "⌘",
         "h": "Prompt Engineering",
-        "p": "We write advanced prompts for ChatGPT, Claude, Gemini, Midjourney and more."
+        "p": "We write advanced prompts for ChatGPT, Claude, Gemini, Midjourney and more.",
+        "img": "/images/caps/ai-4.webp"
       },
       {
         "ic": "⚙",
         "h": "Workflow Automation",
-        "p": "We build planning, reporting and execution workflows that cut manual effort."
+        "p": "We build planning, reporting and execution workflows that cut manual effort.",
+        "img": "/images/caps/ai-5.webp"
       },
       {
         "ic": "∞",
         "h": "Creative Scaling",
-        "p": "We help brands produce multiple content variations while holding brand consistency."
+        "p": "We help brands produce multiple content variations while holding brand consistency.",
+        "img": "/images/caps/ai-6.webp"
       }
     ],
     "steps": [
@@ -649,7 +685,7 @@ export const SERVICES = {
   "creator-management": {
     "route": "creator-management",
     "image": "/images/stock/creator-management.webp",
-    "accent": "#FF9F5A",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 07 · Inloop Media",
     "sub": "We help creators build stronger personal brands, improve content direction and unlock better collaboration opportunities.",
     "cta": "Manage My Creator Journey",
@@ -673,32 +709,38 @@ export const SERVICES = {
       {
         "ic": "◇",
         "h": "Creator Positioning",
-        "p": "Niche, audience, content style and brand value proposition defined."
+        "p": "Niche, audience, content style and brand value proposition defined.",
+        "img": "/images/caps/creator-management-1.webp"
       },
       {
         "ic": "☰",
         "h": "Profile Optimization",
-        "p": "Bio, highlights, pinned posts, content structure and page presentation."
+        "p": "Bio, highlights, pinned posts, content structure and page presentation.",
+        "img": "/images/caps/creator-management-2.webp"
       },
       {
         "ic": "▦",
         "h": "Content Strategy",
-        "p": "Content pillars, reel ideas, carousel topics and growth-focused formats."
+        "p": "Content pillars, reel ideas, carousel topics and growth-focused formats.",
+        "img": "/images/caps/creator-management-3.webp"
       },
       {
         "ic": "✉",
         "h": "Brand Collaboration Support",
-        "p": "Media kits, pitch decks and outreach messages prepared."
+        "p": "Media kits, pitch decks and outreach messages prepared.",
+        "img": "/images/caps/creator-management-4.webp"
       },
       {
         "ic": "▷",
         "h": "Campaign Coordination",
-        "p": "Deliverables, timelines, brand communication and approvals managed."
+        "p": "Deliverables, timelines, brand communication and approvals managed.",
+        "img": "/images/caps/creator-management-5.webp"
       },
       {
         "ic": "▤",
         "h": "Performance Review",
-        "p": "Content performance analyzed with clear improvements for growth."
+        "p": "Content performance analyzed with clear improvements for growth.",
+        "img": "/images/caps/creator-management-6.webp"
       }
     ],
     "steps": [
@@ -756,7 +798,7 @@ export const SERVICES = {
   "production": {
     "route": "production",
     "image": "/images/stock/production.webp",
-    "accent": "#FF5A5F",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 08 · Inloop Media",
     "sub": "We create high-quality video, photography and campaign content that makes brands look polished, professional and visually impactful.",
     "cta": "Plan Your Production",
@@ -780,32 +822,38 @@ export const SERVICES = {
       {
         "ic": "▷",
         "h": "Video Production",
-        "p": "Brand films, campaign videos, reels, product videos and corporate videos."
+        "p": "Brand films, campaign videos, reels, product videos and corporate videos.",
+        "img": "/images/caps/production-1.webp"
       },
       {
         "ic": "◉",
         "h": "Photography",
-        "p": "Product, lifestyle, campaign and social media visuals."
+        "p": "Product, lifestyle, campaign and social media visuals.",
+        "img": "/images/caps/production-2.webp"
       },
       {
         "ic": "✦",
         "h": "Creative Direction",
-        "p": "Moodboards, scripts, shot lists, styling direction and visual planning."
+        "p": "Moodboards, scripts, shot lists, styling direction and visual planning.",
+        "img": "/images/caps/production-3.webp"
       },
       {
         "ic": "☰",
         "h": "Shoot Management",
-        "p": "Location planning, talent coordination, props, styling and on-ground execution."
+        "p": "Location planning, talent coordination, props, styling and on-ground execution.",
+        "img": "/images/caps/production-4.webp"
       },
       {
         "ic": "⚙",
         "h": "Post-Production",
-        "p": "Editing, color grading, sound design, motion graphics and final exports."
+        "p": "Editing, color grading, sound design, motion graphics and final exports.",
+        "img": "/images/caps/production-5.webp"
       },
       {
         "ic": "◐",
         "h": "Event Coverage",
-        "p": "Event reels, recap videos, stories, photography and highlight edits."
+        "p": "Event reels, recap videos, stories, photography and highlight edits.",
+        "img": "/images/caps/production-6.webp"
       }
     ],
     "steps": [
@@ -864,7 +912,7 @@ export const SERVICES = {
   "pr": {
     "route": "pr",
     "image": "/images/stock/pr.webp",
-    "accent": "#2DD4BF",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 09 · Inloop Media",
     "sub": "We help brands communicate with clarity, strengthen reputation and create meaningful visibility across media and digital platforms.",
     "cta": "Build Brand Reputation",
@@ -888,32 +936,38 @@ export const SERVICES = {
       {
         "ic": "◐",
         "h": "PR Strategy",
-        "p": "Communication plans based on your brand goals, audience and market positioning."
+        "p": "Communication plans based on your brand goals, audience and market positioning.",
+        "img": "/images/caps/pr-1.webp"
       },
       {
         "ic": "✎",
         "h": "Press Releases",
-        "p": "Professional releases for launches, announcements and campaigns."
+        "p": "Professional releases for launches, announcements and campaigns.",
+        "img": "/images/caps/pr-2.webp"
       },
       {
         "ic": "✉",
         "h": "Media Communication",
-        "p": "Media notes, brand statements and outreach-ready communication assets."
+        "p": "Media notes, brand statements and outreach-ready communication assets.",
+        "img": "/images/caps/pr-3.webp"
       },
       {
         "ic": "◈",
         "h": "Brand Messaging",
-        "p": "A clear definition of how your brand should speak across public platforms."
+        "p": "A clear definition of how your brand should speak across public platforms.",
+        "img": "/images/caps/pr-4.webp"
       },
       {
         "ic": "★",
         "h": "Reputation Building",
-        "p": "Consistent visibility and trust through structured communication."
+        "p": "Consistent visibility and trust through structured communication.",
+        "img": "/images/caps/pr-5.webp"
       },
       {
         "ic": "⚠",
         "h": "Crisis Communication",
-        "p": "Sensitive communication handled with clarity, control and professionalism."
+        "p": "Sensitive communication handled with clarity, control and professionalism.",
+        "img": "/images/caps/pr-6.webp"
       }
     ],
     "steps": [
@@ -970,7 +1024,7 @@ export const SERVICES = {
   "content": {
     "route": "content",
     "image": "/images/stock/content.webp",
-    "accent": "#FFC857",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 10 · Inloop Media",
     "sub": "We create strategic, visually polished and platform-ready content for brands, campaigns, websites and social media.",
     "cta": "Create Better Content",
@@ -994,32 +1048,38 @@ export const SERVICES = {
       {
         "ic": "◎",
         "h": "Social Media Content",
-        "p": "Reels, carousels, static posts, stories and campaign creatives."
+        "p": "Reels, carousels, static posts, stories and campaign creatives.",
+        "img": "/images/caps/content-1.webp"
       },
       {
         "ic": "✎",
         "h": "Copywriting",
-        "p": "Captions, website copy, ad copy, scripts and brand communication."
+        "p": "Captions, website copy, ad copy, scripts and brand communication.",
+        "img": "/images/caps/content-2.webp"
       },
       {
         "ic": "▷",
         "h": "Video Content",
-        "p": "Short-form videos, reels, edits, motion graphics and product content."
+        "p": "Short-form videos, reels, edits, motion graphics and product content.",
+        "img": "/images/caps/content-3.webp"
       },
       {
         "ic": "✦",
         "h": "Campaign Content",
-        "p": "Launch creatives, promotional assets, influencer content and event communication."
+        "p": "Launch creatives, promotional assets, influencer content and event communication.",
+        "img": "/images/caps/content-4.webp"
       },
       {
         "ic": "⬡",
         "h": "Website Content",
-        "p": "Homepage, service page, about page and landing page copy."
+        "p": "Homepage, service page, about page and landing page copy.",
+        "img": "/images/caps/content-5.webp"
       },
       {
         "ic": "◈",
         "h": "Creative Direction",
-        "p": "Moodboards, content themes, visual references and storytelling direction."
+        "p": "Moodboards, content themes, visual references and storytelling direction.",
+        "img": "/images/caps/content-6.webp"
       }
     ],
     "steps": [
@@ -1079,7 +1139,7 @@ export const SERVICES = {
   "seo": {
     "route": "seo",
     "image": "/images/stock/seo.webp",
-    "accent": "#4FC3F7",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 11 · Inloop Media",
     "sub": "We help brands improve their organic search presence through strategic SEO, technical optimization, content planning and search-focused growth systems designed to attract the right audience consistently.",
     "cta": "Improve My Search Visibility",
@@ -1104,42 +1164,50 @@ export const SERVICES = {
       {
         "ic": "☉",
         "h": "SEO Audit",
-        "p": "We analyze your website's SEO health — technical setup, page structure, content quality, metadata, speed, indexing and search visibility."
+        "p": "We analyze your website's SEO health — technical setup, page structure, content quality, metadata, speed, indexing and search visibility.",
+        "img": "/images/caps/seo-1.webp"
       },
       {
         "ic": "⌖",
         "h": "Keyword Strategy",
-        "p": "We research high-intent keywords based on your audience, industry, competition and business goals."
+        "p": "We research high-intent keywords based on your audience, industry, competition and business goals.",
+        "img": "/images/caps/seo-2.webp"
       },
       {
         "ic": "☰",
         "h": "On-Page SEO",
-        "p": "We optimize page titles, meta descriptions, headings, URLs, internal linking, image alt text and content structure."
+        "p": "We optimize page titles, meta descriptions, headings, URLs, internal linking, image alt text and content structure.",
+        "img": "/images/caps/seo-3.webp"
       },
       {
         "ic": "⚙",
         "h": "Technical SEO",
-        "p": "We improve crawlability, indexing, website speed, mobile performance, schema structure and overall technical health."
+        "p": "We improve crawlability, indexing, website speed, mobile performance, schema structure and overall technical health.",
+        "img": "/images/caps/seo-4.webp"
       },
       {
         "ic": "✎",
         "h": "Content Optimization",
-        "p": "We improve website copy, landing pages, service pages and blogs to make them more relevant for search and users."
+        "p": "We improve website copy, landing pages, service pages and blogs to make them more relevant for search and users.",
+        "img": "/images/caps/seo-5.webp"
       },
       {
         "ic": "◎",
         "h": "Local SEO",
-        "p": "We optimize your local presence for location-based searches, Google Business Profile visibility and nearby discovery."
+        "p": "We optimize your local presence for location-based searches, Google Business Profile visibility and nearby discovery.",
+        "img": "/images/caps/seo-6.webp"
       },
       {
         "ic": "☷",
         "h": "SEO Content Planning",
-        "p": "We create blog topics, landing page ideas and search-led content plans that support long-term organic growth."
+        "p": "We create blog topics, landing page ideas and search-led content plans that support long-term organic growth.",
+        "img": "/images/caps/seo-7.webp"
       },
       {
         "ic": "◰",
         "h": "SEO Reporting",
-        "p": "Clear monthly reports with traffic insights, keyword performance, ranking changes and next-step recommendations."
+        "p": "Clear monthly reports with traffic insights, keyword performance, ranking changes and next-step recommendations.",
+        "img": "/images/caps/seo-8.webp"
       }
     ],
     "steps": [
@@ -1250,7 +1318,7 @@ export const SERVICES = {
   "ecommerce": {
     "route": "ecommerce",
     "image": "/images/stock/ecommerce.webp",
-    "accent": "#10B981",
+    "accent": "#C9CDD3",
     "eyebrow": "Service 12 · Inloop Media",
     "sub": "We help e-commerce brands improve storefront experience, product storytelling, conversion journeys and retention systems to drive stronger sales and long-term growth.",
     "cta": "Optimize My Store",
@@ -1275,42 +1343,50 @@ export const SERVICES = {
       {
         "ic": "▤",
         "h": "Storefront Strategy",
-        "p": "We review your store and define improvements for layout, navigation, product visibility, brand storytelling and UX."
+        "p": "We review your store and define improvements for layout, navigation, product visibility, brand storytelling and UX.",
+        "img": "/images/caps/ecommerce-1.webp"
       },
       {
         "ic": "▣",
         "h": "Product Page Optimization",
-        "p": "We improve titles, descriptions, visuals, benefits, specifications, trust elements, reviews and purchase CTAs."
+        "p": "We improve titles, descriptions, visuals, benefits, specifications, trust elements, reviews and purchase CTAs.",
+        "img": "/images/caps/ecommerce-2.webp"
       },
       {
         "ic": "↗",
         "h": "Conversion Rate Optimization",
-        "p": "We identify friction points in the buying journey and optimize key areas to improve conversions."
+        "p": "We identify friction points in the buying journey and optimize key areas to improve conversions.",
+        "img": "/images/caps/ecommerce-3.webp"
       },
       {
         "ic": "◉",
         "h": "E-commerce Funnel Planning",
-        "p": "We create structured customer journeys across awareness, consideration, purchase and retention stages."
+        "p": "We create structured customer journeys across awareness, consideration, purchase and retention stages.",
+        "img": "/images/caps/ecommerce-4.webp"
       },
       {
         "ic": "▩",
         "h": "Landing Page Design",
-        "p": "We plan high-converting landing pages for product launches, offers, campaigns and paid ads."
+        "p": "We plan high-converting landing pages for product launches, offers, campaigns and paid ads.",
+        "img": "/images/caps/ecommerce-5.webp"
       },
       {
         "ic": "↻",
         "h": "Retention Strategy",
-        "p": "Repeat purchase systems through WhatsApp, email, remarketing and customer engagement flows."
+        "p": "Repeat purchase systems through WhatsApp, email, remarketing and customer engagement flows.",
+        "img": "/images/caps/ecommerce-6.webp"
       },
       {
         "ic": "★",
         "h": "Offer & Campaign Planning",
-        "p": "We structure offers, bundles, launch campaigns and promotional journeys to improve sales."
+        "p": "We structure offers, bundles, launch campaigns and promotional journeys to improve sales.",
+        "img": "/images/caps/ecommerce-7.webp"
       },
       {
         "ic": "◰",
         "h": "Performance Review",
-        "p": "We analyze store performance, customer behavior and campaign data to find growth opportunities."
+        "p": "We analyze store performance, customer behavior and campaign data to find growth opportunities.",
+        "img": "/images/caps/ecommerce-8.webp"
       }
     ],
     "steps": [

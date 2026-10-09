@@ -41,7 +41,7 @@ function Statement({ text }) {
 
 const ROTATE_MS = 4500;
 
-function Capabilities({ caps, image }) {
+function Capabilities({ caps }) {
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);
   const [inView, setInView] = useState(false);
@@ -88,13 +88,17 @@ function Capabilities({ caps, image }) {
             </button>
           ))}
         </div>
-        <div className="svx-panel" role="tabpanel" key={active} data-noview>
-          {image && <img className="svx-panel-img" src={image} alt="" loading="lazy" decoding="async" aria-hidden="true" />}
-          <span className="svx-panel-glyph" aria-hidden="true">{cap.ic}</span>
-          <span className="svx-panel-ic" aria-hidden="true">{cap.ic}</span>
-          <h3>{cap.h}</h3>
-          <p>{cap.p}</p>
+        <div className="svx-panel" role="tabpanel" data-noview>
+          {/* every capability has its own photo; they cross-fade as the tabs change.
+              Loaded eagerly: some browsers never decode lazy images that start at opacity 0 */}
+          {caps.map((c, i) => (
+            <img key={c.img} className={`svx-panel-img${i === active ? ' on' : ''}`} src={c.img} alt="" aria-hidden="true" />
+          ))}
           <span className="svx-panel-n" aria-hidden="true">{String(active + 1).padStart(2, '0')} / {String(caps.length).padStart(2, '0')}</span>
+          <div className="svx-panel-body" key={active}>
+            <h3>{cap.h}</h3>
+            <p>{cap.p}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -116,7 +120,7 @@ function Rail({ label, items, reverse }) {
 }
 
 export default function ServicePage({ data, children }) {
-  const { route, image, accent, eyebrow, title, sub, cta, badges, statement, glance, caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
+  const { route, image, accent, eyebrow, title, sub, cta, badges, statement, caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
 
   return (
     <div id="svp"><main className="route svx" data-route={route} style={{ '--acc': accent }}>
@@ -135,9 +139,6 @@ export default function ServicePage({ data, children }) {
         </div>
         <figure className="svx-hero-media reveal d3" data-noview>
           <img src={image} alt="" decoding="async" fetchPriority="high" />
-          {glance.map(([big, label], i) => (
-            <span className={`svx-chip-stat s${i}`} key={big}><b>{big}</b><span>{label}</span></span>
-          ))}
         </figure>
       </header>
 
@@ -145,7 +146,7 @@ export default function ServicePage({ data, children }) {
 
       {children}
 
-      <Capabilities caps={caps} image={image} />
+      <Capabilities caps={caps} />
 
       <section className="sec svx-process">
         <div className="sec-head reveal-up">

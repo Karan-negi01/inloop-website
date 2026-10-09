@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { initSiteEffects } from '@/lib/siteEffects';
 import { initSpotlight } from '@/lib/spotlight';
 import { SITE_URL, routeFromPath, seoForRoute } from '@/lib/seo';
@@ -45,6 +45,7 @@ function applySeo(route) {
 
 export default function Layout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isFirst = useRef(true);
   const hashPath = useRef(null);
 
@@ -147,6 +148,22 @@ export default function Layout() {
     }
   }, [location.pathname, location.hash]);
 
+  // logo: scrolled down → back to the top of this page; already at the top →
+  // the homepage (from its top), and on the homepage itself → a fresh reload
+  function onLogo(e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    // keep the page-transition handler in siteEffects from turning this into a full reload
+    e.stopPropagation();
+    if (window.scrollY > 4) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    } else if (routeFromPath(location.pathname) !== 'home') {
+      navigate('/');
+    } else {
+      window.location.assign('/');
+    }
+  }
+
   return (
     <>
       <div className="scroll-prog"></div>
@@ -198,7 +215,7 @@ export default function Layout() {
       </div>
 
       <nav className="nav">
-        <Link className="brand" to="/">
+        <Link className="brand" to="/" onClick={onLogo}>
           <img className="navlogo" alt="Inloop" />
           <span className="wm"><b>inloop</b> <span>media</span></span>
         </Link>

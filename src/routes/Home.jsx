@@ -45,13 +45,13 @@ export default function Home() {
       <p className="sec-sub">From the first pixel of your identity to the last touch of a qualified lead — we build, run, and scale all of it.</p>
     </div>
     <div className="svc-bento">
-      <article className="svc anim-rise bx-a bx-lg"><Link className="svc-link" to="/branding" aria-label="Brand Strategy &amp; Identity"></Link><span className="svc-glyph" aria-hidden="true">✦</span><span className="svc-ic">✦</span><div className="svc-tx"><h3>Branding</h3><p>Identity systems that make you unmistakable — naming, visual language and guidelines your whole team can run with.</p><span className="svc-more">Explore service <span>→</span></span></div><span className="svc-go">↗</span></article>
+      <article className="svc anim-rise bx-a bx-lg"><Link className="svc-link" to="/branding" aria-label="Brand Strategy &amp; Identity"></Link><img className="svc-bg" src="/images/stock/branding.webp" alt="" loading="lazy" decoding="async" aria-hidden="true" /><span className="svc-glyph" aria-hidden="true">✦</span><span className="svc-ic">✦</span><div className="svc-tx"><h3>Branding</h3><p>Identity systems that make you unmistakable — naming, visual language and guidelines your whole team can run with.</p><span className="svc-more">Explore service <span>→</span></span></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-b" data-d="1"><Link className="svc-link" to="/social-media" aria-label="Social Media Management"></Link><span className="svc-ic">◎</span><div className="svc-tx"><h3>Social Media</h3><p>Always-on content and community that compounds.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-c" data-d="2"><Link className="svc-link" to="/website" aria-label="Website Design &amp; Development"></Link><span className="svc-ic">⬡</span><div className="svc-tx"><h3>Website &amp; Tech</h3><p>Sites, funnels and tracking built to convert.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-d" data-d="3"><Link className="svc-link" to="/influencer" aria-label="Influencer Marketing"></Link><span className="svc-ic">◈</span><div className="svc-tx"><h3>Influencer</h3><p>Creator partnerships matched to real intent.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-e"><Link className="svc-link" to="/creator-management" aria-label="Creator Management"></Link><span className="svc-ic">◇</span><div className="svc-tx"><h3>Creator Management</h3><p>End-to-end management for talent and brands.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-f" data-d="1"><Link className="svc-link" to="/production" aria-label="Creative Production"></Link><span className="svc-ic">●</span><div className="svc-tx"><h3>Production</h3><p>Shoots and post that move at AI speed.</p></div><span className="svc-go">↗</span></article>
-      <article className="svc anim-rise bx-g bx-lg" data-d="2"><Link className="svc-link" to="/performance" aria-label="Performance Marketing"></Link><span className="svc-glyph" aria-hidden="true">▲</span><span className="svc-ic">▲</span><div className="svc-tx"><h3>Performance</h3><p>Paid media engineered around ROAS, not vanity — tested, measured and scaled on what actually converts.</p><span className="svc-more">Explore service <span>→</span></span></div><span className="svc-go">↗</span></article>
+      <article className="svc anim-rise bx-g bx-lg" data-d="2"><Link className="svc-link" to="/performance" aria-label="Performance Marketing"></Link><img className="svc-bg" src="/images/stock/performance.webp" alt="" loading="lazy" decoding="async" aria-hidden="true" /><span className="svc-glyph" aria-hidden="true">▲</span><span className="svc-ic">▲</span><div className="svc-tx"><h3>Performance</h3><p>Paid media engineered around ROAS, not vanity — tested, measured and scaled on what actually converts.</p><span className="svc-more">Explore service <span>→</span></span></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-h" data-d="3"><Link className="svc-link" to="/pr" aria-label="Strategic PR &amp; Communication"></Link><span className="svc-ic">◐</span><div className="svc-tx"><h3>PR &amp; Communication</h3><p>Narratives that earn attention and trust.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-i"><Link className="svc-link" to="/content" aria-label="Content Creation"></Link><span className="svc-ic">✧</span><div className="svc-tx"><h3>Content Creation</h3><p>Story-first assets across every format.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-j" data-d="1"><Link className="svc-link" to="/seo" aria-label="SEO &amp; Search"></Link><span className="svc-ic">⌖</span><div className="svc-tx"><h3>SEO &amp; Search</h3><p>Search visibility that compounds organically.</p></div><span className="svc-go">↗</span></article>
@@ -82,6 +82,7 @@ export default function Home() {
     </div>
     <div className="cs-grid">
       <article className="cs-card anim-rise">
+        <div className="cs-img"><img src="/images/stock/case-app.webp" alt="" loading="lazy" decoding="async" /></div>
         <span className="cs-cat">App · Social + Paid Ads</span>
         <div className="cs-metric"><span data-count="3.2" data-suf="x">0</span></div>
         <div className="cs-metric-l">installs in 60 days</div>
@@ -89,6 +90,7 @@ export default function Home() {
         <div className="cs-foot"><b>Apploft</b><p>Scaled installs with a social-first paid engine.</p></div>
       </article>
       <article className="cs-card anim-rise" data-d="1">
+        <div className="cs-img"><img src="/images/stock/case-fashion.webp" alt="" loading="lazy" decoding="async" /></div>
         <span className="cs-cat">Fashion · Web + UI/UX + Social</span>
         <div className="cs-metric"><span data-count="40" data-pre="+" data-suf="%">0</span></div>
         <div className="cs-metric-l">conversion rate lift</div>
@@ -96,6 +98,7 @@ export default function Home() {
         <div className="cs-foot"><b>Luxe Apparel</b><p>A redesign and social system built to convert.</p></div>
       </article>
       <article className="cs-card anim-rise" data-d="2">
+        <div className="cs-img"><img src="/images/stock/case-health.webp" alt="" loading="lazy" decoding="async" /></div>
         <span className="cs-cat">FMCG Health · Influencer + Meta Ads</span>
         <div className="cs-metric"><span data-count="4.3" data-suf="x">0</span></div>
         <div className="cs-metric-l">ROAS in month one</div>

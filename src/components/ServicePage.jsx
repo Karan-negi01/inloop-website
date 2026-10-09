@@ -14,7 +14,7 @@ function Title({ text }) {
   );
 }
 
-function Statement({ text, glance }) {
+function Statement({ text, glance, image }) {
   const ref = useRef(null);
   // words light up in sequence once the statement scrolls into view
   useEffect(() => {
@@ -31,16 +31,23 @@ function Statement({ text, glance }) {
   }, []);
 
   return (
-    <section className="sec svx-statement">
-      <p className="svx-words" ref={ref}>
-        {text.split(' ').map((w, k) => <span key={k} style={{ '--k': k }}>{w} </span>)}
-      </p>
-      {glance.length > 0 && (
-        <div className="svx-glance">
-          {glance.map(([big, label]) => (
-            <div className="svx-glance-i anim-rise" key={big}><b>{big}</b><span>{label}</span></div>
-          ))}
-        </div>
+    <section className={`sec svx-statement${image ? ' has-img' : ''}`}>
+      <div className="svx-st-text">
+        <p className="svx-words" ref={ref}>
+          {text.split(' ').map((w, k) => <span key={k} style={{ '--k': k }}>{w} </span>)}
+        </p>
+        {glance.length > 0 && (
+          <div className="svx-glance">
+            {glance.map(([big, label]) => (
+              <div className="svx-glance-i anim-rise" key={big}><b>{big}</b><span>{label}</span></div>
+            ))}
+          </div>
+        )}
+      </div>
+      {image && (
+        <figure className="svx-st-img anim-rise">
+          <img src={image} alt="" loading="lazy" decoding="async" />
+        </figure>
       )}
     </section>
   );
@@ -51,17 +58,29 @@ const ROTATE_MS = 4500;
 function Capabilities({ caps }) {
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);
+  const [inView, setInView] = useState(false);
+  const ref = useRef(null);
+
+  // only rotate while the showcase is actually on screen, so a visitor who
+  // scrolls down to it starts from the first capability
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // auto-advance until the visitor picks one themselves
   useEffect(() => {
-    if (!auto) return undefined;
+    if (!auto || !inView) return undefined;
     const t = setTimeout(() => setActive((a) => (a + 1) % caps.length), ROTATE_MS);
     return () => clearTimeout(t);
-  }, [active, auto, caps.length]);
+  }, [active, auto, inView, caps.length]);
 
   const cap = caps[active];
   return (
-    <section className="sec svx-caps">
+    <section className="sec svx-caps" ref={ref}>
       <div className="sec-head reveal-up">
         <div className="kick2">What we do</div>
         <h2>{caps.length} ways we <span className="grad">move the needle</span></h2>
@@ -79,7 +98,7 @@ function Capabilities({ caps }) {
             >
               <span className="svx-cap-n">{String(i + 1).padStart(2, '0')}</span>
               <span className="svx-cap-h">{c.h}</span>
-              <span className="svx-cap-bar" aria-hidden="true">{i === active && auto && <i key={active} />}</span>
+              <span className="svx-cap-bar" aria-hidden="true">{i === active && auto && inView && <i key={active} />}</span>
             </button>
           ))}
         </div>
@@ -110,7 +129,7 @@ function Rail({ label, items, reverse }) {
 }
 
 export default function ServicePage({ data, children }) {
-  const { route, eyebrow, title, sub, cta, badges, statement, glance, caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
+  const { route, image, eyebrow, title, sub, cta, badges, statement, glance, caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
 
   return (
     <div id="svp"><main className="route svx" data-route={route}>
@@ -128,7 +147,7 @@ export default function ServicePage({ data, children }) {
         </div>
       </header>
 
-      <Statement text={statement} glance={glance} />
+      <Statement text={statement} glance={glance} image={image} />
 
       {children}
 

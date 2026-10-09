@@ -1,5 +1,6 @@
-// AI video concepts — each card is a looping, CSS-animated storyboard of a
-// short-form ad (hook → demo → CTA) instead of a placeholder "play" thumbnail.
+// AI video concepts — each card is styled as a short-form video player whose
+// "footage" is a looping, CSS-animated storyboard of the ad (hook → demo → CTA),
+// with the scenes running as captions over it.
 const ICONS = {
   beauty: (
     <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M26 6h12v8H26z" /><path d="M22 14h20l2 8H20z" /><rect x="18" y="22" width="28" height="36" rx="6" /><path d="M26 34c2-3 10-3 12 0M28 42h8" /></svg>
@@ -23,27 +24,27 @@ const ICONS = {
 
 const CONCEPTS = [
   {
-    icon: 'beauty', title: 'Beauty, Health & Wellness', sub: 'UGC unboxings & routines', cta: 'Shop the routine',
+    icon: 'beauty', title: 'Beauty, Health & Wellness', sub: 'UGC unboxings & routines', len: '0:15',
     scenes: ['“I almost skipped this step…”', 'Texture close-up, day 1 → day 7', 'Glow kit — 20% off today'],
   },
   {
-    icon: 'fashion', title: 'Fashion & Apparel', sub: 'Lookbooks & try-on hooks', cta: 'Shop the look',
+    icon: 'fashion', title: 'Fashion & Apparel', sub: 'Lookbooks & try-on hooks', len: '0:12',
     scenes: ['One jacket, five outfits', 'AI try-on across body types', 'New drop — sizes XS to 3XL'],
   },
   {
-    icon: 'saas', title: 'High-Tech & SaaS', sub: 'Explainer & demo ads', cta: 'Start free trial',
+    icon: 'saas', title: 'High-Tech & SaaS', sub: 'Explainer & demo ads', len: '0:20',
     scenes: ['Still exporting reports by hand?', '3-click dashboard walkthrough', 'Live in 10 minutes'],
   },
   {
-    icon: 'services', title: 'Professional Services', sub: 'Talking-head authority', cta: 'Book a consult',
+    icon: 'services', title: 'Professional Services', sub: 'Talking-head authority', len: '0:18',
     scenes: ['3 mistakes that cost you clients', 'Expert breakdown, captioned', 'Free 15-min audit'],
   },
   {
-    icon: 'd2c', title: 'D2C & E-commerce', sub: 'Product spotlights', cta: 'Buy now',
+    icon: 'd2c', title: 'D2C & E-commerce', sub: 'Product spotlights', len: '0:15',
     scenes: ['Why 10,000 people switched', '360° product spin + reviews', 'Free shipping this week'],
   },
   {
-    icon: 'realestate', title: 'Real Estate', sub: 'Walkthrough reels', cta: 'Schedule a visit',
+    icon: 'realestate', title: 'Real Estate', sub: 'Walkthrough reels', len: '0:22',
     scenes: ['Sunrise from the 14th floor', 'AI-staged room walkthrough', '2 & 3 BHK — site visits open'],
   },
 ];
@@ -58,9 +59,10 @@ export default function AiVideoGrid() {
           <div className="aiv-thumb">
             <div className="aiv-top" aria-hidden="true">
               <div className="aiv-segs"><i /><i /><i /></div>
-              <div className="aiv-meta"><span className="aiv-badge">AI</span><span>Sponsored</span></div>
+              <div className="aiv-meta"><span className="aiv-badge">AI</span><span>Sponsored</span><span className="aiv-len">{c.len}</span></div>
             </div>
             <span className="aiv-ic">{ICONS[c.icon]}</span>
+            <span className="aiv-pp" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
             <ol className="aiv-scenes" aria-label={`${c.title} ad storyboard`}>
               {c.scenes.map((s, k) => (
                 <li className="aiv-scene" key={STAGES[k]}>
@@ -69,7 +71,11 @@ export default function AiVideoGrid() {
                 </li>
               ))}
             </ol>
-            <span className="aiv-cta" aria-hidden="true">{c.cta} <span>→</span></span>
+            <div className="aiv-bar" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+              <span className="aiv-track"><i /></span>
+              <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" /><path d="M16 9a4 4 0 0 1 0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+            </div>
           </div>
           <div className="aiv-label"><b>{c.title}</b><span>{c.sub}</span></div>
         </article>

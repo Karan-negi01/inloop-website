@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { initSiteEffects } from '@/lib/siteEffects';
+import { initSpotlight } from '@/lib/spotlight';
 import { SITE_URL, routeFromPath, seoForRoute } from '@/lib/seo';
 import CountryCodeSelect from './CountryCodeSelect';
 
@@ -49,6 +50,7 @@ export default function Layout() {
   // run the ported vanilla-JS behavior layer once, on client mount
   useEffect(() => {
     initSiteEffects();
+    initSpotlight();
   }, []);
 
   // instant pre-paint cover so a route swap never flashes the new page

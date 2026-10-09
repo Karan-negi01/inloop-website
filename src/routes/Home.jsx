@@ -60,6 +60,21 @@ export default function Home() {
     </div>
   </section>
 
+<section className="sec proc" id="process">
+    <div className="sec-head reveal-up">
+      <div className="kick2">How we work</div>
+      <h2>From first call to <span className="grad">compounding growth</span></h2>
+      <p className="sec-sub">One team, one plan, one dashboard — a simple loop we run for every brand we take on.</p>
+    </div>
+    <div className="proc-line anim-rise" aria-hidden="true"><i></i></div>
+    <ol className="proc-grid">
+      <li className="proc-step anim-rise"><span className="proc-n">01</span><h3>Discover</h3><p>A 48-hour deep dive into your brand, numbers, audience and competitors.</p></li>
+      <li className="proc-step anim-rise" data-d="1"><span className="proc-n">02</span><h3>Strategy</h3><p>A channel plan with clear targets, budgets and the creative angles to test.</p></li>
+      <li className="proc-step anim-rise" data-d="2"><span className="proc-n">03</span><h3>Launch</h3><p>Creative, campaigns, pages and tracking shipped by one team, fast.</p></li>
+      <li className="proc-step anim-rise" data-d="3"><span className="proc-n">04</span><h3>Scale</h3><p>Weekly optimisation and reporting — we double down on what converts.</p></li>
+    </ol>
+  </section>
+
 <section className="sec cases" id="work">
     <div className="sec-head reveal-up">
       <div className="kick2">Case studies</div>
@@ -68,24 +83,27 @@ export default function Home() {
     <div className="cs-grid">
       <article className="cs-card anim-rise">
         <span className="cs-cat">App · Social + Paid Ads</span>
-        <div className="cs-metric">3.2x</div>
+        <div className="cs-metric"><span data-count="3.2" data-suf="x">0</span></div>
         <div className="cs-metric-l">installs in 60 days</div>
+        <svg className="cs-chart" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true"><path className="cs-area" d="M0 60 C40 58 70 54 100 46 S160 26 200 14 S230 6 240 4 V64 H0Z" /><path className="cs-line" pathLength="1" d="M0 60 C40 58 70 54 100 46 S160 26 200 14 S230 6 240 4" /></svg>
         <div className="cs-foot"><b>Apploft</b><p>Scaled installs with a social-first paid engine.</p></div>
       </article>
       <article className="cs-card anim-rise" data-d="1">
         <span className="cs-cat">Fashion · Web + UI/UX + Social</span>
-        <div className="cs-metric">+40%</div>
+        <div className="cs-metric"><span data-count="40" data-pre="+" data-suf="%">0</span></div>
         <div className="cs-metric-l">conversion rate lift</div>
+        <div className="cs-bars" aria-hidden="true"><span style={{'--v': .71}}><i>Before</i></span><span className="up" style={{'--v': 1}}><i>After</i></span></div>
         <div className="cs-foot"><b>Luxe Apparel</b><p>A redesign and social system built to convert.</p></div>
       </article>
       <article className="cs-card anim-rise" data-d="2">
         <span className="cs-cat">FMCG Health · Influencer + Meta Ads</span>
-        <div className="cs-metric">4.3x</div>
+        <div className="cs-metric"><span data-count="4.3" data-suf="x">0</span></div>
         <div className="cs-metric-l">ROAS in month one</div>
+        <svg className="cs-chart" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true"><path className="cs-area" d="M0 54 L40 50 L80 42 L120 44 L160 26 L200 18 L240 6 V64 H0Z" /><path className="cs-line" pathLength="1" d="M0 54 L40 50 L80 42 L120 44 L160 26 L200 18 L240 6" /></svg>
         <div className="cs-foot"><b>FMCG health brand</b><p>Creator-led demand at profitable ROAS.</p></div>
       </article>
     </div>
-    <div className="cs-strip reveal-up"><span className="cs-strip-n">25+</span><span>brands and counting across accounts</span><span className="cs-strip-sep" aria-hidden="true"></span><span>Real systems, real numbers.</span></div>
+    <div className="cs-strip reveal-up"><span className="cs-strip-n"><span data-count="25" data-suf="+">0</span></span><span>brands and counting across accounts</span><span className="cs-strip-sep" aria-hidden="true"></span><span>Real systems, real numbers.</span></div>
   </section>
 
 <section className="sec adsx" id="ads">

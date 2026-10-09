@@ -64,6 +64,9 @@ export default function ServicesFlip() {
         if (!card) return;
         const frontEl = card.querySelector('.flip-card-front');
         const backEl = card.querySelector('.flip-card-back');
+        // centre explicitly: GSAP only infers the CSS translate(-50%,-50%) when it
+        // rounds to exactly half the card size, which fails for fractional sizes
+        gsap.set(card, { xPercent: -50, yPercent: -50, x: 0, y: 0 });
         gsap.set(backEl, { rotateY: 180 });
         gsap.set(frontEl, { rotateY: 0 });
 

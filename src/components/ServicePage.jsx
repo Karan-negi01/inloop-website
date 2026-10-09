@@ -14,7 +14,7 @@ function Title({ text }) {
   );
 }
 
-function Statement({ text, glance, image }) {
+function Statement({ text }) {
   const ref = useRef(null);
   // words light up in sequence once the statement scrolls into view
   useEffect(() => {
@@ -31,31 +31,17 @@ function Statement({ text, glance, image }) {
   }, []);
 
   return (
-    <section className={`sec svx-statement${image ? ' has-img' : ''}`}>
-      <div className="svx-st-text">
-        <p className="svx-words" ref={ref}>
-          {text.split(' ').map((w, k) => <span key={k} style={{ '--k': k }}>{w} </span>)}
-        </p>
-        {glance.length > 0 && (
-          <div className="svx-glance">
-            {glance.map(([big, label]) => (
-              <div className="svx-glance-i anim-rise" key={big}><b>{big}</b><span>{label}</span></div>
-            ))}
-          </div>
-        )}
-      </div>
-      {image && (
-        <figure className="svx-st-img anim-rise">
-          <img src={image} alt="" loading="lazy" decoding="async" />
-        </figure>
-      )}
+    <section className="sec svx-statement">
+      <p className="svx-words" ref={ref}>
+        {text.split(' ').map((w, k) => <span key={k} style={{ '--k': k }}>{w} </span>)}
+      </p>
     </section>
   );
 }
 
 const ROTATE_MS = 4500;
 
-function Capabilities({ caps }) {
+function Capabilities({ caps, image }) {
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);
   const [inView, setInView] = useState(false);
@@ -102,7 +88,8 @@ function Capabilities({ caps }) {
             </button>
           ))}
         </div>
-        <div className="svx-panel" role="tabpanel" key={active}>
+        <div className="svx-panel" role="tabpanel" key={active} data-noview>
+          {image && <img className="svx-panel-img" src={image} alt="" loading="lazy" decoding="async" aria-hidden="true" />}
           <span className="svx-panel-glyph" aria-hidden="true">{cap.ic}</span>
           <span className="svx-panel-ic" aria-hidden="true">{cap.ic}</span>
           <h3>{cap.h}</h3>
@@ -129,29 +116,36 @@ function Rail({ label, items, reverse }) {
 }
 
 export default function ServicePage({ data, children }) {
-  const { route, image, eyebrow, title, sub, cta, badges, statement, glance, caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
+  const { route, image, accent, eyebrow, title, sub, cta, badges, statement, glance, caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
 
   return (
-    <div id="svp"><main className="route svx" data-route={route}>
-      <header className="sp-hero">
-        <div className="hero-orbit" aria-hidden="true"><span className="ho-glow"></span><svg className="ho-rings" viewBox="0 0 800 800"><g className="ho-spin s1"><circle className="ho-c" cx="400" cy="400" r="158"/></g><g className="ho-spin s2"><circle className="ho-c dash" cx="400" cy="400" r="238"/><circle className="ho-dot" cx="400" cy="162" r="4"/></g><g className="ho-spin s3"><circle className="ho-c thin dash" cx="400" cy="400" r="318"/></g><g className="ho-spin s4"><circle className="ho-c faint" cx="400" cy="400" r="392"/><circle className="ho-dot" cx="400" cy="8" r="3"/></g></svg></div>
-        <div className="reveal d1"><span className="sp-eyebrow"><span className="dot"></span>{eyebrow}</span></div>
-        <h1 className="reveal d2 pt-fade svx-title"><Title text={title} /></h1>
-        <p className="reveal d3 sub pt-fade">{sub}</p>
-        <div className="reveal d4 cta-row pt-fade">
-          <Link className="btn primary lg magnetic" data-mag="0.3" to="/#contact">{cta}</Link>
-          <Link className="btn ghost magnetic" data-mag="0.3" to="/#services">All services <span className="arr">↗</span></Link>
+    <div id="svp"><main className="route svx" data-route={route} style={{ '--acc': accent }}>
+      <header className="sp-hero svx-hero">
+        <div className="svx-hero-copy">
+          <div className="reveal d1"><span className="sp-eyebrow"><span className="dot"></span>{eyebrow}</span></div>
+          <h1 className="reveal d2 pt-fade svx-title"><Title text={title} /></h1>
+          <p className="reveal d3 sub pt-fade">{sub}</p>
+          <div className="reveal d4 cta-row pt-fade">
+            <Link className="btn primary lg magnetic" data-mag="0.3" to="/#contact">{cta}</Link>
+            <Link className="btn ghost magnetic" data-mag="0.3" to="/#services">All services <span className="arr">↗</span></Link>
+          </div>
+          <div className="sp-badges reveal d4">
+            {badges.map((b) => <span className="sp-badge" key={b}>{b}</span>)}
+          </div>
         </div>
-        <div className="sp-badges reveal d4">
-          {badges.map((b) => <span className="sp-badge" key={b}>{b}</span>)}
-        </div>
+        <figure className="svx-hero-media reveal d3" data-noview>
+          <img src={image} alt="" decoding="async" fetchPriority="high" />
+          {glance.map(([big, label], i) => (
+            <span className={`svx-chip-stat s${i}`} key={big}><b>{big}</b><span>{label}</span></span>
+          ))}
+        </figure>
       </header>
 
-      <Statement text={statement} glance={glance} image={image} />
+      <Statement text={statement} />
 
       {children}
 
-      <Capabilities caps={caps} />
+      <Capabilities caps={caps} image={image} />
 
       <section className="sec svx-process">
         <div className="sec-head reveal-up">

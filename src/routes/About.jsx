@@ -9,14 +9,17 @@ gsap.registerPlugin(ScrollTrigger);
 const STORY = [
   {
     title: 'Born from a simple observation',
+    image: '/images/stock/story-1.webp',
     body: 'We watched brands with average ideas and strong systems consistently outgrow brands with brilliant ideas and no structure. That one pattern changed how we think about everything.',
   },
   {
     title: 'Built for modern brands',
+    image: '/images/stock/story-2.webp',
     body: "Inloop Media was built to bring that thinking to modern brands — combining structured growth systems, performance-driven content and AI-powered execution under one roof. Today, we're building one of the most ambitious AI-first marketing ecosystems, working across creative, performance, media and technology.",
   },
   {
     title: 'Backed by AMS Group',
+    image: '/images/stock/story-3.webp',
     body: 'As part of AMS Group, we bring the heritage of a diversified business group to every brand we grow — blending proven business wisdom with the speed of today.',
   },
 ];
@@ -89,39 +92,6 @@ export default function About() {
         scrollTrigger: { trigger: '.abx-belief-prose', start: 'top 85%' },
       });
 
-      const mm = gsap.matchMedia();
-
-      // ── story: pinned, three chapters crossfade (desktop only) ──
-      mm.add('(min-width: 861px)', () => {
-        const pinEl = root.querySelector('.abx-story-pin');
-        const chapters = gsap.utils.toArray('.abx-chapter');
-        const counter = root.querySelector('.abx-story-count b');
-        const dots = gsap.utils.toArray('.abx-dot');
-        gsap.set(chapters.slice(1), { autoAlpha: 0, y: 28 });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: pinEl,
-            start: 'top top',
-            end: `+=${window.innerHeight * 2.2}`,
-            pin: true,
-            scrub: 1.2,
-            anticipatePin: 1,
-            onUpdate(self) {
-              const i = Math.min(chapters.length - 1, Math.floor(self.progress * chapters.length));
-              if (counter) counter.textContent = pad(i + 1);
-              dots.forEach((d, k) => d.classList.toggle('on', k === i));
-            },
-          },
-        });
-        tl.fromTo('.abx-story-bar i', { scaleX: 0 }, { scaleX: 1, ease: 'none', duration: chapters.length }, 0);
-        chapters.forEach((ch, i) => {
-          if (i === 0) return;
-          tl.to(chapters[i - 1], { autoAlpha: 0, y: -28, duration: 0.5, ease: 'power1.inOut' }, i - 0.35);
-          tl.to(ch, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power1.inOut' }, i - 0.1);
-        });
-      });
-
       // ── values: each row lights up as it reaches the middle of the screen ──
       gsap.utils.toArray('.abx-value').forEach((row) => {
         gsap.fromTo(
@@ -187,25 +157,22 @@ export default function About() {
       </div>
     </section>
 
-    {/* story — pinned chapters on desktop, stacked on mobile */}
-    <section className="abx-story" id="story">
-      <div className="abx-story-pin">
-        <div className="abx-story-side">
-          <div className="kick2">Our story</div>
-          <div className="abx-story-count"><b>01</b><span>/ {pad(STORY.length)}</span></div>
-          <div className="abx-story-bar" aria-hidden="true"><i></i></div>
-          <div className="abx-dots" aria-hidden="true">{STORY.map((_, i) => <span key={i} className={`abx-dot${i === 0 ? ' on' : ''}`}></span>)}</div>
-        </div>
-        <div className="abx-chapters">
-          {STORY.map((c, i) => (
-            <article className="abx-chapter" key={c.title}>
-              <span className="abx-chapter-n">Chapter {pad(i + 1)}</span>
-              <h2>{c.title}</h2>
-              <p>{c.body}</p>
-            </article>
-          ))}
-        </div>
+    {/* story — three chapters as photo cards on a timeline */}
+    <section className="sec abx-story2" id="story">
+      <div className="abx-head">
+        <div className="kick2">Our story</div>
+        <h2>How Inloop <span className="grad">came to be</span></h2>
       </div>
+      <ol className="abx-tl">
+        {STORY.map((c, i) => (
+          <li className="abx-tl-item anim-rise" key={c.title} data-noview>
+            <figure className="abx-tl-img"><img src={c.image} alt="" loading="lazy" decoding="async" /></figure>
+            <span className="abx-tl-n">Chapter {pad(i + 1)}</span>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+          </li>
+        ))}
+      </ol>
     </section>
 
     <section className="sec founders founders-ab" id="founders-ab"><div className="fwrap"><div className="fnd-head"><span className="fnd-kick">AMS Group Leadership</span><h2 className="fnd-title">Meet the founders</h2><p className="fnd-ams-note">Inloop Media is part of AMS Group.</p></div><div className="fnd-grid"><div className="fnd-text"><article className="fnd-block"><h3>Sarthak Garg</h3><p className="fbio">Sarthak leads AMS with a strong execution-first mindset. He focuses on building high-performing teams, driving measurable impact, and creating systems that scale. Known for his clarity and speed, he believes in turning ideas into outcomes — fast and right.</p><div className="fnd-q"><span className="ql">Quote</span><blockquote>“Strong teams and clear ownership build great companies.”</blockquote></div></article><article className="fnd-block"><h3>Mayank Aggarwal</h3><p className="fbio">Mayank brings a balance of strategy and creativity to AMS. He works closely on brand vision, partnerships, and culture, ensuring growth is thoughtful and sustainable. His approach keeps people and purpose at the center of everything AMS builds.</p><div className="fnd-q"><span className="ql">Quote</span><blockquote>“When people grow, businesses follow.”</blockquote></div></article></div><figure className="fnd-photo"><div className="fnd-card"><div className="pic fnd-pic" role="img" aria-label="Sarthak Garg and Mayank Aggarwal, founders of AMS"></div></div><figcaption>Sarthak Garg &amp; Mayank Aggarwal — Founders, AMS</figcaption></figure></div></div></section>

@@ -3171,42 +3171,131 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
   box-shadow:0 60px 140px -60px rgba(255,255,255,.25),inset 0 1px 0 rgba(255,255,255,.16)}
 #aiad .aiad-wrap::before{content:"";position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,#fff,transparent)}
 
-/* ================= PHOTOGRAPHY (stock photos in public/images/stock) =================
-   Photos sit in black & white to match the theme and bloom into colour on hover —
-   the one place colour is allowed in. */
-.svx-st-img img,.cs-img img,.svc-bento .svc-bg{
-  filter:grayscale(1) contrast(1.08) brightness(.82);
-  transition:filter .8s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1),opacity .6s}
-
-/* service pages: statement + a tall photo card */
-@media(min-width:901px){
-  #svp .svx-statement.has-img{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,5vw,72px);
-    align-items:center;text-align:left;max-width:1180px}
-  #svp .svx-statement.has-img .svx-words{margin:0;max-width:16ch}
-  #svp .svx-statement.has-img .svx-glance{justify-content:flex-start}
-}
-.svx-st-img{position:relative;margin:0;overflow:hidden;aspect-ratio:4/5;max-height:78vh;border-radius:28px;
-  border:1px solid rgba(255,255,255,.12);box-shadow:0 50px 120px -50px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.03)}
-.svx-st-img::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(8,8,8,0) 45%,rgba(8,8,8,.75)),radial-gradient(120% 80% at 100% 0%,rgba(255,255,255,.12),transparent 50%)}
-.svx-st-img img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.03)}
-.svx-st-img:hover img{filter:grayscale(0) contrast(1.02) brightness(.95);transform:scale(1.07)}
-@media(max-width:900px){
-  .svx-st-img{aspect-ratio:16/11;margin-top:36px;border-radius:22px}
-}
+/* ================= PHOTOGRAPHY (stock photos in public/images/stock, full colour) ================= */
+.cs-img img,.svc-bento .svc-bg{transition:transform 1.2s cubic-bezier(.2,.7,.2,1),opacity .6s}
 
 /* home case studies: a photo header on each card */
 .cs-img{position:relative;margin:calc(-1 * clamp(28px,2.6vw,36px)) calc(-1 * clamp(24px,2.4vw,32px)) 22px;height:170px;overflow:hidden;
   border-bottom:1px solid rgba(255,255,255,.08)}
 .cs-img::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,8,8,0) 30%,rgba(10,10,11,.9))}
 .cs-img img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.02)}
-.cs-card:hover .cs-img img{filter:grayscale(0) contrast(1.02) brightness(.95);transform:scale(1.08)}
+.cs-card:hover .cs-img img{transform:scale(1.08)}
 
-/* home services bento: photography behind the two feature cards */
-.svc-bento .svc-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.6;pointer-events:none;
-  -webkit-mask-image:linear-gradient(180deg,#000 25%,rgba(0,0,0,.35) 70%,transparent);mask-image:linear-gradient(180deg,#000 25%,rgba(0,0,0,.35) 70%,transparent)}
-.svc-bento .bx-lg:has(.svc-bg)::before{z-index:1}
-.svc-bento .bx-lg:has(.svc-bg) .svc-tx,.svc-bento .bx-lg:has(.svc-bg) .svc-ic{position:relative;z-index:2}
-.svc-bento .bx-lg:has(.svc-bg){background:linear-gradient(180deg,rgba(8,8,8,.15),rgba(8,8,8,.85)),#0b0b0c}
-.svc-bento .bx-lg:hover .svc-bg{opacity:.85;filter:grayscale(0) contrast(1.02) brightness(.8);transform:scale(1.05)}
-@media(prefers-reduced-motion:reduce){.svx-st-img img,.cs-img img,.svc-bento .svc-bg{transition:filter .3s;transform:none!important}}
+/* home services bento: every card carries its service's photo, fading out
+   towards the copy at the bottom */
+.svc-bento .svc-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.5;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 10%,rgba(0,0,0,.4) 60%,transparent 92%);mask-image:linear-gradient(180deg,#000 10%,rgba(0,0,0,.4) 60%,transparent 92%)}
+.svc-bento .svc:has(.svc-bg){background:#0b0b0c}
+.svc-bento .svc:has(.svc-bg)::before{z-index:1}
+.svc-bento .svc:has(.svc-bg) :is(.svc-tx,.svc-ic,.svc-go){position:relative;z-index:2}
+.svc-bento .svc:has(.svc-bg) .svc-go{position:absolute}
+.svc-bento .svc:has(.svc-bg) .svc-tx p{color:#c9cbce}
+.svc-bento .bx-lg .svc-bg{opacity:.62}
+.svc-bento .svc:hover .svc-bg{opacity:.85;transform:scale(1.05)}
+@media(prefers-reduced-motion:reduce){.cs-img img,.svc-bento .svc-bg{transition:none;transform:none!important}}
+
+/* home case studies: the photo fills the card, the result sits over it */
+#work .cs-card{min-height:clamp(440px,40vw,520px);justify-content:flex-end;border-color:rgba(255,255,255,.1);background:#0b0b0c}
+#work .cs-img{position:absolute;inset:0;margin:0;height:auto;border:0;z-index:0}
+#work .cs-img::after{background:linear-gradient(180deg,rgba(8,8,8,.15) 0%,rgba(8,8,8,.35) 35%,rgba(8,8,8,.92) 72%,#0a0a0b 100%)}
+#work .cs-card > :not(.cs-img){position:relative;z-index:1}
+#work .cs-card > .cs-cat{position:absolute;top:clamp(22px,2.2vw,28px);left:clamp(22px,2.2vw,28px);padding:7px 12px;border-radius:999px;
+  color:#fff;letter-spacing:.14em;background:rgba(10,10,11,.55);border:1px solid rgba(255,255,255,.18);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#work .cs-metric{margin-top:0}
+#work .cs-metric-l{color:#fff}
+#work .cs-foot{border-top-color:rgba(255,255,255,.14)}
+#work .cs-foot p{color:#c4c6c9}
+#work .cs-card:hover{border-color:rgba(255,255,255,.24)}
+
+/* ================= SERVICE PAGES v2 — split photo hero + a signature accent per service =================
+   --acc is set per page from src/lib/serviceData.js (gold for branding, pink for social…). */
+#svp .svx{--acc:#ffffff;--acc-soft:color-mix(in srgb,var(--acc) 35%,transparent);--acc-faint:color-mix(in srgb,var(--acc) 14%,transparent)}
+
+/* hero: copy on the left, a big colour photo on the right with floating stat chips */
+#svp .svx .sp-hero.svx-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,72px);
+  align-items:center;text-align:left;max-width:1240px;padding-top:clamp(120px,14vh,150px)}
+#svp .svx-hero-copy{display:flex;flex-direction:column;align-items:flex-start}
+#svp .svx .svx-hero .svx-title{font-size:clamp(40px,5.4vw,80px);max-width:12ch}
+#svp .svx .svx-hero .sub{max-width:46ch}
+#svp .svx .svx-hero .cta-row,#svp .svx .svx-hero .sp-badges{justify-content:flex-start}
+.svx-hero-media{position:relative;margin:0}
+.svx-hero-media::before{content:"";position:absolute;inset:8% 6% -4%;border-radius:40px;z-index:0;pointer-events:none;
+  background:radial-gradient(closest-side,var(--acc-soft),transparent);filter:blur(40px)}
+.svx-hero-media img{position:relative;z-index:1;display:block;width:100%;aspect-ratio:4/5;max-height:min(74vh,640px);object-fit:cover;
+  border-radius:32px;border:1px solid rgba(255,255,255,.14);box-shadow:0 50px 120px -50px rgba(0,0,0,.95)}
+.svx-chip-stat{position:absolute;z-index:2;display:flex;flex-direction:column;gap:4px;padding:14px 18px;border-radius:18px;
+  background:rgba(12,12,13,.62);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.9);animation:svxFloat 6s ease-in-out infinite}
+.svx-chip-stat b{font:700 clamp(20px,2vw,26px)/1 "Bricolage Grotesque",sans-serif;color:var(--acc)}
+.svx-chip-stat span{font-size:12.5px;color:#d4d5d8;max-width:22ch}
+.svx-chip-stat.s0{left:-28px;bottom:36px}
+.svx-chip-stat.s1{right:-22px;top:32px;animation-delay:-3s}
+@keyframes svxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(max-width:1000px){
+  #svp .svx .sp-hero.svx-hero{grid-template-columns:minmax(0,1fr);gap:40px}
+  .svx-hero-media img{aspect-ratio:16/11}
+  .svx-chip-stat.s0{left:12px;bottom:12px}
+  .svx-chip-stat.s1{right:12px;top:12px}
+}
+
+/* the accent, used with restraint */
+#svp .svx .grad{background:linear-gradient(100deg,#ffffff 10%,var(--acc) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#svp .svx .sp-eyebrow .dot{background:var(--acc);box-shadow:0 0 12px var(--acc)}
+#svp .svx .kick2{color:var(--acc);opacity:1}
+#svp .svx .sp-badge{border-color:var(--acc-soft)}
+
+/* statement: centred, words light up */
+#svp .svx-statement{text-align:center}
+#svp .svx-statement .svx-words{margin:0 auto}
+
+/* capability showcase: accent bar + the service photo inside the panel */
+.svx .svx-cap.on{border-color:var(--acc-soft);background:var(--acc-faint)}
+.svx .svx-cap.on .svx-cap-n{color:var(--acc);opacity:1}
+.svx .svx-cap-bar i{background:var(--acc)}
+.svx .svx-panel{background:radial-gradient(120% 90% at 100% 0%,var(--acc-soft),transparent 60%),linear-gradient(180deg,#141415,#0a0a0b);
+  border-color:var(--acc-soft)}
+.svx-panel-img{position:absolute;top:0;right:0;width:62%;height:100%;object-fit:cover;opacity:.8;pointer-events:none;
+  -webkit-mask-image:linear-gradient(270deg,#000 35%,transparent);mask-image:linear-gradient(270deg,#000 35%,transparent);
+  animation:svxKen 9s ease-out both}
+@keyframes svxKen{from{transform:scale(1.12)}to{transform:scale(1)}}
+.svx-panel:has(.svx-panel-img) .svx-panel-glyph{display:none}
+.svx-panel :is(.svx-panel-ic,h3,p){position:relative;z-index:1}
+.svx-panel .svx-panel-n{z-index:1}
+.svx .svx-panel-ic{background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--acc) 55%,#fff));box-shadow:0 0 34px var(--acc-soft)}
+.svx .svx-panel p{max-width:34ch;text-shadow:0 2px 16px rgba(0,0,0,.8)}
+.svx .svx-panel h3{text-shadow:0 4px 30px rgba(0,0,0,.7)}
+@media(max-width:900px){.svx-panel-img{width:100%;opacity:.45;-webkit-mask-image:linear-gradient(180deg,#000 20%,transparent 85%);mask-image:linear-gradient(180deg,#000 20%,transparent 85%)}}
+
+/* process, rails, tiles, CTA */
+.svx .svx-line i{background:linear-gradient(90deg,var(--acc-faint),var(--acc));box-shadow:0 0 14px var(--acc-soft)}
+.svx .svx-step-n{-webkit-text-stroke-color:var(--acc)}
+.svx .svx-step:hover .svx-step-n{color:var(--acc);-webkit-text-stroke-color:var(--acc);text-shadow:0 0 30px var(--acc-soft)}
+.svx .svx-chip::before{content:"";display:inline-block;width:6px;height:6px;margin-right:10px;border-radius:50%;vertical-align:middle;
+  background:var(--acc);box-shadow:0 0 10px var(--acc)}
+.svx .svx-tile:is(:hover,:focus-visible) .svx-tile-ic{background:var(--acc);color:#0b0b0c;border-color:transparent}
+.svx .svx-tile:is(:hover,:focus-visible){border-color:var(--acc-soft)}
+.svx :is(.svx-panel,.svx-step,.svx-tile)::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),var(--acc-faint),transparent 50%)}
+#svp .svx .cta-band-inner{border-color:var(--acc-soft);box-shadow:0 60px 140px -60px var(--acc-soft)}
+@media(prefers-reduced-motion:reduce){.svx-chip-stat,.svx-panel-img{animation:none}}
+
+/* ================= ABOUT — "Our story" photo timeline ================= */
+#svp .abx-story2{max-width:1180px}
+.abx-tl{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,24px);margin:0;padding:0;list-style:none}
+.abx-tl::before{content:"";position:absolute;left:0;right:0;top:calc(clamp(200px,22vw,260px) + 28px);height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)}
+.abx-tl-item{position:relative;display:flex;flex-direction:column;gap:12px}
+.abx-tl-img{position:relative;margin:0 0 18px;height:clamp(200px,22vw,260px);overflow:hidden;border-radius:24px;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 40px 90px -50px rgba(0,0,0,.95)}
+.abx-tl-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(8,8,8,.55))}
+.abx-tl-img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.abx-tl-item:hover .abx-tl-img img{transform:scale(1.07)}
+.abx-tl-n{position:relative;align-self:flex-start;padding:6px 12px;border-radius:999px;font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:#0b0b0c;background:linear-gradient(180deg,#fff,#cfd0d2);box-shadow:0 0 0 6px #080808,0 0 24px rgba(255,255,255,.3)}
+#svp .abx-tl-item h3{margin:6px 0 0;font:700 clamp(21px,2vw,26px)/1.15 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;color:#fff}
+#svp .abx-tl-item p{margin:0;font-size:15px;line-height:1.65;color:var(--muted)}
+@media(max-width:860px){
+  .abx-tl{grid-template-columns:minmax(0,1fr);gap:44px}
+  .abx-tl::before{display:none}
+  .abx-tl-img{height:220px}
+}

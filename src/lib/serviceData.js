@@ -1,9 +1,11 @@
 // Content for the service pages, rendered by src/components/ServicePage.jsx.
-// `title` wraps the highlighted words in [brackets].
+// `title` wraps the highlighted words in [brackets]; `accent` is the page's
+// signature colour (glows, numbers, highlights) on the black base.
 export const SERVICES = {
   "branding": {
     "route": "branding",
     "image": "/images/stock/branding.webp",
+    "accent": "#E8B86D",
     "eyebrow": "Service 01 · Inloop Media",
     "sub": "We build AI-led brand identities that help modern brands define who they are, communicate with conviction and stay relevant as they scale.",
     "cta": "Begin Your Brand Journey",
@@ -108,6 +110,7 @@ export const SERVICES = {
   "social-media": {
     "route": "social-media",
     "image": "/images/stock/social-media.webp",
+    "accent": "#FF6B9A",
     "eyebrow": "Service 02 · Inloop Media",
     "sub": "We create and manage social experiences that keep modern brands relevant, consistent and culturally connected across every platform.",
     "cta": "Grow Your Social Presence",
@@ -215,6 +218,7 @@ export const SERVICES = {
   "website": {
     "route": "website",
     "image": "/images/stock/website.webp",
+    "accent": "#5B8CFF",
     "eyebrow": "Service 03 · Inloop Media",
     "sub": "We design and develop responsive, premium, user-focused websites that create strong digital impressions and convert visitors into customers.",
     "cta": "Build My Website",
@@ -325,6 +329,7 @@ export const SERVICES = {
   "influencer": {
     "route": "influencer",
     "image": "/images/stock/influencer.webp",
+    "accent": "#B57CFF",
     "eyebrow": "Service 04 · Inloop Media",
     "sub": "We help brands discover, collaborate and grow through authentic influencer campaigns that build awareness, trust and measurable impact.",
     "cta": "Plan Your Campaign",
@@ -431,6 +436,7 @@ export const SERVICES = {
   "performance": {
     "route": "performance",
     "image": "/images/stock/performance.webp",
+    "accent": "#34D399",
     "eyebrow": "Service 05 · Inloop Media",
     "sub": "We plan, build and optimize paid campaigns that help brands move faster and market smarter across every channel.",
     "cta": "Run Better Ads",
@@ -537,6 +543,7 @@ export const SERVICES = {
   "ai": {
     "route": "ai",
     "image": "/images/stock/ai.webp",
+    "accent": "#8B7CFF",
     "eyebrow": "Service 06 · Inloop Media",
     "sub": "We use AI-led workflows to help brands create smarter content, faster concepts, scalable campaigns and leaner creative systems.",
     "cta": "Explore AI Solutions",
@@ -642,6 +649,7 @@ export const SERVICES = {
   "creator-management": {
     "route": "creator-management",
     "image": "/images/stock/creator-management.webp",
+    "accent": "#FF9F5A",
     "eyebrow": "Service 07 · Inloop Media",
     "sub": "We help creators build stronger personal brands, improve content direction and unlock better collaboration opportunities.",
     "cta": "Manage My Creator Journey",
@@ -748,6 +756,7 @@ export const SERVICES = {
   "production": {
     "route": "production",
     "image": "/images/stock/production.webp",
+    "accent": "#FF5A5F",
     "eyebrow": "Service 08 · Inloop Media",
     "sub": "We create high-quality video, photography and campaign content that makes brands look polished, professional and visually impactful.",
     "cta": "Plan Your Production",
@@ -855,6 +864,7 @@ export const SERVICES = {
   "pr": {
     "route": "pr",
     "image": "/images/stock/pr.webp",
+    "accent": "#2DD4BF",
     "eyebrow": "Service 09 · Inloop Media",
     "sub": "We help brands communicate with clarity, strengthen reputation and create meaningful visibility across media and digital platforms.",
     "cta": "Build Brand Reputation",
@@ -960,6 +970,7 @@ export const SERVICES = {
   "content": {
     "route": "content",
     "image": "/images/stock/content.webp",
+    "accent": "#FFC857",
     "eyebrow": "Service 10 · Inloop Media",
     "sub": "We create strategic, visually polished and platform-ready content for brands, campaigns, websites and social media.",
     "cta": "Create Better Content",
@@ -1068,6 +1079,7 @@ export const SERVICES = {
   "seo": {
     "route": "seo",
     "image": "/images/stock/seo.webp",
+    "accent": "#4FC3F7",
     "eyebrow": "Service 11 · Inloop Media",
     "sub": "We help brands improve their organic search presence through strategic SEO, technical optimization, content planning and search-focused growth systems designed to attract the right audience consistently.",
     "cta": "Improve My Search Visibility",
@@ -1238,6 +1250,7 @@ export const SERVICES = {
   "ecommerce": {
     "route": "ecommerce",
     "image": "/images/stock/ecommerce.webp",
+    "accent": "#10B981",
     "eyebrow": "Service 12 · Inloop Media",
     "sub": "We help e-commerce brands improve storefront experience, product storytelling, conversion journeys and retention systems to drive stronger sales and long-term growth.",
     "cta": "Optimize My Store",

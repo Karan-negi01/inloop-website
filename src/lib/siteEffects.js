@@ -332,7 +332,8 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
     if(!ring) return;
     var SEL = 'img,.mz-tile,.wrk-gal,.wrk-reel,.fc-visual,.st-visual,video,.lc-item,.av-frame,.member';
     document.addEventListener('mouseover', function(e){
-      if(e.target.closest && e.target.closest(SEL)){ ring.classList.add('view'); dot && dot.classList.add('view'); }
+      // no "VIEW" over decorative photos that aren't clickable (marked data-noview)
+      if(e.target.closest && e.target.closest(SEL) && !e.target.closest('[data-noview]')){ ring.classList.add('view'); dot && dot.classList.add('view'); }
     });
     document.addEventListener('mouseout', function(e){
       if(e.target.closest && e.target.closest(SEL)){ ring.classList.remove('view'); dot && dot.classList.remove('view'); }

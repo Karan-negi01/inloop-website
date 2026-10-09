@@ -1007,12 +1007,16 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
       update();
 
       // autoplay alongside manual scrolling: advance one card every few seconds
-      // and loop back at the end; pauses for a while after the visitor scrolls
-      // or clicks it, and whenever the carousel is off-screen
+      // and loop back at the end. It pauses briefly only after the visitor
+      // actually moves the carousel (drag / sideways scroll / arrows) — plain
+      // page scrolling over it must not stop it — and while it is off-screen.
       (function(){
-        var resumeAt=0;
-        function hold(){ resumeAt=Date.now()+7000; }
-        ['pointerdown','wheel','touchstart','keydown'].forEach(function(ev){ track.addEventListener(ev,hold,{passive:true}); });
+        var resumeAt=0, gliding=false;
+        function hold(){ resumeAt=Date.now()+5000; }
+        track.addEventListener('pointerdown',hold,{passive:true});
+        track.addEventListener('keydown',hold);
+        track.addEventListener('wheel',function(e){ if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) hold(); },{passive:true});
+        track.addEventListener('scroll',function(){ if(!gliding) hold(); },{passive:true});
         prev.addEventListener('click',hold); next.addEventListener('click',hold);
         // on-screen check straight from layout (no observer), so it never goes stale
         function onScreen(){ var r=track.getBoundingClientRect(); return r.bottom>innerHeight*.15 && r.top<innerHeight*.85; }
@@ -1020,10 +1024,12 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
         // browser, independent of native smooth-scroll support
         function glide(to){
           var from=track.scrollLeft, t0=null;
+          gliding=true;
           track.style.scrollSnapType='none';
           function f(ts){ if(t0===null) t0=ts; var p=Math.min((ts-t0)/700,1);
             track.scrollLeft=from+(to-from)*(p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2);
-            if(p<1) requestAnimationFrame(f); else track.style.scrollSnapType=''; }
+            if(p<1) requestAnimationFrame(f);
+            else { track.style.scrollSnapType=''; setTimeout(function(){ gliding=false; },120); } }
           requestAnimationFrame(f);
         }
         var auto=setInterval(function(){

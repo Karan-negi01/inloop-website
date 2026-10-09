@@ -55,14 +55,22 @@ export default function AiVideoGrid() {
   return (
     <div className="aiv-grid" ref={gridRef}>
       {CONCEPTS.map((c, i) => (
-        <article className="aiv-card anim-rise" style={{ '--i': i }} key={c.title} onClick={() => setOpen(i)}>
+        <article
+          className="aiv-card anim-rise"
+          style={{ '--i': i }}
+          key={c.title}
+          role="button"
+          tabIndex={0}
+          aria-label={`Play ${c.title} video`}
+          onClick={() => setOpen(i)}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(i); } }}
+        >
           <div className="aiv-thumb">
             <video className="aiv-video" src={c.video} muted loop playsInline preload="metadata" aria-hidden="true" />
             <div className="aiv-top" aria-hidden="true">
               <div className="aiv-segs"><i /><i /><i /></div>
               <div className="aiv-meta"><span className="aiv-badge">AI</span><span>Sponsored</span><span className="aiv-len">{c.len}</span></div>
             </div>
-            <button type="button" className="aiv-pp" aria-label={`Play ${c.title} video`} onClick={(e) => { e.stopPropagation(); setOpen(i); }}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg></button>
             <ol className="aiv-scenes" aria-label={`${c.title} ad storyboard`}>
               {c.scenes.map((s, k) => (
                 <li className="aiv-scene" key={STAGES[k]}>

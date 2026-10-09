@@ -592,6 +592,8 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
     if(!trigger || !mega) return;
     var links = mega.querySelectorAll('.mega-link');
     var openTL = null, closeTimer = null;
+    // after picking a service the menu closes and stays closed until the pointer leaves it
+    var suppress = false;
 
     function buildOpenTL(){
       if(!hasGSAP) return null;
@@ -604,6 +606,7 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
     }
 
     function open(){
+      if(suppress) return;
       if(closeTimer){clearTimeout(closeTimer);closeTimer=null;}
       if(item.classList.contains('open')) return;
       item.classList.add('open');
@@ -622,12 +625,20 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
     // desktop hover
     if(!TOUCH){
       item.addEventListener('mouseenter',function(){ if(window.innerWidth>760) open(); });
-      item.addEventListener('mouseleave',function(){ if(window.innerWidth>760){ closeTimer=setTimeout(close,140);} });
+      item.addEventListener('mouseleave',function(){ suppress=false; if(window.innerWidth>760){ closeTimer=setTimeout(close,140);} });
     }
     // click / tap toggles (and is the only behaviour on mobile)
     trigger.addEventListener('click',function(e){
       e.preventDefault();
       item.classList.contains('open') ? close() : open();
+    });
+    // choosing a service (or "All services") closes the menu straight away
+    mega.addEventListener('click',function(e){
+      if(!e.target.closest('a')) return;
+      suppress = true;
+      if(closeTimer){clearTimeout(closeTimer);closeTimer=null;}
+      item.classList.remove('open');
+      trigger.setAttribute('aria-expanded','false');
     });
     // close on outside click / Esc
     document.addEventListener('click',function(e){ if(!item.contains(e.target)) close(); });
@@ -995,19 +1006,16 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
       window.addEventListener('resize',function(){ if(document.contains(track)) update(); });
       update();
 
-      // autoplay: advance one card every few seconds and loop back at the end;
-      // pauses while hovered, for a while after the visitor scrolls/clicks it,
-      // and whenever the carousel is off-screen
-      if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
-        var hovering=false, onScreen=false, resumeAt=0;
+      // autoplay alongside manual scrolling: advance one card every few seconds
+      // and loop back at the end; pauses for a while after the visitor scrolls
+      // or clicks it, and whenever the carousel is off-screen
+      (function(){
+        var resumeAt=0;
         function hold(){ resumeAt=Date.now()+7000; }
-        track.addEventListener('mouseenter',function(){ hovering=true; });
-        track.addEventListener('mouseleave',function(){ hovering=false; });
         ['pointerdown','wheel','touchstart','keydown'].forEach(function(ev){ track.addEventListener(ev,hold,{passive:true}); });
         prev.addEventListener('click',hold); next.addEventListener('click',hold);
-        if('IntersectionObserver' in window){
-          new IntersectionObserver(function(es){ onScreen=es[0].isIntersecting; },{threshold:.35}).observe(track);
-        }
+        // on-screen check straight from layout (no observer), so it never goes stale
+        function onScreen(){ var r=track.getBoundingClientRect(); return r.bottom>innerHeight*.15 && r.top<innerHeight*.85; }
         // own rAF glide (snap paused meanwhile) so the slide is smooth in every
         // browser, independent of native smooth-scroll support
         function glide(to){
@@ -1020,11 +1028,11 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
         }
         var auto=setInterval(function(){
           if(!document.contains(track)){ clearInterval(auto); return; }
-          if(hovering || !onScreen || document.hidden || Date.now()<resumeAt) return;
+          if(!onScreen() || document.hidden || Date.now()<resumeAt) return;
           var max=track.scrollWidth-track.clientWidth;
           glide(track.scrollLeft>=max-2 ? 0 : Math.min(max, track.scrollLeft+step()));
         },3500);
-      }
+      })();
     }
     chips.forEach(function(c){ c.addEventListener('click',function(){
       chips.forEach(function(x){x.classList.remove('active')}); c.classList.add('active');

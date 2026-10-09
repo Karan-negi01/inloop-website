@@ -71,7 +71,9 @@ export default function Layout() {
 
     applySeo(route);
     document.body.setAttribute('data-fx', route === 'home' || route === 'about' ? route : 'service');
-    window.scrollTo(0, 0);
+    // instant: html has scroll-behavior:smooth, which otherwise animates the new
+    // page up from wherever the previous page was scrolled to
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     scope.querySelectorAll('.reveal-up').forEach((el) => el.classList.add('in'));
     scope.classList.remove('live');

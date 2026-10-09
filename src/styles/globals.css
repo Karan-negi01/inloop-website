@@ -2978,3 +2978,125 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
   #svp .sp-steps::after,.pipe-track b{animation:none;display:none}
   .pipe-track i{transform:none;transition:none}
 }
+
+/* ================= SERVICE PAGES — visual-first layout (src/components/ServicePage.jsx) ================= */
+#svp .svx .sp-hero h1.svx-title{font-size:clamp(40px,7.4vw,92px);line-height:.98;letter-spacing:-.035em;max-width:13ch}
+#svp .svx .sp-hero .sub{max-width:54ch}
+
+/* big statement: words light up in sequence on scroll */
+#svp .svx-statement{text-align:center;padding-top:clamp(40px,6vw,80px)}
+.svx-words{margin:0 auto;max-width:20ch;font:700 clamp(30px,5.2vw,68px)/1.06 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em}
+.svx-words span{color:rgba(255,255,255,.14);transition:color .6s ease;transition-delay:calc(var(--k) * 70ms)}
+.svx-words.lit span{color:#fff}
+.svx-glance{display:flex;justify-content:center;gap:clamp(14px,2vw,22px);flex-wrap:wrap;margin-top:clamp(36px,5vw,56px)}
+.svx-glance-i{position:relative;min-width:220px;padding:22px 28px;border-radius:20px;text-align:left;
+  border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01))}
+.svx-glance-i::before{content:"";position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,#fff,transparent)}
+.svx-glance-i b{display:block;font:700 clamp(24px,2.6vw,34px)/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;
+  background:linear-gradient(180deg,#fff 40%,rgba(255,255,255,.55));-webkit-background-clip:text;background-clip:text;color:transparent}
+.svx-glance-i span{display:block;margin-top:8px;font-size:13.5px;color:var(--muted)}
+
+/* capabilities: tab list + one big panel */
+.svx-caps-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(16px,2.4vw,28px);align-items:stretch}
+.svx-caps-list{display:flex;flex-direction:column;gap:6px}
+.svx-cap{position:relative;display:flex;align-items:center;gap:16px;width:100%;padding:16px 18px;border-radius:14px;text-align:left;cursor:pointer;
+  font:inherit;color:rgba(255,255,255,.5);background:transparent;border:1px solid transparent;transition:color .3s,background .3s,border-color .3s}
+.svx-cap:hover{color:#e6e7e9;background:rgba(255,255,255,.03)}
+.svx-cap.on{color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.svx-cap-n{flex:none;font:700 13px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.06em;opacity:.7}
+.svx-cap-h{flex:1;font:600 clamp(16px,1.5vw,19px)/1.25 "Bricolage Grotesque",sans-serif;letter-spacing:-.01em}
+.svx-cap-bar{position:absolute;left:18px;right:18px;bottom:0;height:2px;overflow:hidden;border-radius:2px}
+.svx-cap-bar i{position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:0 50%;animation:svxBar 4.5s linear forwards}
+@keyframes svxBar{to{transform:scaleX(1)}}
+.svx-panel{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:clamp(300px,38vw,420px);
+  padding:clamp(26px,3vw,40px);border-radius:26px;border:1px solid rgba(255,255,255,.1);
+  background:radial-gradient(120% 90% at 100% 0%,rgba(255,255,255,.12),transparent 55%),linear-gradient(180deg,#141415,#0a0a0b);
+  box-shadow:0 40px 100px -40px rgba(255,255,255,.12);animation:svxPanel .55s cubic-bezier(.2,.7,.2,1)}
+@keyframes svxPanel{from{opacity:0;transform:translateY(14px)}}
+.svx-panel-glyph{position:absolute;right:-4%;top:-12%;font-size:clamp(220px,26vw,360px);line-height:1;color:rgba(255,255,255,.05);
+  pointer-events:none;animation:svxGlyph .9s cubic-bezier(.2,.7,.2,1)}
+@keyframes svxGlyph{from{opacity:0;transform:rotate(-14deg) scale(.85)}}
+.svx-panel-ic{display:grid;place-items:center;width:64px;height:64px;margin-bottom:auto;border-radius:18px;font-size:28px;color:#0b0b0c;
+  background:linear-gradient(180deg,#fff,#c9cacc);box-shadow:0 0 34px rgba(255,255,255,.3)}
+.svx-panel h3{position:relative;margin:40px 0 10px;font:700 clamp(26px,3vw,40px)/1.05 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;color:#fff}
+.svx-panel p{position:relative;margin:0;max-width:40ch;font-size:clamp(15px,1.4vw,17.5px);line-height:1.6;color:#c4c6c9}
+.svx-panel-n{position:absolute;top:clamp(26px,3vw,40px);right:clamp(26px,3vw,40px);font:600 12px/1 Manrope,sans-serif;letter-spacing:.2em;color:rgba(255,255,255,.5)}
+
+/* process */
+.svx-line{position:relative;height:2px;border-radius:2px;background:rgba(255,255,255,.08);margin-bottom:-1px}
+.svx-line i{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.2),#fff);box-shadow:0 0 14px rgba(255,255,255,.5);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform 1.8s cubic-bezier(.4,0,.2,1) .2s}
+.svx-line.is-in i{transform:scaleX(1)}
+.svx-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,20px);margin:0;padding:0;list-style:none}
+.svx-step{position:relative;padding:30px 26px 28px;border-radius:0 0 22px 22px;border:1px solid rgba(255,255,255,.07);border-top:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+  transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1),border-color .4s}
+.svx-step:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.14)}
+.svx-step-n{display:block;margin-bottom:16px;font:800 clamp(40px,4.4vw,58px)/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.04em;
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.45);transition:color .4s,text-shadow .4s}
+.svx-step:hover .svx-step-n{color:#fff;-webkit-text-stroke-color:#fff;text-shadow:0 0 30px rgba(255,255,255,.35)}
+.svx-step h3{margin:0 0 8px;font:700 20px/1.2 "Bricolage Grotesque",sans-serif;color:#fff}
+.svx-step p{margin:0;font-size:14.5px;line-height:1.6;color:var(--muted)}
+.svx-steps.n6 .svx-step{border-top:1px solid rgba(255,255,255,.07);border-radius:22px}
+.svx-process:has(.svx-steps.n6) .svx-line{display:none}
+
+/* moving chip rails */
+#svp .svx-rails{display:flex;flex-direction:column;gap:18px;max-width:none;padding:clamp(20px,3vw,40px) 0}
+.svx-rail{display:flex;align-items:center;gap:20px;max-width:1180px;width:100%;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+.svx-rail-lab{flex:none;width:120px;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.svx-rail-win{flex:1;min-width:0;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.svx-rail-track{display:flex;gap:12px;width:max-content;animation:svxRail 38s linear infinite}
+.svx-rail.rev .svx-rail-track{animation-direction:reverse}
+.svx-rail-win:hover .svx-rail-track{animation-play-state:paused}
+@keyframes svxRail{to{transform:translateX(calc(-50% - 6px))}}
+.svx-chip{flex:none;padding:12px 20px;border-radius:999px;font-size:14.5px;font-weight:600;white-space:nowrap;color:#e6e7e9;
+  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04)}
+
+/* why tiles: icon + title, the detail appears on hover */
+.svx-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:clamp(14px,1.6vw,18px)}
+.svx-tile{position:relative;display:flex;flex-direction:column;min-height:230px;padding:26px 24px;border-radius:22px;outline:none;overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1),border-color .4s,background .4s}
+.svx-tile-ic{display:grid;place-items:center;width:52px;height:52px;border-radius:15px;font-size:22px;color:#fff;
+  border:1px solid rgba(255,255,255,.14);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.2),rgba(150,156,164,.08));
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),background .45s,color .45s}
+.svx-tile h3{margin:auto 0 0;font:700 clamp(19px,1.7vw,22px)/1.15 "Bricolage Grotesque",sans-serif;letter-spacing:-.01em;color:#fff}
+/* detail expands under the title (0fr → 1fr), pushing the title up into the free space */
+.svx-tile-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
+.svx-tile-more p{min-height:0;overflow:hidden;margin:0;padding-top:10px;font-size:14px;line-height:1.55;color:#c4c6c9;
+  opacity:0;transition:opacity .35s}
+.svx-tile:is(:hover,:focus-visible){transform:translateY(-4px);border-color:rgba(255,255,255,.18);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.015))}
+.svx-tile:is(:hover,:focus-visible) .svx-tile-ic{transform:rotate(-8deg) scale(1.06);background:linear-gradient(180deg,#fff,#c9cacc);color:#0b0b0c}
+.svx-tile:is(:hover,:focus-visible) .svx-tile-more{grid-template-rows:1fr}
+.svx-tile:is(:hover,:focus-visible) .svx-tile-more p{opacity:1;transition-delay:.1s}
+@media (hover:none){
+  .svx-tile{min-height:0}.svx-tile h3{margin-top:22px}
+  .svx-tile-more{grid-template-rows:1fr}.svx-tile-more p{opacity:1}
+}
+
+/* spotlight on the new surfaces (src/lib/spotlight.js) */
+:is(.svx-panel,.svx-step,.svx-tile)::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .4s ease;
+  background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.085),transparent 45%)}
+:is(.svx-panel,.svx-step,.svx-tile):hover::after{opacity:1}
+
+@media(max-width:900px){
+  .svx-caps-grid{grid-template-columns:minmax(0,1fr)}
+  .svx-caps-list{flex-direction:row;overflow-x:auto;scrollbar-width:none;-webkit-mask:linear-gradient(90deg,#000 85%,transparent);mask:linear-gradient(90deg,#000 85%,transparent)}
+  .svx-caps-list::-webkit-scrollbar{display:none}
+  .svx-cap{flex:none;width:auto;padding:11px 16px;border-color:rgba(255,255,255,.08);border-radius:999px}
+  .svx-cap-n{display:none}
+  .svx-cap-h{white-space:nowrap;font-size:15px}
+  .svx-cap-bar{left:14px;right:14px}
+  .svx-panel{min-height:300px}
+  .svx-line{display:none}
+  .svx-steps{grid-template-columns:minmax(0,1fr)}
+  .svx-step{border-top:1px solid rgba(255,255,255,.07);border-radius:22px}
+  .svx-rail{flex-direction:column;align-items:flex-start;gap:10px}
+  .svx-rail-lab{width:auto}
+  .svx-rail-win{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .svx-words span{color:#fff;transition:none}
+  .svx-rail-track,.svx-cap-bar i,.svx-panel,.svx-panel-glyph{animation:none}
+  .svx-line i{transform:none;transition:none}
+}

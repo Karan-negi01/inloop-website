@@ -5,6 +5,7 @@ const SELECTOR = [
   '.svc-bento .svc', '.cs-card', '.pkq', '.aiv-card', '.proc-step',
   // service pages (About is left untouched)
   '#svp main:not([data-route="about"]) :is(.svc, .sp-step, .sp-why, .pipe-step)',
+  '.svx-panel', '.svx-step', '.svx-tile',
 ].join(', ');
 
 let started = false;

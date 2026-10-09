@@ -232,6 +232,7 @@ export default function Layout() {
 
           <Link to="/careers">Careers</Link>
           <Link to="/about">About</Link>
+          <Link to="/#contact" className="links-cta">Book a Free Call <span className="arr" aria-hidden="true">↗</span></Link>
         </div>
         <Link to="/#contact" className="nav-cta magnetic" data-mag="0.3">Book a Free Call <span className="arr">↗</span></Link>
         <button className="menu-btn" aria-label="Menu"><span></span></button>

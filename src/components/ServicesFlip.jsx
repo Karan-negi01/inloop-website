@@ -26,30 +26,31 @@ export default function ServicesFlip() {
     };
   }, []);
 
+  // gsap.matchMedia rebuilds the right layout when the viewport crosses the
+  // breakpoint (e.g. a tablet rotating), instead of deciding once on mount.
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const mm = gsap.matchMedia(containerRef);
 
-      // ── MOBILE: stacked column, each card flips as it scrolls into view ──
-      if (isMobile) {
-        mobileCardRefs.current.forEach((card) => {
-          if (!card) return;
-          const front = card.querySelector('.flip-card-front');
-          const back = card.querySelector('.flip-card-back');
+    // ── MOBILE + TABLET PORTRAIT: stacked cards, each flips as it scrolls into view ──
+    mm.add('(max-width: 1023px)', () => {
+      mobileCardRefs.current.forEach((card) => {
+        if (!card) return;
+        const front = card.querySelector('.flip-card-front');
+        const back = card.querySelector('.flip-card-back');
 
-          gsap.set(front, { rotateY: 0 });
-          gsap.set(back, { rotateY: 180 });
+        gsap.set(front, { rotateY: 0 });
+        gsap.set(back, { rotateY: 180 });
 
-          gsap.timeline({
-            scrollTrigger: { trigger: card, start: 'top 88%', end: 'center 48%', scrub: 1.2, invalidateOnRefresh: true },
-          })
-            .to(front, { rotateY: -180, ease: 'power2.inOut', duration: 1 })
-            .to(back, { rotateY: 0, ease: 'power2.inOut', duration: 1 }, '<');
-        });
-        return;
-      }
+        gsap.timeline({
+          scrollTrigger: { trigger: card, start: 'top 88%', end: 'center 48%', scrub: 1.2, invalidateOnRefresh: true },
+        })
+          .to(front, { rotateY: -180, ease: 'power2.inOut', duration: 1 })
+          .to(back, { rotateY: 0, ease: 'power2.inOut', duration: 1 }, '<');
+      });
+    });
 
-      // ── DESKTOP: pin the section → fan the cards out → flip them ──
+    // ── DESKTOP: pin the section → fan the cards out → flip them ──
+    mm.add('(min-width: 1024px)', () => {
       const cards = cardRefs.current;
       const cardsSection = containerRef.current.querySelector('.svcflip-desktop');
       if (!cardsSection) return;
@@ -77,9 +78,9 @@ export default function ServicesFlip() {
         tl.to(backEl, { rotateY: 0, ease: 'power3.inOut', duration: 1.2 }, flipStart);
         tl.to(card, { rotation: 0, ease: 'power3.inOut', duration: 1.2 }, flipStart);
       });
-    }, containerRef);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (

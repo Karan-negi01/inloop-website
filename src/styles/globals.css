@@ -472,8 +472,9 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
 .pkq-cta:hover .arr{transform:translateX(4px)}
 .pkq.feat .pkq-cta{border-color:transparent;color:#0b0b0c;background:linear-gradient(180deg,#fff,#d6d8db);box-shadow:0 14px 40px -16px rgba(255,255,255,.45)}
 .pkq.feat .pkq-cta:hover{background:#fff}
+@media(max-width:400px){.pkq-cta{white-space:normal;text-align:center}}
 @media(max-width:900px){
-  .pkq-wrap{grid-template-columns:1fr;max-width:520px}
+  .pkq-wrap{grid-template-columns:minmax(0,1fr);max-width:520px}
   .pkq:not(.feat) .pkq-head{padding-top:0}
   .pkq-blurb{min-height:0}
 }
@@ -1053,6 +1054,7 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   .links{display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;
     background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
   .links a{font-size:14px;color:#cfd0d3;font-weight:500;position:relative;transition:color .2s,background .2s}
+  .links .links-cta{display:none}
   .links > a,.links .nav-item > a{display:block;padding:8px 16px;border-radius:999px}
   .links > a:hover,.links .nav-item > a:hover,.links .nav-item.open > a{color:#fff;background:rgba(255,255,255,.08)}
   .links a.has::after{content:"";display:inline-block;width:6px;height:6px;
@@ -1138,8 +1140,9 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   /* the stats row makes the hero block taller — drop the scroll cue where it would collide */
   @media (max-height:880px){ .hero .scroll-cue{display:none} }
   @media (max-width:760px){
-    .hero-stats{margin-top:36px}
-    .hs:nth-child(n+4){display:none}
+    .hero-stats{margin-top:36px;flex-wrap:wrap;row-gap:20px}
+    .hs{flex:0 0 33.333%}
+    .hs:nth-child(4)::before{display:none}
     .hs{padding:0 8px}
     .hs-l{font-size:11px;letter-spacing:.08em;line-height:1.4;white-space:normal}
   }
@@ -1188,11 +1191,15 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
     .menu-btn span::before,.menu-btn span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:#e4e5e7}
     .menu-btn span::before{top:-6px}.menu-btn span::after{top:6px}
     .nav .nav-cta{display:none}
+    .links .links-cta{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;padding:13px 16px;border-radius:12px;
+      font-weight:700;color:#0b0b0c;background:linear-gradient(180deg,var(--red-2),var(--red))}
+    .links .links-cta:hover{color:#0b0b0c;background:#fff}
     .hero-content{top:56%}
     .cta-row{width:100%}
     .btn{flex:1;justify-content:center}
   }
   /* ================= COSMIC HOMEPAGE SECTIONS ================= */
+  main [id]{scroll-margin-top:84px}
   .sec{position:relative;z-index:2;max-width:1180px;margin:0 auto;
     padding:clamp(64px,10vw,132px) clamp(20px,5vw,40px)}
   .kick2{font-size:12px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
@@ -1307,8 +1314,10 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   .svcflip-desktop{display:none}
   .svcflip-mobile{max-width:1180px;margin:0 auto;padding:clamp(64px,10vw,132px) clamp(20px,5vw,40px)}
   .svcflip-mobile-stack{display:flex;flex-direction:column;align-items:center;gap:28px;margin-top:20px}
+  /* tablets in portrait get the stacked cards two-up instead of one long column */
+  @media(min-width:640px){.svcflip-mobile-stack{display:grid;grid-template-columns:repeat(2,minmax(0,325px));justify-content:center;justify-items:center}}
 
-  .service-card{position:relative;width:325px;height:480px;perspective:1200px}
+  .service-card{position:relative;width:min(325px,100%);aspect-ratio:325/480;perspective:1200px}
   .card-float-wrapper{position:relative;width:100%;height:100%;animation:svcFloat 3s ease-in-out infinite}
   .service-card:nth-child(2) .card-float-wrapper{animation-delay:.2s}
   .service-card:nth-child(3) .card-float-wrapper{animation-delay:.4s}
@@ -1353,7 +1362,7 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   .flip-card-cta:hover .arr{transform:translate(2px,-2px)}
   .flip-card-tag{font-size:8px;letter-spacing:.35em;color:rgba(0,0,0,.2);text-transform:uppercase;font-weight:700}
 
-  @media(min-width:769px){
+  @media(min-width:1024px){
     .svcflip-mobile{display:none}
     .svcflip-desktop{display:block;position:relative;width:100%;height:100vh;background:#000;
       overflow:hidden;box-shadow:0 -40px 100px rgba(0,0,0,.8);border-top:1px solid rgba(255,255,255,.02)}
@@ -1362,7 +1371,9 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
       background:radial-gradient(ellipse,rgba(255,255,255,.05) 0%,transparent 70%)}
     .svcflip-head{position:absolute;top:14vh;left:0;right:0;padding:0 20px;
       display:flex;flex-direction:column;align-items:center;text-align:center;z-index:5}
-    .svcflip .service-card{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);will-change:transform}
+    /* cards fan out 24vw apart, so cap width at 22vw to keep a gap between them at every width */
+    .svcflip .service-card{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);will-change:transform;
+      width:min(325px,22vw);height:480px;aspect-ratio:auto}
     .svcflip-desktop .service-card:nth-child(2){z-index:2}
     .svcflip-desktop .service-card:nth-child(3){z-index:3}
     .svcflip-desktop .service-card:nth-child(4){z-index:4}
@@ -1370,9 +1381,9 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
     .svcflip-cue{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
       font-size:12px;letter-spacing:.3em;color:rgba(255,255,255,.45);text-transform:uppercase;
       font-weight:600;white-space:nowrap}
-    @media(max-height:900px){.svcflip .service-card{top:56%;width:295px;height:415px}}
+    @media(max-height:900px){.svcflip .service-card{top:56%;width:min(295px,22vw);height:415px}}
   }
-  @media(min-width:1024px) and (max-width:1440px){.svcflip .service-card{width:300px;height:440px}}
+  @media(min-width:1024px) and (max-width:1440px){.svcflip .service-card{width:min(300px,22vw);height:440px}}
 
   /* ---- AI core / neural ---- */
   .ai-core-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,64px);align-items:center}
@@ -2756,4 +2767,16 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
   #svp .abx-agents{grid-template-columns:1fr;gap:40px}
   #svp .abx-agents-line{display:none}
   #svp .abx-nums{grid-template-columns:1fr 1fr;row-gap:44px}
+}
+
+/* ---------- Hero on phones & short screens ----------
+   The hero copy is absolutely centred, which overflows under the nav when the
+   viewport is narrow or short (small phones, phones in landscape). Put it back
+   in normal flow there so the hero grows to fit; the post-intro slide-up is kept
+   as a transform. */
+@media (max-width:760px), (max-height:700px){
+  .hero{justify-content:center;padding:104px 0 48px}
+  .hero-content{position:relative;top:auto;left:auto;margin:0 auto;transform:translateY(6vh)}
+  body.docked .hero-content{top:auto;transform:none}
+  .hero .scroll-cue{display:none}
 }

@@ -1691,6 +1691,10 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
   background-size:30px 30px;-webkit-mask-image:radial-gradient(circle at 50% 40%,#000,transparent 75%);mask-image:radial-gradient(circle at 50% 40%,#000,transparent 75%)}
 /* story-style progress segments, one per scene, filling in sequence */
+.aiv-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.85;transition:opacity .4s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.aiv-thumb:has(.aiv-video)::before{z-index:1;opacity:1;-webkit-mask-image:none;mask-image:none;background-image:none;
+  background:linear-gradient(180deg,rgba(6,6,7,.55) 0%,rgba(6,6,7,.05) 30%,rgba(6,6,7,.15) 55%,rgba(6,6,7,.85) 100%)}
+.aiv-card:hover .aiv-video{opacity:1;transform:scale(1.04)}
 .aiv-top{position:relative;z-index:2}
 .aiv-segs{display:flex;gap:5px}
 .aiv-segs i{position:relative;flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.18);overflow:hidden}
@@ -1704,10 +1708,6 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
 .aiv-meta{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;font-weight:600;color:rgba(255,255,255,.7)}
 .aiv-len{margin-left:auto;padding:3px 8px;border-radius:6px;font-size:11.5px;font-variant-numeric:tabular-nums;color:#fff;background:rgba(0,0,0,.45)}
 .aiv-badge{padding:3px 7px;border-radius:6px;font-size:11px;font-weight:800;letter-spacing:.08em;color:#0b0b0c;background:linear-gradient(180deg,#fff,#c7c8ca)}
-.aiv-ic{position:absolute;inset:0;z-index:1;display:grid;place-items:center;pointer-events:none}
-.aiv-ic svg{width:58%;max-width:170px;opacity:.28;fill:none;stroke:rgba(255,255,255,.85);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
-  filter:drop-shadow(0 0 18px rgba(255,255,255,.25));animation:aivFloat 6s ease-in-out infinite;animation-delay:calc(var(--i)*-.9s)}
-@keyframes aivFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
 /* scenes cross-fade in place: hook → demo → CTA */
 /* centred play button (the original thumbnail control) */
 .aiv-card{cursor:pointer}
@@ -1735,7 +1735,7 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   animation:aivTrack 9s linear infinite;animation-delay:calc(var(--i)*-1.3s)}
 @keyframes aivTrack{to{transform:scaleX(1)}}
 @media(prefers-reduced-motion:reduce){
-  .aiv-segs i::after,.aiv-scene,.aiv-ic svg,.aiv-track i,.aiv-pp::after{animation:none}
+  .aiv-segs i::after,.aiv-scene,.aiv-track i,.aiv-pp::after{animation:none}
   .aiv-segs i:first-child::after{transform:scaleX(1)}
   .aiv-scene:first-child{opacity:1}
 }
@@ -2882,6 +2882,9 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
 .avp-frame::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;
   background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
   background-size:32px 32px;-webkit-mask-image:radial-gradient(circle at 50% 35%,#000,transparent 75%);mask-image:radial-gradient(circle at 50% 35%,#000,transparent 75%)}
+.avp-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.avp-frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(6,6,7,.6) 0%,rgba(6,6,7,0) 22%,rgba(6,6,7,0) 45%,rgba(6,6,7,.88) 100%)}
 .avp-top{position:absolute;top:0;left:0;right:0;z-index:3;padding:16px 16px 0}
 .avp-segs{display:flex;gap:5px}
 .avp-segs i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.22);overflow:hidden}
@@ -2889,18 +2892,7 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
 .avp-meta{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.75)}
 /* scenes */
 .avp-scene{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:0 22px 30px}
-.avp-ic{position:absolute;left:50%;top:40%;width:52%;transform:translate(-50%,-50%);pointer-events:none}
-.avp-ic svg{display:block;width:100%;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
-  filter:drop-shadow(0 0 28px rgba(255,255,255,.35))}
-.avp-scene.s0 .avp-ic{opacity:.22;animation:avpDrift 6s ease-in-out infinite alternate}
-.avp-scene.s1 .avp-ic{opacity:.9;animation:avpZoom 1.2s cubic-bezier(.2,.7,.2,1) both,avpSpin 8s linear infinite}
-.avp-scene.s2 .avp-ic{opacity:.35;top:32%;width:40%;animation:avpZoom .8s cubic-bezier(.2,.7,.2,1) both}
-@keyframes avpDrift{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-56%) scale(1.08)}}
-@keyframes avpZoom{from{transform:translate(-50%,-50%) scale(.6);opacity:0}}
-@keyframes avpSpin{to{filter:drop-shadow(0 0 40px rgba(255,255,255,.5))}}
-.avp-scene.s1::after{content:"";position:absolute;left:12%;right:12%;top:20%;height:2px;border-radius:2px;
-  background:linear-gradient(90deg,transparent,#fff,transparent);box-shadow:0 0 18px rgba(255,255,255,.7);animation:avpScan 2.2s ease-in-out infinite}
-@keyframes avpScan{0%,100%{top:20%;opacity:.2}50%{top:58%;opacity:1}}
+@keyframes avpZoom{from{transform:scale(.6);opacity:0}}
 .avp-step{align-self:flex-start;margin-bottom:10px;padding:4px 9px;border-radius:6px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
   color:#0b0b0c;background:#fff;animation:avpWord .5s cubic-bezier(.2,.7,.2,1) both}
 .avp-line{margin:0;font:700 clamp(22px,3.4vh,34px)/1.12 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.6)}
@@ -3100,3 +3092,51 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
   .svx-rail-track,.svx-cap-bar i,.svx-panel,.svx-panel-glyph{animation:none}
   .svx-line i{transform:none;transition:none}
 }
+
+/* ================= LUXURY TYPE LAYER =================
+   An editorial serif (Instrument Serif) for highlighted words, numbers and plan
+   names, hairline eyebrows and lighter headings. Scoped on purpose: it skips the
+   home hero, flip cards, ad carousel, AI video section, client logos, tools
+   marquee and the About founders/team sections. */
+:root{--serif:"Instrument Serif",Georgia,"Times New Roman",serif}
+
+/* highlighted words → serif italic */
+:is(#services,#process,#work,#pricing,#aiad,.footer) .grad,
+#svp main:not([data-route="about"]) .grad,
+#svp main[data-route="about"] :is(.ab-hero,#belief,#story,#values,#way,#numbers,#about-cta) .grad{
+  font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.005em;padding-right:.08em;
+  background:linear-gradient(100deg,#ffffff 0%,#e9e9ea 45%,#a9adb3 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* section headings: a touch lighter and tighter */
+:is(#services,#process,#work,#pricing) .sec-head h2,
+#aiad .aiad-title,
+#svp main:not([data-route="about"]) .sec-head h2,
+#svp main[data-route="about"] :is(#values,#way,#numbers,#about-cta) .abx-head h2,
+#svp main[data-route="about"] #about-cta h2{font-weight:600;letter-spacing:-.03em}
+
+/* eyebrows with hairlines */
+:is(#services,#process,#work,#pricing) .kick2,
+#svp main:not([data-route="about"]) .kick2,
+#svp main[data-route="about"] :is(#values,#way,#numbers) .kick2{
+  display:inline-flex;align-items:center;gap:14px;letter-spacing:.32em;font-weight:600;color:#cfd0d3}
+:is(#services,#process,#work,#pricing) .kick2::before,:is(#services,#process,#work,#pricing) .kick2::after,
+#svp main:not([data-route="about"]) .sec-head .kick2::before,#svp main:not([data-route="about"]) .sec-head .kick2::after,
+#svp main[data-route="about"] :is(#values,#way,#numbers) .kick2::before,#svp main[data-route="about"] :is(#values,#way,#numbers) .kick2::after{
+  content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6))}
+:is(#services,#process,#work,#pricing) .kick2::after,
+#svp main:not([data-route="about"]) .sec-head .kick2::after,
+#svp main[data-route="about"] :is(#values,#way,#numbers) .kick2::after{background:linear-gradient(90deg,rgba(255,255,255,.6),transparent)}
+
+/* editorial numerals & names */
+#work .cs-metric{font-family:var(--serif);font-weight:400;font-style:normal;letter-spacing:-.02em;line-height:.85}
+#work .cs-strip-n,.svx-glance-i b{font-family:var(--serif);font-weight:400;letter-spacing:0}
+#pricing .pkq-name{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;font-size:clamp(42px,4vw,58px)}
+#pricing .pkq.feat .pkq-name{font-style:italic}
+#svp main[data-route="about"] #numbers .gs-stat-n{font-family:var(--serif);font-weight:400;letter-spacing:-.01em}
+#svp main[data-route="about"] #values .abx-value-n{font-family:var(--serif);font-style:italic;font-weight:400}
+.svx-step-n{font-family:var(--serif);font-style:italic;font-weight:400;-webkit-text-stroke:0;color:rgba(255,255,255,.28);letter-spacing:0}
+.svx-step:hover .svx-step-n{color:#fff;text-shadow:0 0 30px rgba(255,255,255,.3)}
+.proc-step h3,.svx-panel h3{letter-spacing:-.02em}
+
+/* footer: an editorial tagline */
+.footer .foot-tag{font-family:var(--serif);font-style:italic;font-size:clamp(19px,1.6vw,22px);line-height:1.4;color:#d4d5d8}

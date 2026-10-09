@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Full-screen player for an AI video concept: plays the ad's three scenes
-// (hook → demo → CTA) as a timed 9:16 motion piece with real playback
-// controls — play/pause, scrubbing progress, replay — instead of a static card.
+// Full-screen player for an AI video concept: the concept's footage plays in a
+// 9:16 frame while the ad's three scenes (hook → demo → CTA) run as timed
+// captions, with real playback controls — play/pause, seek, replay.
 const STAGES = ['Hook', 'Demo', 'CTA'];
 
 function toSeconds(len) {
@@ -16,11 +16,12 @@ function fmt(t) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 }
 
-export default function AiVideoPlayer({ concept, icon, index, onClose }) {
+export default function AiVideoPlayer({ concept, index, onClose }) {
   const duration = toSeconds(concept.len);
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(true);
   const closeRef = useRef(null);
+  const videoRef = useRef(null);
   const last = useRef(null);
 
   const ended = time >= duration;
@@ -45,9 +46,18 @@ export default function AiVideoPlayer({ concept, icon, index, onClose }) {
     };
   }, [playing, ended, duration]);
 
+  // the footage follows the player: plays/pauses with it and loops underneath
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (playing && !ended) v.play().catch(() => {});
+    else v.pause();
+  }, [playing, ended]);
+
   const toggle = useCallback(() => {
     if (ended) {
       setTime(0);
+      if (videoRef.current) videoRef.current.currentTime = 0;
       setPlaying(true);
     } else {
       setPlaying((p) => !p);
@@ -78,6 +88,8 @@ export default function AiVideoPlayer({ concept, icon, index, onClose }) {
     const r = e.currentTarget.getBoundingClientRect();
     const p = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
     setTime(p * duration);
+    const v = videoRef.current;
+    if (v && v.duration) v.currentTime = (p * duration) % v.duration;
   }
 
   const sceneText = concept.scenes[scene];
@@ -89,6 +101,7 @@ export default function AiVideoPlayer({ concept, icon, index, onClose }) {
         <button ref={closeRef} type="button" className="avp-x" onClick={onClose} aria-label="Close video">&times;</button>
 
         <div className="avp-frame" onClick={toggle}>
+          <video ref={videoRef} className="avp-video" src={concept.video} muted loop playsInline autoPlay aria-hidden="true" />
           <div className="avp-top">
             <div className="avp-segs">
               {STAGES.map((s, k) => (
@@ -100,7 +113,6 @@ export default function AiVideoPlayer({ concept, icon, index, onClose }) {
 
           {/* each scene remounts on change so its entrance animation replays */}
           <div className={`avp-scene s${scene}`} key={scene}>
-            <span className="avp-ic">{icon}</span>
             <span className="avp-step">{STAGES[scene]}</span>
             <p className="avp-line">
               {sceneText.split(' ').map((w, k) => (

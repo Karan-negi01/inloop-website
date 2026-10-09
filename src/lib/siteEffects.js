@@ -994,6 +994,37 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
       track.addEventListener('scroll',function(){ requestAnimationFrame(update); },{passive:true});
       window.addEventListener('resize',function(){ if(document.contains(track)) update(); });
       update();
+
+      // autoplay: advance one card every few seconds and loop back at the end;
+      // pauses while hovered, for a while after the visitor scrolls/clicks it,
+      // and whenever the carousel is off-screen
+      if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+        var hovering=false, onScreen=false, resumeAt=0;
+        function hold(){ resumeAt=Date.now()+7000; }
+        track.addEventListener('mouseenter',function(){ hovering=true; });
+        track.addEventListener('mouseleave',function(){ hovering=false; });
+        ['pointerdown','wheel','touchstart','keydown'].forEach(function(ev){ track.addEventListener(ev,hold,{passive:true}); });
+        prev.addEventListener('click',hold); next.addEventListener('click',hold);
+        if('IntersectionObserver' in window){
+          new IntersectionObserver(function(es){ onScreen=es[0].isIntersecting; },{threshold:.35}).observe(track);
+        }
+        // own rAF glide (snap paused meanwhile) so the slide is smooth in every
+        // browser, independent of native smooth-scroll support
+        function glide(to){
+          var from=track.scrollLeft, t0=null;
+          track.style.scrollSnapType='none';
+          function f(ts){ if(t0===null) t0=ts; var p=Math.min((ts-t0)/700,1);
+            track.scrollLeft=from+(to-from)*(p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2);
+            if(p<1) requestAnimationFrame(f); else track.style.scrollSnapType=''; }
+          requestAnimationFrame(f);
+        }
+        var auto=setInterval(function(){
+          if(!document.contains(track)){ clearInterval(auto); return; }
+          if(hovering || !onScreen || document.hidden || Date.now()<resumeAt) return;
+          var max=track.scrollWidth-track.clientWidth;
+          glide(track.scrollLeft>=max-2 ? 0 : Math.min(max, track.scrollLeft+step()));
+        },3500);
+      }
     }
     chips.forEach(function(c){ c.addEventListener('click',function(){
       chips.forEach(function(x){x.classList.remove('active')}); c.classList.add('active');

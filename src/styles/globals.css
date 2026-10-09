@@ -1095,11 +1095,6 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
     transition:top 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1);
   }
   body.docked .hero-content{top:50%;transform:translate(-50%,-50%)}
-  /* soft dark backdrop so the cursor-following tubes never wash out the copy */
-  .hero-content::before{content:"";position:absolute;z-index:-1;inset:-12% -18%;pointer-events:none;
-    background:radial-gradient(closest-side,rgba(5,5,6,.78),rgba(5,5,6,.45) 60%,transparent);filter:blur(10px)}
-  .hero-content h1{text-shadow:0 2px 24px rgba(0,0,0,.65)}
-  .hero-content .sub{color:#c4c6c9;text-shadow:0 1px 12px rgba(0,0,0,.8)}
   .reveal{opacity:0;transform:translateY(18px);filter:blur(6px);
     transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
   body.ready .reveal{opacity:1;transform:none;filter:none}
@@ -1122,7 +1117,7 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
   h1 .chrome{
     background:linear-gradient(180deg,#ffffff 0%,#d5d7d9 42%,#96989b 70%,#f2f2f3 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
-    filter:drop-shadow(0 2px 10px rgba(0,0,0,.75)) drop-shadow(0 1px 14px rgba(215,217,219,.2))}
+    filter:drop-shadow(0 1px 14px rgba(215,217,219,.25))}
   .sub{margin-top:22px;font-size:clamp(15px,1.7vw,18.5px);line-height:1.6;
     color:var(--muted);max-width:60ch}
   .sub b{color:#dddfe1;font-weight:600}
@@ -1136,15 +1131,14 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
     background:linear-gradient(180deg,transparent,rgba(255,255,255,.18),transparent)}
   .hs-n{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:clamp(22px,2.3vw,32px);line-height:1;letter-spacing:-.03em;white-space:nowrap;
     background:linear-gradient(180deg,#fff 35%,rgba(255,255,255,.55));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hs-l{margin-top:10px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#a1a2a5;white-space:nowrap}
+  .hs-l{margin-top:9px;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7b818a;white-space:nowrap}
   /* the stats row makes the hero block taller — drop the scroll cue where it would collide */
   @media (max-height:880px){ .hero .scroll-cue{display:none} }
   @media (max-width:760px){
-    .hero-stats{margin-top:36px;flex-wrap:wrap;row-gap:20px}
-    .hs{flex:0 0 33.333%}
-    .hs:nth-child(4)::before{display:none}
+    .hero-stats{margin-top:36px}
+    .hs:nth-child(n+4){display:none}
     .hs{padding:0 8px}
-    .hs-l{font-size:11px;letter-spacing:.08em;line-height:1.4;white-space:normal}
+    .hs-l{font-size:9.5px;letter-spacing:.12em;line-height:1.4;white-space:normal}
   }
   .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px;
     padding:15px 26px;border-radius:13px;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
@@ -1381,9 +1375,16 @@ body.has-cursor a,body.has-cursor button,body.has-cursor .magnetic{cursor:none}
     .svcflip-cue{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
       font-size:12px;letter-spacing:.3em;color:rgba(255,255,255,.45);text-transform:uppercase;
       font-weight:600;white-space:nowrap}
-    @media(max-height:900px){.svcflip .service-card{top:56%;width:min(295px,22vw);height:415px}}
+    /* short screens (laptops): the card height follows the space left under the heading so they never overlap */
+    @media(max-height:900px){.svcflip .service-card{--h:min(415px,calc(86vh - 190px));height:var(--h);
+      width:min(295px,22vw,calc(var(--h) * .71));top:max(56%,calc(14vh + 100px + var(--h) / 2))}}
+    @media(max-height:680px){
+      .svcflip-desktop .flip-card-body{padding:22px 18px 18px}
+      .svcflip-desktop .flip-card-list{padding-top:14px}
+      .svcflip-desktop .flip-card-list li{padding:7px 0;font-size:12.5px}
+    }
   }
-  @media(min-width:1024px) and (max-width:1440px){.svcflip .service-card{width:min(300px,22vw);height:440px}}
+  @media(min-width:1024px) and (max-width:1440px){.svcflip .service-card{--h:min(440px,calc(86vh - 190px));height:var(--h);width:min(300px,22vw,calc(var(--h) * .68))}}
 
   /* ---- AI core / neural ---- */
   .ai-core-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,64px);align-items:center}
@@ -2769,14 +2770,10 @@ body.intro #c{z-index:30}body.docked #c{opacity:0;pointer-events:none;transition
   #svp .abx-nums{grid-template-columns:1fr 1fr;row-gap:44px}
 }
 
-/* ---------- Hero on phones & short screens ----------
-   The hero copy is absolutely centred, which overflows under the nav when the
-   viewport is narrow or short (small phones, phones in landscape). Put it back
-   in normal flow there so the hero grows to fit; the post-intro slide-up is kept
-   as a transform. */
-@media (max-width:760px), (max-height:700px){
-  .hero{justify-content:center;padding:104px 0 48px}
-  .hero-content{position:relative;top:auto;left:auto;margin:0 auto;transform:translateY(6vh)}
-  body.docked .hero-content{top:auto;transform:none}
-  .hero .scroll-cue{display:none}
+
+/* Hero text sizing on phones & short screens: only the type scales (with the
+   viewport height too) so the copy fits under the nav — layout is unchanged. */
+@media (max-width:760px), (max-height:600px){
+  .hero h1{font-size:clamp(24px,min(10.5vw,5.4vh),84px)}
+  .hero .sub{font-size:clamp(13px,min(4.2vw,2.5vh),18.5px)}
 }

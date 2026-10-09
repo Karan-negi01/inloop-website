@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import TubesBackground from '@/components/TubesBackground';
 import ServicesFlip from '@/components/ServicesFlip';
 import ToolsMarquee from '@/components/ToolsMarquee';
+import AiVideoGrid from '@/components/AiVideoGrid';
 
 export default function Home() {
   return (
@@ -46,7 +47,7 @@ export default function Home() {
     <div className="svc-bento">
       <article className="svc anim-rise bx-a bx-lg"><Link className="svc-link" to="/branding" aria-label="Brand Strategy &amp; Identity"></Link><span className="svc-glyph" aria-hidden="true">✦</span><span className="svc-ic">✦</span><div className="svc-tx"><h3>Branding</h3><p>Identity systems that make you unmistakable — naming, visual language and guidelines your whole team can run with.</p><span className="svc-more">Explore service <span>→</span></span></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-b" data-d="1"><Link className="svc-link" to="/social-media" aria-label="Social Media Management"></Link><span className="svc-ic">◎</span><div className="svc-tx"><h3>Social Media</h3><p>Always-on content and community that compounds.</p></div><span className="svc-go">↗</span></article>
-      <article className="svc anim-rise bx-c" data-d="2"><Link className="svc-link" to="/website" aria-label="Website Design &amp; Development"></Link><span className="svc-ic">⬡</span><div className="svc-tx"><h3>Tech</h3><p>Sites, funnels and tracking built to convert.</p></div><span className="svc-go">↗</span></article>
+      <article className="svc anim-rise bx-c" data-d="2"><Link className="svc-link" to="/website" aria-label="Website Design &amp; Development"></Link><span className="svc-ic">⬡</span><div className="svc-tx"><h3>Website &amp; Tech</h3><p>Sites, funnels and tracking built to convert.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-d" data-d="3"><Link className="svc-link" to="/influencer" aria-label="Influencer Marketing"></Link><span className="svc-ic">◈</span><div className="svc-tx"><h3>Influencer</h3><p>Creator partnerships matched to real intent.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-e"><Link className="svc-link" to="/creator-management" aria-label="Creator Management"></Link><span className="svc-ic">◇</span><div className="svc-tx"><h3>Creator Management</h3><p>End-to-end management for talent and brands.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-f" data-d="1"><Link className="svc-link" to="/production" aria-label="Creative Production"></Link><span className="svc-ic">●</span><div className="svc-tx"><h3>Production</h3><p>Shoots and post that move at AI speed.</p></div><span className="svc-go">↗</span></article>
@@ -54,21 +55,38 @@ export default function Home() {
       <article className="svc anim-rise bx-h" data-d="3"><Link className="svc-link" to="/pr" aria-label="Strategic PR &amp; Communication"></Link><span className="svc-ic">◐</span><div className="svc-tx"><h3>PR &amp; Communication</h3><p>Narratives that earn attention and trust.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-i"><Link className="svc-link" to="/content" aria-label="Content Creation"></Link><span className="svc-ic">✧</span><div className="svc-tx"><h3>Content Creation</h3><p>Story-first assets across every format.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-j" data-d="1"><Link className="svc-link" to="/seo" aria-label="SEO &amp; Search"></Link><span className="svc-ic">⌖</span><div className="svc-tx"><h3>SEO &amp; Search</h3><p>Search visibility that compounds organically.</p></div><span className="svc-go">↗</span></article>
-      <article className="svc anim-rise bx-k bx-wide" data-d="2"><Link className="svc-link" to="/ai" aria-label="AI-Powered Creative"></Link><span className="svc-ic">∞</span><div className="svc-tx"><h3>AI Powered</h3><p>Automation and models woven through every play.</p></div><span className="svc-go">↗</span></article>
+      <article className="svc anim-rise bx-k bx-wide" data-d="2"><Link className="svc-link" to="/ai" aria-label="AI-Powered Creative"></Link><span className="svc-ic">∞</span><div className="svc-tx"><h3>AI Creative</h3><p>Automation and models woven through every play.</p></div><span className="svc-go">↗</span></article>
       <article className="svc anim-rise bx-l bx-wide" data-d="3"><Link className="svc-link" to="/ecommerce" aria-label="E-commerce Growth"></Link><span className="svc-ic">▣</span><div className="svc-tx"><h3>E-commerce Growth</h3><p>Storefronts, funnels and retention that sell.</p></div><span className="svc-go">↗</span></article>
     </div>
   </section>
 
-<section className="sec aivid" id="ai-video">
+<section className="sec cases" id="work">
     <div className="sec-head reveal-up">
-      <div className="kick2">AI Video</div>
-      <h2>Scroll-stopping <span className="grad">AI video creative</span></h2>
-      <p className="sec-sub">UGC hooks, product demos and story ads — generated and edited with AI, then tuned for performance on every feed.</p>
+      <div className="kick2">Case studies</div>
+      <h2>Results that speak, <span className="grad">real brands, real numbers</span></h2>
     </div>
-    <div className="aiv-grid"><article className="aiv-card anim-rise" style={{'--i': 0}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Beauty, Health &amp; Wellness</b><span>UGC unboxings &amp; routines</span></div></article><article className="aiv-card anim-rise" style={{'--i': 1}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Fashion &amp; Apparel</b><span>Lookbooks &amp; try-on hooks</span></div></article><article className="aiv-card anim-rise" style={{'--i': 2}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>High-Tech &amp; SaaS</b><span>Explainer &amp; demo ads</span></div></article><article className="aiv-card anim-rise" style={{'--i': 3}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Professional Services</b><span>Talking-head authority</span></div></article><article className="aiv-card anim-rise" style={{'--i': 4}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>D2C &amp; E-commerce</b><span>Product spotlights</span></div></article><article className="aiv-card anim-rise" style={{'--i': 5}}><div className="aiv-thumb"><span className="aiv-pp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div className="aiv-label"><b>Real Estate</b><span>Walkthrough reels</span></div></article></div>
+    <div className="cs-grid">
+      <article className="cs-card anim-rise">
+        <span className="cs-cat">App · Social + Paid Ads</span>
+        <div className="cs-metric">3.2x</div>
+        <div className="cs-metric-l">installs in 60 days</div>
+        <div className="cs-foot"><b>Apploft</b><p>Scaled installs with a social-first paid engine.</p></div>
+      </article>
+      <article className="cs-card anim-rise" data-d="1">
+        <span className="cs-cat">Fashion · Web + UI/UX + Social</span>
+        <div className="cs-metric">+40%</div>
+        <div className="cs-metric-l">conversion rate lift</div>
+        <div className="cs-foot"><b>Luxe Apparel</b><p>A redesign and social system built to convert.</p></div>
+      </article>
+      <article className="cs-card anim-rise" data-d="2">
+        <span className="cs-cat">FMCG Health · Influencer + Meta Ads</span>
+        <div className="cs-metric">4.3x</div>
+        <div className="cs-metric-l">ROAS in month one</div>
+        <div className="cs-foot"><b>FMCG health brand</b><p>Creator-led demand at profitable ROAS.</p></div>
+      </article>
+    </div>
+    <div className="cs-strip reveal-up"><span className="cs-strip-n">25+</span><span>brands and counting across accounts</span><span className="cs-strip-sep" aria-hidden="true"></span><span>Real systems, real numbers.</span></div>
   </section>
-
-  <ToolsMarquee />
 
 <section className="sec adsx" id="ads">
     <div className="sec-head reveal-up">
@@ -87,6 +105,17 @@ export default function Home() {
       </div>
     </div>
   </section>
+
+<section className="sec aivid" id="ai-video">
+    <div className="sec-head reveal-up">
+      <div className="kick2">AI Video</div>
+      <h2>Scroll-stopping <span className="grad">AI video creative</span></h2>
+      <p className="sec-sub">UGC hooks, product demos and story ads — generated and edited with AI, then tuned for performance on every feed.</p>
+    </div>
+    <AiVideoGrid />
+  </section>
+
+  <ToolsMarquee />
 
 <section className="sec packages" id="pricing">
     <div className="sec-head reveal-up">
@@ -149,34 +178,6 @@ export default function Home() {
       </div>
     </article>
     </div>
-  </section>
-
-<section className="sec cases" id="work">
-    <div className="sec-head reveal-up">
-      <div className="kick2">Case studies</div>
-      <h2>Results that speak, <span className="grad">real brands, real numbers</span></h2>
-    </div>
-    <div className="cs-grid">
-      <article className="cs-card anim-rise">
-        <span className="cs-cat">App · Social + Paid Ads</span>
-        <div className="cs-metric">3.2x</div>
-        <div className="cs-metric-l">installs in 60 days</div>
-        <div className="cs-foot"><b>Apploft</b><p>Scaled installs with a social-first paid engine.</p></div>
-      </article>
-      <article className="cs-card anim-rise" data-d="1">
-        <span className="cs-cat">Fashion · Web + UI/UX + Social</span>
-        <div className="cs-metric">+40%</div>
-        <div className="cs-metric-l">conversion rate lift</div>
-        <div className="cs-foot"><b>Luxe Apparel</b><p>A redesign and social system built to convert.</p></div>
-      </article>
-      <article className="cs-card anim-rise" data-d="2">
-        <span className="cs-cat">FMCG Health · Influencer + Meta Ads</span>
-        <div className="cs-metric">4.3x</div>
-        <div className="cs-metric-l">ROAS in month one</div>
-        <div className="cs-foot"><b>FMCG health brand</b><p>Creator-led demand at profitable ROAS.</p></div>
-      </article>
-    </div>
-    <div className="cs-strip reveal-up"><span className="cs-strip-n">25+</span><span>brands and counting across accounts</span><span className="cs-strip-sep" aria-hidden="true"></span><span>Real systems, real numbers.</span></div>
   </section>
 
 <section className="sec aiad-band" id="aiad">

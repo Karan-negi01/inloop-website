@@ -12,12 +12,12 @@ const PRINCIPLES = [
 ];
 
 const TEAMS = [
-  { name: 'Strategy', img: '/images/caps/branding-1.webp', line: 'Find the angle that makes a brand impossible to ignore.', does: ['Brand positioning', 'Market research', 'Growth roadmaps'] },
-  { name: 'Design & Brand', img: '/images/caps/branding-2.webp', line: 'Build identities and creatives that look as good as they perform.', does: ['Visual identity', 'Campaign creatives', 'UI design'] },
-  { name: 'Content & Production', img: '/images/caps/production-1.webp', line: 'Write, shoot and edit the stories that stop the scroll.', does: ['Short-form video', 'Copywriting', 'Shoots & editing'] },
-  { name: 'Performance', img: '/images/caps/performance-6.webp', line: 'Turn ad spend into measurable, compounding growth.', does: ['Meta & Google Ads', 'Funnels', 'Analytics'] },
-  { name: 'Tech & AI', img: '/images/caps/website-2.webp', line: 'Ship fast websites, automations and AI workflows.', does: ['Next.js & Shopify', 'Automation', 'AI pipelines'] },
-  { name: 'Influencer & Creators', img: '/images/caps/influencer-1.webp', line: 'Match brands with creators their audience already trusts.', does: ['Creator discovery', 'Campaign management', 'UGC'] },
+  { name: 'Strategy', img: '/images/careers/team-strategy.webp', line: 'Find the angle that makes a brand impossible to ignore.', does: ['Brand positioning', 'Market research', 'Growth roadmaps'] },
+  { name: 'Design & Brand', img: '/images/careers/team-design.webp', line: 'Build identities and creatives that look as good as they perform.', does: ['Visual identity', 'Campaign creatives', 'UI design'] },
+  { name: 'Content & Production', img: '/images/careers/team-production.webp', line: 'Write, shoot and edit the stories that stop the scroll.', does: ['Short-form video', 'Copywriting', 'Shoots & editing'] },
+  { name: 'Performance', img: '/images/careers/team-performance.webp', line: 'Turn ad spend into measurable, compounding growth.', does: ['Meta & Google Ads', 'Funnels', 'Analytics'] },
+  { name: 'Tech & AI', img: '/images/careers/team-tech.webp', line: 'Ship fast websites, automations and AI workflows.', does: ['Next.js & Shopify', 'Automation', 'AI pipelines'] },
+  { name: 'Influencer & Creators', img: '/images/careers/team-creators.webp', line: 'Match brands with creators their audience already trusts.', does: ['Creator discovery', 'Campaign management', 'UGC'] },
 ];
 
 // Placeholder openings until the real ones are confirmed.
@@ -67,8 +67,8 @@ export default function Careers() {
       </dl>
     </div>
     <div className="cr-hero-art reveal d3" aria-hidden="true">
-      <figure className="cr-ph cr-ph-a" data-noview><img src="/images/stock/story-2.webp" alt="" /></figure>
-      <figure className="cr-ph cr-ph-b" data-noview><img src="/images/stock/story-1.webp" alt="" /></figure>
+      <figure className="cr-ph cr-ph-a" data-noview><img src="/images/careers/hero-studio.webp" alt="" /></figure>
+      <figure className="cr-ph cr-ph-b" data-noview><img src="/images/careers/hero-night.webp" alt="" /></figure>
       <svg className="cr-ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="96" /></svg>
     </div>
   </header>

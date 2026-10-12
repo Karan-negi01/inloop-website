@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 // Shared, visual-first layout for every service page. Content lives in
-// src/lib/serviceData.js; long paragraphs are replaced by an interactive
-// capability showcase, hover-to-reveal tiles and moving chip rails, so a
-// visitor can scan the page instead of reading it.
+// src/lib/serviceData.js. Below the hero: an overview split (statement +
+// at-a-glance stats), a photo bento of capabilities, a sticky process
+// timeline, a deliverables checklist, the "why Inloop" strip and FAQ.
 
 function Title({ text }) {
   // "Brands people [remember]." → highlight the bracketed words
@@ -14,7 +14,7 @@ function Title({ text }) {
   );
 }
 
-function Statement({ text }) {
+function Overview({ text, glance }) {
   const ref = useRef(null);
   // words light up in sequence once the statement scrolls into view
   useEffect(() => {
@@ -31,96 +31,45 @@ function Statement({ text }) {
   }, []);
 
   return (
-    <section className="sec svx-statement">
-      <p className="svx-words" ref={ref}>
-        {text.split(' ').map((w, k) => <span key={k} style={{ '--k': k }}>{w} </span>)}
-      </p>
-    </section>
-  );
-}
-
-const ROTATE_MS = 4500;
-
-function Capabilities({ caps }) {
-  const [active, setActive] = useState(0);
-  const [auto, setAuto] = useState(true);
-  const [inView, setInView] = useState(false);
-  const ref = useRef(null);
-
-  // only rotate while the showcase is actually on screen, so a visitor who
-  // scrolls down to it starts from the first capability
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return undefined;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.4 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  // auto-advance until the visitor picks one themselves
-  useEffect(() => {
-    if (!auto || !inView) return undefined;
-    const t = setTimeout(() => setActive((a) => (a + 1) % caps.length), ROTATE_MS);
-    return () => clearTimeout(t);
-  }, [active, auto, inView, caps.length]);
-
-  const cap = caps[active];
-  return (
-    <section className="sec svx-caps" ref={ref}>
-      <div className="sec-head reveal-up">
-        <div className="kick2">What we do</div>
-        <h2>{caps.length} ways we <span className="grad">move the needle</span></h2>
+    <section className="sec sv-over">
+      <div className="sv-over-copy">
+        <div className="kick2">Overview</div>
+        <p className="svx-words sv-words" ref={ref}>
+          {text.split(' ').map((w, k) => <span key={k} style={{ '--k': k }}>{w} </span>)}
+        </p>
       </div>
-      <div className="svx-caps-grid">
-        <div className="svx-caps-list" role="tablist" aria-label="Capabilities">
-          {caps.map((c, i) => (
-            <button
-              type="button"
-              role="tab"
-              aria-selected={i === active}
-              className={`svx-cap${i === active ? ' on' : ''}`}
-              key={c.h}
-              onClick={() => { setActive(i); setAuto(false); }}
-            >
-              <span className="svx-cap-n">{String(i + 1).padStart(2, '0')}</span>
-              <span className="svx-cap-h">{c.h}</span>
-              <span className="svx-cap-bar" aria-hidden="true">{i === active && auto && inView && <i key={active} />}</span>
-            </button>
-          ))}
-        </div>
-        <div className="svx-panel" role="tabpanel" data-noview>
-          {/* every capability has its own photo; they cross-fade as the tabs change.
-              Loaded eagerly: some browsers never decode lazy images that start at opacity 0 */}
-          {caps.map((c, i) => (
-            <img key={c.img} className={`svx-panel-img${i === active ? ' on' : ''}`} src={c.img} alt="" aria-hidden="true" />
-          ))}
-          <span className="svx-panel-n" aria-hidden="true">{String(active + 1).padStart(2, '0')} / {String(caps.length).padStart(2, '0')}</span>
-          <div className="svx-panel-body" key={active}>
-            <h3>{cap.h}</h3>
-            <p>{cap.p}</p>
+      <dl className="sv-glance">
+        {glance.map(([v, l]) => (
+          <div className="sv-glance-i anim-rise" key={v}>
+            <dt>{v}</dt>
+            <dd>{l}</dd>
           </div>
-        </div>
-      </div>
+        ))}
+      </dl>
     </section>
   );
 }
 
-function Rail({ label, items, reverse }) {
-  // duplicated list so the CSS marquee loops seamlessly
+const Check = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7" /></svg>
+);
+
+function Checklist({ label, title, items }) {
   return (
-    <div className={`svx-rail${reverse ? ' rev' : ''}`}>
-      <span className="svx-rail-lab">{label}</span>
-      <div className="svx-rail-win">
-        <div className="svx-rail-track">
-          {[...items, ...items].map((t, i) => <span className="svx-chip" key={i} aria-hidden={i >= items.length}>{t}</span>)}
-        </div>
+    <div className="sv-list">
+      <div className="sv-list-head reveal-up">
+        <div className="kick2">{label}</div>
+        <h2>{title}</h2>
       </div>
+      <ul className="sv-checks">
+        {items.map((t) => <li className="anim-rise" key={t}><Check />{t}</li>)}
+      </ul>
     </div>
   );
 }
 
 export default function ServicePage({ data, children }) {
-  const { route, image, accent, eyebrow, title, sub, cta, badges, statement, caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
+  const { route, image, accent, eyebrow, title, sub, cta, badges, statement, glance = [], caps, steps, deliver, bestFor, why, faq, ctaH, ctaP } = data;
 
   return (
     <div id="svp"><main className="route svx" data-route={route} style={{ '--acc': accent }}>
@@ -142,55 +91,82 @@ export default function ServicePage({ data, children }) {
         </figure>
       </header>
 
-      <Statement text={statement} />
+      <Overview text={statement} glance={glance} />
 
       {children}
 
-      <Capabilities caps={caps} />
+      <section className="sec sv-caps">
+        <div className="sv-head reveal-up">
+          <div>
+            <div className="kick2">What we do</div>
+            <h2>{caps.length} ways we <span className="grad">move the needle</span></h2>
+          </div>
+          <p>Hover any card to see what’s included.</p>
+        </div>
+        <div className={`sv-bento n${caps.length}`}>
+          {caps.map((c, i) => (
+            <article className="sv-card anim-rise" key={c.h} tabIndex={0} data-noview>
+              <img src={c.img} alt="" loading="lazy" decoding="async" />
+              <span className="sv-card-n">{String(i + 1).padStart(2, '0')}</span>
+              <div className="sv-card-body">
+                <h3>{c.h}</h3>
+                <p>{c.p}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-      <section className="sec svx-process">
-        <div className="sec-head reveal-up">
+      <section className="sec sv-process">
+        <div className="sv-process-side reveal-up">
           <div className="kick2">How it works</div>
           <h2>{steps.length} steps, <span className="grad">zero guesswork</span></h2>
+          <p>A clear, repeatable process, so you always know what’s happening and what comes next.</p>
+          <Link className="btn ghost magnetic" data-mag="0.3" to="/#contact">Start with a free call <span className="arr">↗</span></Link>
         </div>
-        <div className="svx-line anim-rise" aria-hidden="true"><i></i></div>
-        <ol className={`svx-steps n${steps.length}`}>
+        <ol className="sv-steps">
           {steps.map((s, i) => (
-            <li className="svx-step anim-rise" key={s.h}>
-              <span className="svx-step-n">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{s.h}</h3>
-              <p>{s.p}</p>
+            <li className="sv-step anim-rise" key={s.h}>
+              <span className="sv-step-n">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{s.h}</h3>
+                <p>{s.p}</p>
+              </div>
             </li>
           ))}
         </ol>
       </section>
 
-      <section className="sec svx-rails">
-        <Rail label="What you get" items={deliver} />
-        {bestFor.length > 0 && <Rail label="Best for" items={bestFor} reverse />}
+      <section className={`sec sv-deliver${bestFor.length > 0 ? ' two' : ''}`}>
+        <Checklist label="Deliverables" title="What you get" items={deliver} />
+        {bestFor.length > 0 && <Checklist label="Who it’s for" title="Best for" items={bestFor} />}
       </section>
 
-      <section className="sec svx-why">
-        <div className="sec-head reveal-up">
-          <div className="kick2">Why Inloop</div>
-          <h2>What you <span className="grad">walk away with</span></h2>
+      <section className="sec sv-why">
+        <div className="sv-head reveal-up">
+          <div>
+            <div className="kick2">Why Inloop</div>
+            <h2>What you <span className="grad">walk away with</span></h2>
+          </div>
         </div>
-        <div className="svx-tiles">
-          {why.map((w) => (
-            <div className="svx-tile anim-rise" key={w.h} tabIndex={0}>
-              <span className="svx-tile-ic" aria-hidden="true">{w.ic}</span>
+        <div className={`sv-why-row n${why.length}`}>
+          {why.map((w, i) => (
+            <div className="sv-why-i anim-rise" key={w.h}>
+              <span className="sv-why-n">{String(i + 1).padStart(2, '0')}</span>
               <h3>{w.h}</h3>
-              <div className="svx-tile-more"><p>{w.p}</p></div>
+              <p>{w.p}</p>
             </div>
           ))}
         </div>
       </section>
 
       {faq.length > 0 && (
-        <section className="sec">
-          <div className="sec-head reveal-up">
+        <section className="sec sv-faq">
+          <div className="sv-faq-side reveal-up">
             <div className="kick2">FAQ</div>
             <h2>Questions, <span className="grad">answered</span></h2>
+            <p>Can’t find what you’re looking for? Ask us directly on a free call.</p>
+            <Link className="btn ghost magnetic" data-mag="0.3" to="/#contact">Ask us <span className="arr">↗</span></Link>
           </div>
           <div className="sp-faq">
             {faq.map((f) => (

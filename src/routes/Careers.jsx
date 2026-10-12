@@ -22,10 +22,10 @@ const TEAMS = [
 
 // Placeholder openings until the real ones are confirmed.
 const JOBS = [
-  { title: 'Performance Marketing Executive', team: 'Performance', type: 'Full-time', loc: 'Delhi · Hybrid', line: 'Plan, launch and scale Meta and Google campaigns for fast-growing D2C brands.', tags: ['Meta Ads', 'Google Ads', '1–3 yrs'] },
-  { title: 'Graphic Designer', team: 'Design & Brand', type: 'Full-time', loc: 'Delhi · On-site', line: 'Craft social creatives, ad assets and brand systems that hold a premium bar.', tags: ['Figma', 'Adobe CC', '1–3 yrs'] },
-  { title: 'Video Editor', team: 'Content & Production', type: 'Full-time', loc: 'Delhi · On-site', line: 'Cut short-form reels and ad films that stop the scroll and drive action.', tags: ['Premiere Pro', 'After Effects', 'Reels'] },
-  { title: 'Social Media Manager', team: 'Strategy', type: 'Full-time', loc: 'Delhi · Hybrid', line: 'Own content calendars, community and growth across multiple brand accounts.', tags: ['Content strategy', 'Analytics', '2–4 yrs'] },
+  { title: 'Performance Marketing Executive', team: 'Performance', type: 'Full-time', loc: 'Noida · Hybrid', line: 'Plan, launch and scale Meta and Google campaigns for fast-growing D2C brands.', tags: ['Meta Ads', 'Google Ads', '1–3 yrs'] },
+  { title: 'Graphic Designer', team: 'Design & Brand', type: 'Full-time', loc: 'Noida · On-site', line: 'Craft social creatives, ad assets and brand systems that hold a premium bar.', tags: ['Figma', 'Adobe CC', '1–3 yrs'] },
+  { title: 'Video Editor', team: 'Content & Production', type: 'Full-time', loc: 'Noida · On-site', line: 'Cut short-form reels and ad films that stop the scroll and drive action.', tags: ['Premiere Pro', 'After Effects', 'Reels'] },
+  { title: 'Social Media Manager', team: 'Strategy', type: 'Full-time', loc: 'Noida · Hybrid', line: 'Own content calendars, community and growth across multiple brand accounts.', tags: ['Content strategy', 'Analytics', '2–4 yrs'] },
 ];
 
 const PERKS = [
@@ -61,7 +61,7 @@ export default function Careers() {
         <Link className="btn ghost magnetic" data-mag="0.3" to="/#contact">Pitch yourself <span className="arr">&#8599;</span></Link>
       </div>
       <dl className="reveal d4 pt-fade cr-meta">
-        <div><dt>Base</dt><dd>Delhi &amp; remote</dd></div>
+        <div><dt>Base</dt><dd>Noida &amp; remote</dd></div>
         <div><dt>Team</dt><dd>Senior-led</dd></div>
         <div><dt>Workflow</dt><dd>AI-first</dd></div>
       </dl>

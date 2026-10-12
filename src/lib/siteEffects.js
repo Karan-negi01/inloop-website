@@ -1362,28 +1362,6 @@ if(skipBtn)skipBtn.addEventListener('click',function(){
 })();
 (function(){
   function init(){
-    var chips = document.querySelectorAll('.blog-chip');
-    if(!chips.length) return;
-    var cards = document.querySelectorAll('.blog-grid .blog-card');
-    chips.forEach(function(chip){
-      chip.addEventListener('click', function(){
-        chips.forEach(function(c){ c.classList.remove('on'); });
-        chip.classList.add('on');
-        var cat = chip.textContent.trim().toLowerCase();
-        cards.forEach(function(card){
-          var el = card.querySelector('.blog-card-cat');
-          var cc = el ? el.textContent.trim().toLowerCase() : '';
-          var show = (cat === 'all') || (cc === cat);
-          card.style.display = show ? '' : 'none';
-        });
-      });
-    });
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
-(function(){
-  function init(){
     var form = document.getElementById('agsForm');
     if(!form) return;
     var result = document.getElementById('agsResult');

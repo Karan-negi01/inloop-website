@@ -1,6 +1,8 @@
 // Central SEO metadata for every route, plus the site's canonical base URL.
 // SITE_URL is a placeholder — update it to the real production domain
 // (it also feeds public/sitemap.xml and the canonical/OG tags below).
+import { postBySlug } from '@/lib/blogData';
+
 export const SITE_URL = 'https://www.inloopmedia.com';
 
 export const SEO = {
@@ -88,5 +90,9 @@ export function routeFromPath(pathname) {
 }
 
 export function seoForRoute(route) {
+  if (route.startsWith('blog/')) {
+    const post = postBySlug(route.slice(5));
+    if (post) return { title: `${post.title} — Inloop Media`, description: post.excerpt };
+  }
   return SEO[route] || SEO.home;
 }

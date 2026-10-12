@@ -15,6 +15,7 @@ import Seo from '@/routes/Seo';
 import Ecommerce from '@/routes/Ecommerce';
 import Careers from '@/routes/Careers';
 import Blog from '@/routes/Blog';
+import BlogPost from '@/routes/BlogPost';
 import Portfolio from '@/routes/Portfolio';
 import About from '@/routes/About';
 
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/ecommerce" element={<Ecommerce />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Home />} />

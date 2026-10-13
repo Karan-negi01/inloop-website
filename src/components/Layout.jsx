@@ -126,14 +126,12 @@ export default function Layout() {
     return () => clearTimeout(safety);
   }, [location.pathname]);
 
-  // portfolio category tabs + generic in-page anchor scrolling, driven by the hash
+  // generic in-page anchor scrolling, driven by the hash (the portfolio uses
+  // its hash for the active category tab, so it handles that itself)
   useEffect(() => {
     const route = routeFromPath(location.pathname);
     const anchor = (location.hash || '').replace(/^#/, '');
-    if (route === 'portfolio') {
-      if (window.__pfShow) window.__pfShow(anchor);
-      return;
-    }
+    if (route === 'portfolio') return;
     // arriving from another page (e.g. /ai#ai-work): jump straight to the section
     // under the transition wipe; same-page hash links keep the smooth scroll
     const arrived = hashPath.current !== location.pathname;

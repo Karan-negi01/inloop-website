@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SERVICES } from '@/lib/serviceData';
 import { seoForRoute } from '@/lib/seo';
 
 // Shared, visual-first layout for every service page. Content lives in
 // src/lib/serviceData.js. Below the hero: an overview split (statement +
-// at-a-glance stats), a photo bento of capabilities, a sticky process
-// timeline, a deliverables checklist, the "why Inloop" strip and FAQ.
+// at-a-glance stats), a pinned horizontal reel of capabilities, a sticky
+// process timeline, a kinetic deliverables band and checklist, the "why
+// Inloop" strip, FAQ, related services and a split CTA.
 
 function Title({ text }) {
   // "Brands people [remember]." → highlight the bracketed words
@@ -16,28 +17,34 @@ function Title({ text }) {
   );
 }
 
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 function Overview({ text, glance }) {
   const ref = useRef(null);
-  // words light up in sequence once the statement scrolls into view
-  useEffect(() => {
+  // words brighten one by one, scrubbed to the scroll position
+  useLayoutEffect(() => {
     const el = ref.current;
+    const { gsap } = window;
     if (!el) return undefined;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        el.classList.add('lit');
-        io.disconnect();
-      }
-    }, { threshold: 0.45 });
-    io.observe(el);
-    return () => io.disconnect();
+    if (!gsap || !window.ScrollTrigger || reducedMotion()) {
+      el.classList.add('lit');
+      return undefined;
+    }
+    const ctx = gsap.context(() => {
+      gsap.fromTo(el.querySelectorAll('span'), { opacity: 0.14 }, {
+        opacity: 1, stagger: 0.1, ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top 82%', end: 'bottom 42%', scrub: 0.6 },
+      });
+    }, el);
+    return () => ctx.revert();
   }, []);
 
   return (
     <section className="sec sv-over">
       <div className="sv-over-copy">
         <Kick n="01">Overview</Kick>
-        <p className="svx-words sv-words" ref={ref}>
-          {text.split(' ').map((w, k) => <span key={k} style={{ '--k': k }}>{w} </span>)}
+        <p className="sv-words sv-scrub" ref={ref}>
+          {text.split(' ').map((w, k) => <span key={k}>{w} </span>)}
         </p>
       </div>
       <dl className="sv-glance">
@@ -93,6 +100,118 @@ function Steps({ steps }) {
   );
 }
 
+// "What we do": on desktop the section pins and the capability cards slide
+// sideways as you scroll, each photo drifting inside its frame. Phones (and
+// reduced motion) get a native swipe carousel from the same markup.
+function Reel({ caps }) {
+  const secRef = useRef(null);
+  const trackRef = useRef(null);
+  const countRef = useRef(null);
+  const barRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const sec = secRef.current;
+    const track = trackRef.current;
+    const { gsap } = window;
+    if (!sec || !track || !gsap || !window.ScrollTrigger || reducedMotion()) return undefined;
+
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 861px)', () => {
+      // slide until the last card meets the right edge of the content column
+      const distance = () => {
+        const win = track.parentElement;
+        const cs = getComputedStyle(win);
+        return track.scrollWidth - (win.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
+      };
+      const slide = gsap.to(track, {
+        x: () => -distance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sec,
+          start: 'top top',
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          onUpdate: (st) => {
+            const n = Math.min(caps.length, Math.floor(st.progress * caps.length) + 1);
+            if (countRef.current) countRef.current.textContent = String(n).padStart(2, '0');
+            if (barRef.current) barRef.current.style.transform = `scaleX(${st.progress})`;
+          },
+        },
+      });
+      track.querySelectorAll('.sv-reel-img img').forEach((img) => {
+        gsap.fromTo(img, { xPercent: -7 }, {
+          xPercent: 7, ease: 'none',
+          scrollTrigger: { trigger: img.parentElement, containerAnimation: slide, start: 'left right', end: 'right left', scrub: true },
+        });
+      });
+    });
+    return () => mm.revert();
+  }, [caps.length]);
+
+  return (
+    <section className="sv-reel" ref={secRef}>
+      <div className="sv-reel-head">
+        <div>
+          <Kick n="02">What we do</Kick>
+          <h2>{caps.length} ways we <span className="grad">move the needle</span></h2>
+        </div>
+        <div className="sv-reel-meter" aria-hidden="true">
+          <span><b ref={countRef}>01</b> / {String(caps.length).padStart(2, '0')}</span>
+          <i><em ref={barRef} /></i>
+          <small>Scroll to explore</small>
+        </div>
+      </div>
+      <div className="sv-reel-win">
+        <div className="sv-reel-track" ref={trackRef}>
+          {caps.map((c, i) => (
+            <article className="sv-reel-card" key={c.h} data-noview>
+              <div className="sv-reel-img"><img src={c.img} alt="" decoding="async" /></div>
+              <span className="sv-reel-n">{String(i + 1).padStart(2, '0')}</span>
+              <div className="sv-reel-body">
+                <h3>{c.h}</h3>
+                <p>{c.p}</p>
+              </div>
+            </article>
+          ))}
+          <Link className="sv-reel-end" to="/#contact">
+            <span className="sv-reel-end-k">Next step</span>
+            <b>Let’s build yours.</b>
+            <span className="sv-reel-end-go">Book a free call <em>↗</em></span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// two rows of giant outlined text that slide in opposite directions with scroll
+function Kinetic({ items }) {
+  const ref = useRef(null);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    const { gsap } = window;
+    if (!el || !gsap || !window.ScrollTrigger || reducedMotion()) return undefined;
+    const ctx = gsap.context(() => {
+      const [a, b] = el.querySelectorAll('.sv-kin-row');
+      const st = { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.5 };
+      gsap.fromTo(a, { xPercent: 0 }, { xPercent: -28, ease: 'none', scrollTrigger: st });
+      gsap.fromTo(b, { xPercent: -28 }, { xPercent: 0, ease: 'none', scrollTrigger: { ...st } });
+    }, el);
+    return () => ctx.revert();
+  }, []);
+
+  const half = Math.ceil(items.length / 2);
+  const row = (list) => [...list, ...list].map((t, i) => <span key={i}>{t}<i>✦</i></span>);
+  return (
+    <div className="sv-kin" ref={ref} aria-hidden="true">
+      <div className="sv-kin-row">{row(items.slice(0, half))}</div>
+      <div className="sv-kin-row out">{row(items.slice(half))}</div>
+    </div>
+  );
+}
+
 // the next three services in menu order, wrapping round
 function relatedServices(route) {
   const keys = Object.keys(SERVICES);
@@ -143,27 +262,7 @@ export default function ServicePage({ data, children }) {
 
       {children}
 
-      <section className="sec sv-caps">
-        <div className="sv-head reveal-up">
-          <div>
-            <Kick n="02">What we do</Kick>
-            <h2>{caps.length} ways we <span className="grad">move the needle</span></h2>
-          </div>
-          <p>Hover any card to see what’s included.</p>
-        </div>
-        <div className={`sv-bento n${caps.length}`}>
-          {caps.map((c, i) => (
-            <article className="sv-card anim-rise" key={c.h} tabIndex={0} data-noview>
-              <img src={c.img} alt="" loading="lazy" decoding="async" />
-              <span className="sv-card-n">{String(i + 1).padStart(2, '0')}</span>
-              <div className="sv-card-body">
-                <h3>{c.h}</h3>
-                <p>{c.p}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <Reel caps={caps} />
 
       <section className="sec sv-process">
         <div className="sv-process-side reveal-up">
@@ -174,6 +273,8 @@ export default function ServicePage({ data, children }) {
         </div>
         <Steps steps={steps} />
       </section>
+
+      <Kinetic items={deliver} />
 
       <section className={`sec sv-deliver${bestFor.length > 0 ? ' two' : ''}`}>
         <Checklist n="04" label="Deliverables" title="What you get" items={deliver} />

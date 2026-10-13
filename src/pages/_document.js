@@ -1,23 +1,29 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import { SEO, SITE_URL } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
+
+// Organization details for search engines (knowledge panel, logo, contact).
+const ORG = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Inloop Media",
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/hero-logo.webp`,
+  image: `${SITE_URL}/og.jpg`,
+  email: "hello@inloopmedia.com",
+  telephone: "+91-92112-25929",
+  address: { "@type": "PostalAddress", addressLocality: "Noida", addressRegion: "Uttar Pradesh", addressCountry: "IN" },
+  sameAs: ["https://www.instagram.com/inloop.media/", "https://www.linkedin.com/company/inloop-media/"],
+};
 
 export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Static fallback meta — the app overwrites these per-route once it
-            mounts (see Layout.jsx applySeo). This keeps non-JS crawlers and
-            link-preview scrapers seeing sensible defaults either way. */}
-        <meta name="description" content={SEO.home.description} />
-        <link rel="canonical" href={SITE_URL} />
-        <meta property="og:title" content={SEO.home.title} />
-        <meta property="og:description" content={SEO.home.description} />
-        <meta property="og:url" content={SITE_URL} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Inloop Media" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={SEO.home.title} />
-        <meta name="twitter:description" content={SEO.home.description} />
+        {/* Per-page title, description and share tags are set in
+            src/pages/[[...slug]].js, and kept in sync on client-side
+            navigation by Layout.jsx applySeo. */}
+        <meta name="theme-color" content="#080808" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG) }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

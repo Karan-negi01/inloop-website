@@ -255,6 +255,7 @@ export default function Layout() {
             </div>
           </div>
 
+          <Link to="/portfolio">Portfolio</Link>
           <Link to="/careers">Careers</Link>
           <Link to="/about">About</Link>
           <Link to="/#contact" className="links-cta">Book a Free Call <span className="arr" aria-hidden="true">↗</span></Link>
